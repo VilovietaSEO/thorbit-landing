@@ -1,0 +1,429 @@
+@import "tailwindcss";
+
+/* GT-Flexa Font Family - Light hierarchy for elegance */
+@font-face {
+  font-family: 'GT Flexa';
+  src: url('/fonts/gt-flexa/GT-Flexa-Light-Trial.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT Flexa';
+  src: url('/fonts/gt-flexa/GT-Flexa-Light-Italic-Trial.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT Flexa';
+  src: url('/fonts/gt-flexa/GT-Flexa-Regular-Trial.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT Flexa';
+  src: url('/fonts/gt-flexa/GT-Flexa-Medium-Trial.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT Flexa';
+  src: url('/fonts/gt-flexa/GT-Flexa-Bold-Trial.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT Flexa';
+  src: url('/fonts/gt-flexa/GT-Flexa-Black-Trial.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2025 Modern Design System - Warm, Nature-Inspired Palette */
+:root {
+  /* Base colors - Warm neutrals inspired by Pantone 2025 */
+  --background: #FDFBF7;
+  --foreground: #2C2419;
+
+  /* Primary brand colors - Mocha Mousse palette (Pantone 2025) */
+  --primary: #C4704F;
+  --primary-dark: #A25A3F;
+  --primary-light: #D68966;
+
+  /* Accent colors - Golden Honey */
+  --accent: #D9A854;
+  --accent-hover: #C99644;
+
+  /* Secondary - Serene Blues & Greens */
+  --secondary: #7FA9B3;
+  --secondary-dark: #6A8F99;
+
+  /* Coverage level colors - Warm-shifted semantic colors */
+  --high: #6B9B5A;      /* Green + warm = olive sage */
+  --medium: #D4A55A;    /* Yellow + warm = warm amber */
+  --low: #C4695A;       /* Red + warm = warm brick */
+  --none: #A89B8F;      /* Neutral warm grey */
+
+  /* Importance level colors - Warm-shifted */
+  --critical: #B85A4A;  /* Deep warm red */
+  --imp-high: #C97A52;  /* Warm orange (close to primary) */
+  --imp-medium: #D4A55A; /* Warm amber */
+  --imp-low: #7A8B7A;   /* Warm grey-green */
+
+  /* Text colors - Rich, warm blacks */
+  --text-primary: #2C2419;
+  --text-secondary: #6B5F53;
+  --text-tertiary: #9B8F83;
+
+  /* Background colors - Layered warm neutrals */
+  --bg-primary: #FDFBF7;
+  --bg-secondary: #F5F1E8;
+  --bg-tertiary: #EBE5DA;
+  --bg-hover: #F9F5ED;
+
+  /* Border colors - Subtle warm tones */
+  --border: #E0D8CC;
+  --border-light: #EDE7DC;
+
+  /* Shadows - Warm, soft shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(107, 91, 71, 0.08);
+  --shadow: 0 2px 8px 0 rgba(107, 91, 71, 0.12);
+  --shadow-md: 0 4px 16px 0 rgba(107, 91, 71, 0.16);
+  --shadow-lg: 0 8px 24px 0 rgba(107, 91, 71, 0.20);
+
+  /* Animation timing - Ease-out for responsive feel */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-high: var(--high);
+  --color-medium: var(--medium);
+  --color-low: var(--low);
+  --color-none: var(--none);
+  --color-critical: var(--critical);
+  --color-imp-high: var(--imp-high);
+  --color-imp-medium: var(--imp-medium);
+  --color-imp-low: var(--imp-low);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-bg-hover: var(--bg-hover);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+
+  /* Typography - GT Flexa */
+  --font-sans: 'GT Flexa', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'GT Flexa', sans-serif;
+}
+
+/* Base styles with improved typography - Light weight for elegance */
+body {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  font-family: 'GT Flexa', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 300;  /* Light for body text */
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure all elements inherit GT Flexa */
+* {
+  font-family: inherit;
+}
+
+/* Form elements explicitly use GT Flexa */
+input,
+textarea,
+select,
+button {
+  font-family: 'GT Flexa', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Style select dropdowns with warm aesthetic */
+select {
+  font-weight: 500;
+}
+
+select option {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 0.5rem;
+  font-weight: 300;
+}
+
+/* Headings use Black weight for impact */
+h1, h2, h3 {
+  font-family: 'GT Flexa', sans-serif;
+  font-weight: 900;  /* Black for main headers */
+}
+
+h4, h5, h6 {
+  font-family: 'GT Flexa', sans-serif;
+  font-weight: 500;  /* Medium for secondary headers */
+}
+
+h1 { font-size: 2.25rem; line-height: 2.5rem; }
+h2 { font-size: 1.875rem; line-height: 2.25rem; }
+h3 { font-size: 1.5rem; line-height: 2rem; }
+h4 { font-size: 1.25rem; line-height: 1.75rem; }
+
+/* Italic text uses Light Italic */
+em, i {
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* Enhanced utility classes with micro-interactions */
+.card-v2 {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-v2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.card-v2:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--primary-light);
+}
+
+.card-v2:hover::before {
+  opacity: 1;
+}
+
+/* Button with enhanced micro-interactions */
+.btn-primary-v2 {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: var(--bg-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  transition: all var(--duration-normal) var(--ease-out);
+  box-shadow: var(--shadow-sm);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary-v2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.btn-primary-v2:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.btn-primary-v2:hover::before {
+  opacity: 1;
+}
+
+.btn-primary-v2:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary-v2 > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth loading states */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton-v2 {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 0%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 8px;
+}
+
+/* Badge styles with warm tones */
+.badge-v2 {
+  padding: 0.375rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.badge-active {
+  background: linear-gradient(135deg, var(--high), #6B9B65);
+  color: white;
+}
+
+.badge-paused {
+  background: linear-gradient(135deg, var(--medium), #C9956B);
+  color: white;
+}
+
+.badge-archived {
+  background: linear-gradient(135deg, var(--none), #958B7F);
+  color: white;
+}
+
+/* Smooth focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Enhanced stat display */
+.stat-v2 {
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.stat-v2:hover {
+  transform: scale(1.05);
+}
+
+/* Typography enhancements */
+.heading-display {
+  font-family: 'GT Flexa', sans-serif;
+  font-weight: 900;  /* Black for display headings */
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* Font weight utilities - New hierarchy: Light → Medium → Black */
+.font-light { font-weight: 300 !important; }      /* Body text */
+.font-normal { font-weight: 300 !important; }     /* Body text (map to Light) */
+.font-regular { font-weight: 300 !important; }    /* Body text (map to Light) */
+.font-medium { font-weight: 500 !important; }     /* Secondary headers, buttons */
+.font-semibold { font-weight: 500 !important; }   /* Map to Medium */
+.font-bold { font-weight: 900 !important; }       /* Main headers (map to Black) */
+.font-black { font-weight: 900 !important; }      /* Main headers */
+
+/* Italic utilities */
+.italic { font-style: italic; font-weight: 300; } /* Light Italic */
+
+/* Override Tailwind's font-sans to use GT Flexa */
+.font-sans {
+  font-family: 'GT Flexa', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Coverage/Status number styles - Add visual pop */
+.stat-high {
+  color: var(--high);
+  text-shadow: 0 1px 2px rgba(107, 155, 90, 0.3);
+  font-weight: 700;
+}
+
+.stat-medium {
+  color: var(--medium);
+  text-shadow: 0 1px 2px rgba(212, 165, 90, 0.3);
+  font-weight: 700;
+}
+
+.stat-low {
+  color: var(--low);
+  text-shadow: 0 1px 2px rgba(196, 105, 90, 0.3);
+  font-weight: 700;
+}
+
+/* Pill style for more emphasis */
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.stat-pill-high {
+  background: rgba(107, 155, 90, 0.15);
+  color: var(--high);
+  border: 1px solid rgba(107, 155, 90, 0.3);
+}
+
+.stat-pill-medium {
+  background: rgba(212, 165, 90, 0.15);
+  color: var(--medium);
+  border: 1px solid rgba(212, 165, 90, 0.3);
+}
+
+.stat-pill-low {
+  background: rgba(196, 105, 90, 0.15);
+  color: var(--low);
+  border: 1px solid rgba(196, 105, 90, 0.3);
+}
+
+.stat-pill-none {
+  background: rgba(168, 155, 143, 0.15);
+  color: var(--none);
+  border: 1px solid rgba(168, 155, 143, 0.3);
+}
