@@ -531,17 +531,19 @@ export default function EICSGraphFull() {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm z-40 rounded-lg"
             onClick={() => setSelectedNode(null)}
           />
 
-          {/* Modal */}
-          <div className="fixed inset-y-0 right-0 w-full md:w-1/2 lg:w-2/5 bg-white z-50 shadow-2xl overflow-y-auto">
-            <GraphSidebar
-              node={selectedNode}
-              onClose={() => setSelectedNode(null)}
-              onNodeClick={handleNodeClick}
-            />
+          {/* Modal - sized to match container */}
+          <div className="absolute inset-0 flex items-center justify-center z-50 p-6">
+            <div className="bg-white w-full max-w-2xl h-full rounded-lg shadow-2xl overflow-y-auto">
+              <GraphSidebar
+                node={selectedNode}
+                onClose={() => setSelectedNode(null)}
+                onNodeClick={handleNodeClick}
+              />
+            </div>
           </div>
         </>
       )}
