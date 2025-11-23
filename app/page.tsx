@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Menu, X } from "lucide-react";
+
+const EICSGraphFull = lazy(() => import("@/components/EICSGraphFull"));
 
 export default function LandingPage() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -164,19 +166,23 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Hero Screenshot Placeholder */}
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-bg-secondary border-2 border-dashed border-border rounded-2xl aspect-video flex items-center justify-center shadow-lg">
-              <div className="text-center p-8">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-bg-tertiary flex items-center justify-center">
-                  <svg className="w-10 h-10 text-text-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+          {/* Interactive Graph with Sidebar */}
+          <div className="max-w-6xl mx-auto">
+            <div className="h-[600px] shadow-xl">
+              <Suspense fallback={
+                <div className="w-full h-full bg-bg-secondary border-2 border-dashed border-border rounded-2xl flex items-center justify-center">
+                  <div className="text-center p-8">
+                    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-text-secondary font-light">Loading interactive graph...</p>
+                  </div>
                 </div>
-                <p className="text-lg font-medium text-text-secondary mb-2">Interactive Knowledge Graph</p>
-                <p className="text-text-tertiary font-light">490-630 entities visualized with coverage scoring</p>
-              </div>
+              }>
+                <EICSGraphFull />
+              </Suspense>
             </div>
+            <p className="text-center mt-4 text-sm text-text-tertiary font-light">
+              ↑ Zoom, pan, search, filter by category, click nodes for full details
+            </p>
           </div>
         </div>
       </section>
