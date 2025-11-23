@@ -57,10 +57,10 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
   };
 
   return (
-    <div className="bg-white p-6 h-full overflow-y-auto rounded-lg">
+    <div className="bg-white p-6 h-full overflow-y-auto rounded-lg" style={{ backgroundColor: '#FFFFFF' }}>
       {/* Header */}
       <div className="flex items-start justify-between mb-6 gap-2 pb-4 border-b border-border-light">
-        <h3 className="text-xl font-bold text-text-primary flex-1">{node.name}</h3>
+        <h3 className="text-xl font-black text-text-primary flex-1">{node.name}</h3>
         <span className={`px-3 py-1 rounded text-xs font-bold whitespace-nowrap ${tierColors[node.tier as keyof typeof tierColors] || tierColors[3]}`}>
           TIER {node.tier}
         </span>
@@ -99,7 +99,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Coverage Statistics */}
       {node.coverage && (
         <div className="mb-4 pb-4 border-b border-border">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Coverage</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Coverage</h4>
           <div className="space-y-1 text-sm">
             <div className="flex justify-between">
               <span className="text-text-secondary">High:</span>
@@ -124,7 +124,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Keywords */}
       {keywords.length > 0 && (
         <div className="mb-4 pb-4 border-b border-border">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Keywords</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Keywords</h4>
           <div className="flex flex-wrap gap-2">
             {keywords.map((keyword: string, idx: number) => (
               <span
@@ -141,7 +141,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Synonyms */}
       {synonyms.length > 0 && (
         <div className="mb-4 pb-4 border-b border-border">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Synonyms</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Synonyms</h4>
           <div className="flex flex-wrap gap-2">
             {synonyms.map((synonym: string, idx: number) => (
               <span
@@ -158,7 +158,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Connection Stats */}
       {Object.keys(connectionStats).length > 0 && (
         <div className="mb-4 pb-4 border-b border-border">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Connection Statistics</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Connection Statistics</h4>
           <div className="grid grid-cols-2 gap-2 text-sm">
             {connectionStats.outgoing !== undefined && (
               <div>
@@ -193,7 +193,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Relationships */}
       {Object.keys(relationships).length > 0 && (
         <div className="mb-4 pb-4 border-b border-border">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Relationships</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Relationships</h4>
           {Object.entries(relationships).map(([relType, entities]: [string, any]) => (
             <div key={relType} className="mb-3 last:mb-0">
               <div className="text-xs font-semibold text-text-secondary uppercase mb-1">
@@ -223,7 +223,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Use Cases */}
       {useCases.length > 0 && (
         <div className="mb-4 pb-4 border-b border-border">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Use Cases</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Use Cases</h4>
           <ul className="space-y-2">
             {useCases.map((useCase: any, idx: number) => {
               const text = typeof useCase === 'string' ? useCase : (useCase.scenario || useCase.description || '');
@@ -240,7 +240,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Search Queries */}
       {queryIntents.length > 0 && (
         <div className="mb-4 pb-4 border-b border-border">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Search Queries</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Search Queries</h4>
           <ul className="space-y-1">
             {queryIntents.map((query: any, idx: number) => {
               const queryText = typeof query === 'string' ? query : (query.query || query.intent || '');
@@ -277,7 +277,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
 
             return content ? (
               <div key={sectionKey} className="mb-4 pb-4 border-b border-border">
-                <h4 className="text-sm font-bold text-text-primary mb-2">{sectionTitle}</h4>
+                <h4 className="text-sm font-semibold text-text-primary mb-2">{sectionTitle}</h4>
                 <p className="text-xs text-text-secondary leading-relaxed">{content}</p>
               </div>
             ) : null;
@@ -288,7 +288,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Referenced By */}
       {Object.keys(referencedBy).length > 0 && (
         <div className="mb-4">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Referenced By</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Referenced By</h4>
           {Object.entries(referencedBy).map(([relType, entities]: [string, any]) => (
             <div key={relType} className="mb-3 last:mb-0">
               <div className="text-xs font-semibold text-text-secondary uppercase mb-1">
@@ -318,7 +318,7 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
       {/* Description fallback */}
       {!contentSections.overview && description && (
         <div className="mb-4 pb-4 border-b border-border">
-          <h4 className="text-sm font-bold text-text-primary mb-2">Description</h4>
+          <h4 className="text-sm font-semibold text-text-primary mb-2">Description</h4>
           <p className="text-xs text-text-secondary leading-relaxed">{description}</p>
         </div>
       )}
