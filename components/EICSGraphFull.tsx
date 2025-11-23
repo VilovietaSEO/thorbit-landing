@@ -498,38 +498,53 @@ export default function EICSGraphFull() {
   if (!graphData) return null;
 
   return (
-    <div className="flex gap-6 h-[800px]">
-      {/* Left Panel: Controls + Sidebar */}
-      <div className="w-80 flex flex-col gap-4 overflow-y-auto">
-        <GraphControls
-          graphData={graphData}
-          filters={filters}
-          onFilterChange={setFilters}
-        />
-        {selectedNode && (
-          <GraphSidebar
-            node={selectedNode}
-            onClose={() => setSelectedNode(null)}
-            onNodeClick={handleNodeClick}
+    <div className="relative">
+      <div className="flex gap-6 h-[800px]">
+        {/* Left Panel: Controls Only */}
+        <div className="w-80 flex flex-col gap-4 overflow-y-auto">
+          <GraphControls
+            graphData={graphData}
+            filters={filters}
+            onFilterChange={setFilters}
           />
-        )}
-      </div>
-
-      {/* Right Panel: Graph Canvas */}
-      <div className="flex-1 flex flex-col">
-        {/* Stats Bar */}
-        <div className="flex gap-6 mb-4 text-sm text-text-secondary">
-          <div>Nodes: <span className="font-semibold text-text-primary">{graphData.stats.totalNodes}</span></div>
-          <div>Edges: <span className="font-semibold text-text-primary">{graphData.stats.totalEdges}</span></div>
-          <div>Categories: <span className="font-semibold text-text-primary">{graphData.stats.categories}</span></div>
         </div>
 
-        {/* SVG Canvas */}
-        <svg
-          ref={svgRef}
-          className="w-full flex-1 bg-bg-secondary rounded-lg border border-border"
-        />
+        {/* Right Panel: Graph Canvas */}
+        <div className="flex-1 flex flex-col">
+          {/* Stats Bar */}
+          <div className="flex gap-6 mb-4 text-sm text-text-secondary">
+            <div>Nodes: <span className="font-semibold text-text-primary">{graphData.stats.totalNodes}</span></div>
+            <div>Edges: <span className="font-semibold text-text-primary">{graphData.stats.totalEdges}</span></div>
+            <div>Categories: <span className="font-semibold text-text-primary">{graphData.stats.categories}</span></div>
+          </div>
+
+          {/* SVG Canvas */}
+          <svg
+            ref={svgRef}
+            className="w-full flex-1 bg-bg-secondary rounded-lg border border-border"
+          />
+        </div>
       </div>
+
+      {/* Modal Overlay for Entity Details */}
+      {selectedNode && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            onClick={() => setSelectedNode(null)}
+          />
+
+          {/* Modal */}
+          <div className="fixed inset-y-0 right-0 w-full md:w-1/2 lg:w-2/5 bg-white z-50 shadow-2xl overflow-y-auto">
+            <GraphSidebar
+              node={selectedNode}
+              onClose={() => setSelectedNode(null)}
+              onNodeClick={handleNodeClick}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }
