@@ -478,7 +478,7 @@ export default function EICSGraphFull() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-[800px]">
+      <div className="flex flex-col items-center justify-center h-full">
         <Loader2 className="h-12 w-12 text-primary animate-spin mb-4" />
         <p className="text-text-secondary">Loading knowledge graph...</p>
       </div>
@@ -487,7 +487,7 @@ export default function EICSGraphFull() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center h-[800px]">
+      <div className="flex flex-col items-center justify-center h-full">
         <AlertCircle className="h-12 w-12 text-low mb-4" />
         <p className="text-text-primary font-semibold mb-2">Failed to Load Graph</p>
         <p className="text-text-secondary">{error}</p>
@@ -498,8 +498,8 @@ export default function EICSGraphFull() {
   if (!graphData) return null;
 
   return (
-    <div className="relative">
-      <div className="flex gap-6 h-[800px]">
+    <div className="relative h-full">
+      <div className="flex gap-6 h-full">
         {/* Left Panel: Controls Only */}
         <div className="w-80 flex flex-col gap-4 overflow-y-auto">
           <GraphControls
