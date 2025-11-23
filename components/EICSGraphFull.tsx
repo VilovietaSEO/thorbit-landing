@@ -1,43 +1,53 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { X, Search, Loader2 } from "lucide-react";
+import GraphControls from "./GraphControls";
+import GraphSidebar from "./GraphSidebar";
+import { Loader2, AlertCircle } from "lucide-react";
 
+interface Filters {
+  categories: Set<string>;
+  tiers: Set<number>;
+  searchTerm: string;
+}
+
+// Category colors matching production
 const categoryColors: Record<string, string> = {
-  services: "var(--primary)",
-  materials: "var(--accent)",
-  tools: "var(--high)",
-  symptoms: "var(--medium)",
-  causes: "var(--low)",
-  systems: "var(--imp-high)",
-  other: "var(--text-tertiary)",
+  services: "#C4704F",
+  materials: "#D9A854",
+  tools: "#6B9B5A",
+  symptoms: "#D4A55A",
+  causes: "#C4695A",
+  systems: "#C97A52",
+  other: "#9B8F83"
 };
 
 export default function EICSGraphFull() {
   const svgRef = useRef<SVGSVGElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const simulationRef = useRef<d3.Simulation<any, any> | null>(null);
 
+  const [selectedNode, setSelectedNode] = useState<any>(null);
+  const [filters, setFilters] = useState<Filters>({
+    categories: new Set(),
+    tiers: new Set(),
+    searchTerm: ""
+  });
   const [graphData, setGraphData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedNode, setSelectedNode] = useState<any>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategories, setActiveCategories] = useState<Set<string>>(new Set());
+  const [error, setError] = useState<string | null>(null);
 
-  // Load GeneSight data
+  // Load and transform data
   useEffect(() => {
     async function loadData() {
       try {
         const response = await fetch("/genesight-data.json");
-        const data = await response.json();
+        const rawData = await response.json();
 
         // Build edges from relationships
         const edges: any[] = [];
-        data.nodes.forEach((node: any) => {
+        rawData.nodes.forEach((node: any) => {
           const relationships = node.yaml_content?.relationships || {};
-
-          // Process different relationship types
           ['solves', 'prevents', 'requires', 'relatedTo'].forEach(relType => {
             if (relationships[relType]) {
               relationships[relType].forEach((related: any) => {
@@ -52,10 +62,88 @@ export default function EICSGraphFull() {
           });
         });
 
-        setGraphData({ nodes: data.nodes, edges });
+        // Calculate connection counts for each node
+        const connectionCounts = new Map<string, number>();
+        edges.forEach(edge => {
+          connectionCounts.set(edge.source, (connectionCounts.get(edge.source) || 0) + 1);
+          connectionCounts.set(edge.target, (connectionCounts.get(edge.target) || 0) + 1);
+        });
+
+        // Transform nodes to match production structure
+        const transformedNodes = rawData.nodes.map((node: any) => {
+          const connections = connectionCounts.get(node.id) || 0;
+          const size = Math.max(8, Math.min(20, 8 + connections * 0.5));
+          const color = categoryColors[node.category] || categoryColors.other;
+
+          // Extract metadata from yaml_content
+          const yamlContent = node.yaml_content || {};
+
+          return {
+            ...node,
+            size,
+            color,
+            connections,
+            metadata: {
+              ...yamlContent,
+              keywords: yamlContent.keywords || [],
+              synonyms: yamlContent.synonyms || [],
+              relationships: yamlContent.relationships || {},
+              description: yamlContent.initial_description || '',
+              type: yamlContent.type || 'Unknown'
+            },
+            coverage: {
+              high: 0,
+              medium: 0,
+              low: 0,
+              total: 0
+            }
+          };
+        });
+
+        // Build metadata for filters
+        const categories = new Map<string, { id: string; name: string; color: string; count: number }>();
+        const tiers = new Map<number, { tier: number; count: number }>();
+
+        transformedNodes.forEach((node: any) => {
+          // Categories
+          if (!categories.has(node.category)) {
+            categories.set(node.category, {
+              id: node.category,
+              name: node.category.charAt(0).toUpperCase() + node.category.slice(1),
+              color: node.color,
+              count: 0
+            });
+          }
+          categories.get(node.category)!.count++;
+
+          // Tiers
+          if (!tiers.has(node.tier)) {
+            tiers.set(node.tier, { tier: node.tier, count: 0 });
+          }
+          tiers.get(node.tier)!.count++;
+        });
+
+        const transformedData = {
+          graph: {
+            nodes: transformedNodes,
+            edges
+          },
+          metadata: {
+            categories: Array.from(categories.values()).sort((a, b) => a.name.localeCompare(b.name)),
+            tiers: Array.from(tiers.values()).sort((a, b) => a.tier - b.tier)
+          },
+          stats: {
+            totalNodes: transformedNodes.length,
+            totalEdges: edges.length,
+            categories: categories.size
+          }
+        };
+
+        setGraphData(transformedData);
         setLoading(false);
-      } catch (error) {
-        console.error("Error loading graph data:", error);
+      } catch (err) {
+        console.error("Error loading graph data:", err);
+        setError(String(err));
         setLoading(false);
       }
     }
@@ -63,124 +151,266 @@ export default function EICSGraphFull() {
     loadData();
   }, []);
 
-  const categories = graphData ? [...new Set(graphData.nodes.map((n: any) => n.category))] : [];
-
+  // Render graph when data or filters change
   useEffect(() => {
-    if (!graphData || !svgRef.current || !containerRef.current) return;
+    if (graphData && svgRef.current) {
+      renderGraph(graphData, filters);
+    }
+  }, [graphData, filters]);
 
-    const container = containerRef.current;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (simulationRef.current) {
+        simulationRef.current.stop();
+      }
+    };
+  }, []);
 
-    // Clear existing
-    d3.select(svgRef.current).selectAll("*").remove();
+  // Handle clicking on a related entity in the sidebar
+  function handleNodeClick(nodeId: string) {
+    const node = graphData?.graph.nodes.find((n: any) => n.id === nodeId);
+    if (node) {
+      setSelectedNode(node);
+    }
+  }
 
-    const svg = d3.select(svgRef.current)
-      .attr("width", width)
-      .attr("height", height);
-
-    const g = svg.append("g");
-
-    // Add zoom behavior
-    const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.1, 4])
-      .on("zoom", (event) => {
-        g.attr("transform", event.transform);
-      });
-
-    svg.call(zoom);
-
-    // Filter data
-    let filteredNodes = graphData.nodes.filter((node: any) => {
-      if (searchTerm && !node.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+  function renderGraph(data: any, filters: Filters) {
+    // Filter nodes
+    let filteredNodes = data.graph.nodes.filter((node: any) => {
+      if (filters.categories.size > 0 && !filters.categories.has(node.category)) {
         return false;
       }
-      if (activeCategories.size > 0 && !activeCategories.has(node.category)) {
+      if (filters.tiers.size > 0 && !filters.tiers.has(node.tier)) {
+        return false;
+      }
+      if (filters.searchTerm && !node.name.toLowerCase().includes(filters.searchTerm.toLowerCase())) {
         return false;
       }
       return true;
     });
 
     const filteredNodeIds = new Set(filteredNodes.map((n: any) => n.id));
-    const filteredEdges = graphData.edges.filter((edge: any) =>
-      filteredNodeIds.has(edge.source) && filteredNodeIds.has(edge.target)
-    );
+
+    // Make deep copy of edges
+    const filteredEdges = data.graph.edges
+      .filter((edge: any) =>
+        filteredNodeIds.has(edge.source) && filteredNodeIds.has(edge.target)
+      )
+      .map((edge: any) => ({
+        ...edge,
+        source: edge.source,
+        target: edge.target
+      }));
+
+    // Remove isolated nodes
+    const connectedNodeIds = new Set<string>();
+    filteredEdges.forEach((edge: any) => {
+      connectedNodeIds.add(edge.source);
+      connectedNodeIds.add(edge.target);
+    });
+
+    filteredNodes = filteredNodes.filter((node: any) => connectedNodeIds.has(node.id));
+
+    // Clear existing SVG
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove();
+
+    const width = svgRef.current!.clientWidth;
+    const height = svgRef.current!.clientHeight;
+
+    // Create zoom behavior
+    const zoom = d3.zoom()
+      .scaleExtent([0.1, 4])
+      .on("zoom", (event) => {
+        g.attr("transform", event.transform);
+      });
+
+    svg.call(zoom as any);
+
+    // Create container group for zoom
+    const g = svg.append("g");
+
+    // Initialize nodes near center
+    filteredNodes.forEach((node: any) => {
+      node.x = width / 2 + (Math.random() - 0.5) * 200;
+      node.y = height / 2 + (Math.random() - 0.5) * 200;
+    });
+
+    // Calculate radius for radial containment
+    const radius = Math.min(width, height) * 0.48;
 
     // Create force simulation
-    const simulation = d3.forceSimulation(filteredNodes as any)
-      .force("link", d3.forceLink(filteredEdges).id((d: any) => d.id).distance(100))
-      .force("charge", d3.forceManyBody().strength(-300))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(30));
+    const simulation = d3.forceSimulation(filteredNodes)
+      .force("link", d3.forceLink(filteredEdges)
+        .id((d: any) => d.id)
+        .distance(120)
+        .strength(0.3)
+      )
+      .force("charge", d3.forceManyBody()
+        .strength(-400)
+        .distanceMax(300)
+      )
+      .force("center", d3.forceCenter(width / 2, height / 2).strength(0.03))
+      .force("collision", d3.forceCollide().radius((d: any) => d.size + 40))
+      .force("radial", d3.forceRadial(radius, width / 2, height / 2).strength(0.005))
+      .alphaDecay(0.03)
+      .velocityDecay(0.6)
+      .alpha(1)
+      .alphaTarget(0)
+      .stop();
+
+    // Pre-compute positions
+    for (let i = 0; i < 150; ++i) simulation.tick();
+
+    // Restart with smooth animation
+    simulation.restart().alphaTarget(0);
 
     simulationRef.current = simulation;
 
-    // Draw links
+    // Create links
     const link = g.append("g")
       .selectAll("line")
       .data(filteredEdges)
       .join("line")
-      .attr("stroke", "var(--accent)")
-      .attr("stroke-opacity", 0.25)
-      .attr("stroke-width", 1.5);
+      .attr("stroke", "#999")
+      .attr("stroke-opacity", 0.3)
+      .attr("stroke-width", 1)
+      .attr("class", "graph-link");
 
-    // Draw nodes
-    const node = g.append("g")
-      .selectAll("g")
+    // Add labels - ALWAYS VISIBLE
+    const label = g.append("g")
+      .attr("class", "labels")
+      .selectAll("text")
       .data(filteredNodes)
-      .join("g")
+      .join("text")
+      .attr("text-anchor", "middle")
+      .attr("dy", (d: any) => d.size + 16)
+      .style("font-size", "11px")
+      .style("font-weight", "600")
+      .style("pointer-events", "none")
+      .style("fill", "#374151")
+      .style("stroke", "#ffffff")
+      .style("stroke-width", "3px")
+      .style("paint-order", "stroke")
+      .text((d: any) => d.name);
+
+    // Store original edges for highlighting
+    const originalEdges = filteredEdges.map((e: any) => ({
+      source: typeof e.source === 'object' ? e.source.id : e.source,
+      target: typeof e.target === 'object' ? e.target.id : e.target
+    }));
+
+    // Highlight connections
+    function highlightConnections(selectedId: string | null) {
+      if (!selectedId) {
+        node
+          .attr("opacity", 1)
+          .attr("stroke-width", 2)
+          .attr("stroke", "#fff")
+          .style("filter", "none");
+
+        link
+          .attr("stroke", "#999")
+          .attr("stroke-opacity", 0.3)
+          .attr("stroke-width", 1);
+
+        label
+          .attr("opacity", 1);
+
+        return;
+      }
+
+      // Get connected node IDs
+      const connectedIds = new Set<string>();
+      connectedIds.add(selectedId);
+
+      originalEdges.forEach((edge: any) => {
+        if (edge.source === selectedId) {
+          connectedIds.add(edge.target);
+        }
+        if (edge.target === selectedId) {
+          connectedIds.add(edge.source);
+        }
+      });
+
+      // Dim non-connected nodes
+      node
+        .attr("opacity", (d: any) => connectedIds.has(d.id) ? 1 : 0.15)
+        .attr("stroke-width", (d: any) => d.id === selectedId ? 6 : 2)
+        .attr("stroke", (d: any) => d.id === selectedId ? "#FFD700" : "#fff")
+        .style("filter", (d: any) => d.id === selectedId ? "drop-shadow(0 0 8px rgba(255, 215, 0, 0.8))" : "none");
+
+      // Highlight connected edges
+      link
+        .attr("stroke", (d: any, i: number) => {
+          const edge = originalEdges[i];
+          return (edge.source === selectedId || edge.target === selectedId) ? "#FFD700" : "#999";
+        })
+        .attr("stroke-opacity", (d: any, i: number) => {
+          const edge = originalEdges[i];
+          return (edge.source === selectedId || edge.target === selectedId) ? 0.8 : 0.1;
+        })
+        .attr("stroke-width", (d: any, i: number) => {
+          const edge = originalEdges[i];
+          return (edge.source === selectedId || edge.target === selectedId) ? 3 : 1;
+        });
+
+      // Dim non-connected labels
+      label
+        .attr("opacity", (d: any) => connectedIds.has(d.id) ? 1 : 0.15);
+    }
+
+    // Track drag vs click
+    let dragStartPos = { x: 0, y: 0 };
+    let hasDragged = false;
+
+    // Create nodes
+    const node = g.append("g")
+      .selectAll("circle")
+      .data(filteredNodes)
+      .join("circle")
+      .attr("r", (d: any) => d.size)
+      .attr("fill", (d: any) => d.color)
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 2)
       .style("cursor", "pointer")
+      .on("click", (event: any, d: any) => {
+        if (!hasDragged) {
+          event.stopPropagation();
+
+          // Toggle selection
+          if (selectedNode && selectedNode.id === d.id) {
+            setSelectedNode(null);
+            highlightConnections(null);
+          } else {
+            setSelectedNode(d);
+            highlightConnections(d.id);
+          }
+        }
+        hasDragged = false;
+      })
+      .on("mouseenter", function(event: any, d: any) {
+        if (!selectedNode || selectedNode.id !== d.id) {
+          d3.select(this)
+            .attr("stroke-width", 4)
+            .attr("stroke", "#FFD700");
+        }
+      })
+      .on("mouseleave", function(event: any, d: any) {
+        if (!selectedNode || selectedNode.id !== d.id) {
+          d3.select(this)
+            .attr("stroke-width", 2)
+            .attr("stroke", "#fff");
+        }
+      })
       .call(d3.drag<any, any>()
         .on("start", dragstarted)
         .on("drag", dragged)
-        .on("end", dragended) as any)
-      .on("click", (event, d: any) => {
-        event.stopPropagation();
-        setSelectedNode(d);
-      });
+        .on("end", dragended) as any
+      );
 
-    // Add circles
-    node.append("circle")
-      .attr("r", (d: any) => {
-        const connections = filteredEdges.filter((e: any) =>
-          e.source === d.id || e.target === d.id
-        ).length;
-        return Math.max(6, Math.min(16, 6 + connections * 0.4));
-      })
-      .attr("fill", (d: any) => categoryColors[d.category] || categoryColors.other)
-      .attr("stroke", "white")
-      .attr("stroke-width", 2)
-      .attr("opacity", 0.9);
-
-    // Add labels (only for tier 1 nodes)
-    node.filter((d: any) => d.tier === 1)
-      .append("text")
-      .text((d: any) => d.name.substring(0, 20))
-      .attr("x", 12)
-      .attr("y", 4)
-      .attr("font-size", "11px")
-      .attr("fill", "var(--text-secondary)")
-      .attr("font-weight", "500")
-      .style("pointer-events", "none");
-
-    // Hover effects
-    node.on("mouseenter", function() {
-      d3.select(this).select("circle")
-        .transition()
-        .duration(150)
-        .attr("stroke-width", 3)
-        .attr("opacity", 1);
-    });
-
-    node.on("mouseleave", function() {
-      d3.select(this).select("circle")
-        .transition()
-        .duration(150)
-        .attr("stroke-width", 2)
-        .attr("opacity", 0.9);
-    });
-
-    // Update positions on simulation tick
+    // Update positions on tick
     simulation.on("tick", () => {
       link
         .attr("x1", (d: any) => d.source.x)
@@ -188,229 +418,117 @@ export default function EICSGraphFull() {
         .attr("x2", (d: any) => d.target.x)
         .attr("y2", (d: any) => d.target.y);
 
-      node.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
-    });
+      node
+        .attr("cx", (d: any) => d.x)
+        .attr("cy", (d: any) => d.y);
 
-    // Click background to deselect
-    svg.on("click", (event) => {
-      if (event.target === event.currentTarget) {
-        setSelectedNode(null);
-      }
+      label
+        .attr("x", (d: any) => d.x)
+        .attr("y", (d: any) => d.y);
     });
 
     // Drag functions
-    function dragstarted(event: any) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
+    function dragstarted(event: any, d: any) {
+      dragStartPos = { x: event.x, y: event.y };
+      hasDragged = false;
+      d.fx = d.x;
+      d.fy = d.y;
     }
 
-    function dragged(event: any) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
-    }
+    function dragged(event: any, d: any) {
+      const dx = event.x - dragStartPos.x;
+      const dy = event.y - dragStartPos.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
-    function dragended(event: any) {
-      if (!event.active) simulation.alphaTarget(0);
-      event.subject.fx = null;
-      event.subject.fy = null;
-    }
-
-    // Cleanup
-    return () => {
-      simulation.stop();
-    };
-  }, [graphData, searchTerm, activeCategories]);
-
-  const toggleCategory = (category: string) => {
-    setActiveCategories(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(category)) {
-        newSet.delete(category);
-      } else {
-        newSet.add(category);
+      if (distance > 5) {
+        hasDragged = true;
       }
-      return newSet;
-    });
-  };
 
-  const getConnections = (nodeId: string) => {
-    if (!graphData) return 0;
-    return graphData.edges.filter((e: any) =>
-      e.source === nodeId || e.target === nodeId ||
-      e.source.id === nodeId || e.target.id === nodeId
-    ).length;
-  };
+      d.fx = event.x;
+      d.fy = event.y;
+      d.x = event.x;
+      d.y = event.y;
+
+      d3.select(event.sourceEvent.target)
+        .attr("cx", d.x)
+        .attr("cy", d.y);
+
+      link
+        .attr("x1", (l: any) => l.source.x)
+        .attr("y1", (l: any) => l.source.y)
+        .attr("x2", (l: any) => l.target.x)
+        .attr("y2", (l: any) => l.target.y);
+
+      label.filter((n: any) => n.id === d.id)
+        .attr("x", d.x)
+        .attr("y", d.y);
+    }
+
+    function dragended(event: any, d: any) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+
+    // Clear selection on background click
+    svg.on("click", () => {
+      setSelectedNode(null);
+      highlightConnections(null);
+    });
+  }
 
   if (loading) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-bg-secondary rounded-2xl">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 text-primary animate-spin mx-auto mb-3" />
-          <p className="text-text-secondary">Loading GeneSight graph...</p>
-        </div>
+      <div className="flex flex-col items-center justify-center h-[800px]">
+        <Loader2 className="h-12 w-12 text-primary animate-spin mb-4" />
+        <p className="text-text-secondary">Loading knowledge graph...</p>
       </div>
     );
   }
 
-  if (!graphData) {
+  if (error) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-bg-secondary rounded-2xl">
-        <p className="text-text-secondary">Failed to load graph data</p>
+      <div className="flex flex-col items-center justify-center h-[800px]">
+        <AlertCircle className="h-12 w-12 text-low mb-4" />
+        <p className="text-text-primary font-semibold mb-2">Failed to Load Graph</p>
+        <p className="text-text-secondary">{error}</p>
       </div>
     );
   }
+
+  if (!graphData) return null;
 
   return (
-    <div className="flex h-full w-full bg-bg-primary rounded-2xl border border-border overflow-hidden">
-      {/* Left Sidebar */}
-      <div className="w-80 flex flex-col bg-white border-r border-border-light">
-        {/* Header */}
-        <div className="p-5 border-b border-border-light">
-          <h3 className="text-lg font-black text-text-primary">GeneSight EICS</h3>
-          <p className="text-sm text-text-secondary font-light mt-1">{graphData.nodes.length} entities</p>
-        </div>
-
-        {/* Search */}
-        <div className="p-5 border-b border-border-light">
-          <div className="relative">
-            <Search className="absolute left-3 top-2.5 w-4 h-4 text-text-tertiary" />
-            <input
-              type="text"
-              placeholder="Search entities..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:border-primary"
-            />
-          </div>
-        </div>
-
-        {/* Category Filters */}
-        <div className="p-5 border-b border-border-light">
-          <h4 className="text-xs font-semibold text-text-tertiary uppercase mb-3">Categories</h4>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat: string) => (
-              <button
-                key={cat}
-                onClick={() => toggleCategory(cat)}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all capitalize ${
-                  activeCategories.has(cat)
-                    ? 'text-white'
-                    : 'bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
-                }`}
-                style={activeCategories.has(cat) ? {
-                  backgroundColor: categoryColors[cat] || categoryColors.other,
-                } : {}}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Entity Details */}
-        <div className="flex-1 overflow-y-auto p-5">
-          {selectedNode ? (
-            <div>
-              <div className="flex items-start justify-between mb-4">
-                <h3 className="text-lg font-bold text-text-primary pr-2">{selectedNode.name}</h3>
-                <button
-                  onClick={() => setSelectedNode(null)}
-                  className="p-1 hover:bg-bg-secondary rounded"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="space-y-4 text-sm">
-                <div>
-                  <p className="text-text-tertiary mb-1">
-                    <span className="font-medium">Category:</span> <span className="capitalize">{selectedNode.category}</span>
-                  </p>
-                  <p className="text-text-tertiary mb-1">
-                    <span className="font-medium">Type:</span> {selectedNode.yaml_content?.type || 'N/A'}
-                  </p>
-                  <p className="text-text-tertiary mb-1">
-                    <span className="font-medium">Tier:</span> {selectedNode.tier}
-                  </p>
-                  <p className="text-text-tertiary mb-1">
-                    <span className="font-medium">Importance:</span> {selectedNode.importance}
-                  </p>
-                  <p className="text-text-tertiary">
-                    <span className="font-medium">Connections:</span> {getConnections(selectedNode.id)}
-                  </p>
-                </div>
-
-                {selectedNode.yaml_content?.initial_description && (
-                  <div>
-                    <h4 className="font-semibold text-text-primary mb-2">Description</h4>
-                    <p className="text-text-secondary font-light leading-relaxed">
-                      {selectedNode.yaml_content.initial_description}
-                    </p>
-                  </div>
-                )}
-
-                {selectedNode.yaml_content?.keywords && selectedNode.yaml_content.keywords.length > 0 && (
-                  <div>
-                    <h4 className="font-semibold text-text-primary mb-2">Keywords</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {selectedNode.yaml_content.keywords.slice(0, 5).map((kw: string, i: number) => (
-                        <span key={i} className="px-2 py-1 bg-bg-secondary rounded text-xs text-text-secondary">
-                          {kw}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {selectedNode.yaml_content?.relationships && (
-                  <div>
-                    <h4 className="font-semibold text-text-primary mb-2">Relationships</h4>
-                    {Object.entries(selectedNode.yaml_content.relationships).map(([relType, entities]: [string, any]) => (
-                      entities && entities.length > 0 && (
-                        <div key={relType} className="mb-2">
-                          <p className="text-xs font-medium text-text-tertiary capitalize mb-1">{relType}:</p>
-                          <ul className="space-y-1 pl-2">
-                            {entities.slice(0, 3).map((entity: any, i: number) => (
-                              <li key={i} className="text-xs text-text-secondary">
-                                • {entity.name}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-text-tertiary font-light">Click on a node to see details</p>
-            </div>
-          )}
-        </div>
+    <div className="flex gap-6 h-[800px]">
+      {/* Left Panel: Controls + Sidebar */}
+      <div className="w-80 flex flex-col gap-4 overflow-y-auto">
+        <GraphControls
+          graphData={graphData}
+          filters={filters}
+          onFilterChange={setFilters}
+        />
+        {selectedNode && (
+          <GraphSidebar
+            node={selectedNode}
+            onClose={() => setSelectedNode(null)}
+            onNodeClick={handleNodeClick}
+          />
+        )}
       </div>
 
-      {/* Graph Container */}
-      <div ref={containerRef} className="flex-1 relative bg-bg-secondary/30">
-        <svg ref={svgRef} className="w-full h-full" />
-
-        {/* Controls hint */}
-        <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 border border-border-light text-xs text-text-tertiary">
-          Scroll to zoom • Drag to pan • Click nodes for details
+      {/* Right Panel: Graph Canvas */}
+      <div className="flex-1 flex flex-col">
+        {/* Stats Bar */}
+        <div className="flex gap-6 mb-4 text-sm text-text-secondary">
+          <div>Nodes: <span className="font-semibold text-text-primary">{graphData.stats.totalNodes}</span></div>
+          <div>Edges: <span className="font-semibold text-text-primary">{graphData.stats.totalEdges}</span></div>
+          <div>Categories: <span className="font-semibold text-text-primary">{graphData.stats.categories}</span></div>
         </div>
 
-        {/* Stats */}
-        <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 border border-border-light text-xs">
-          <p className="text-text-primary font-medium">
-            {graphData.nodes.filter((n: any) => {
-              if (searchTerm && !n.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-              if (activeCategories.size > 0 && !activeCategories.has(n.category)) return false;
-              return true;
-            }).length} / {graphData.nodes.length} entities shown
-          </p>
-        </div>
+        {/* SVG Canvas */}
+        <svg
+          ref={svgRef}
+          className="w-full flex-1 bg-bg-secondary rounded-lg border border-border"
+        />
       </div>
     </div>
   );
