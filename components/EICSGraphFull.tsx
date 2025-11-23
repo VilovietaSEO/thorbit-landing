@@ -2,71 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import { X, Search } from "lucide-react";
-
-// Enhanced demo data with full entity details
-const demoData = {
-  nodes: [
-    // Services
-    { id: "emergency-plumbing", name: "Emergency Plumbing", category: "Services", tier: 1, coverage: "high", importance: "critical", type: "service", description: "24/7 emergency plumbing services for urgent repairs and water damage prevention.", relatedTo: ["sewer-system", "leak-detection"] },
-    { id: "drain-cleaning", name: "Drain Cleaning", category: "Services", tier: 1, coverage: "high", importance: "high", type: "service", description: "Professional drain cleaning to remove clogs and restore proper water flow.", relatedTo: ["snake-auger", "sewer-system"] },
-    { id: "water-heater-repair", name: "Water Heater Repair", category: "Services", tier: 1, coverage: "medium", importance: "high", type: "service", description: "Expert repair and maintenance for all types of water heaters.", relatedTo: ["tankless-water-heater"] },
-    { id: "pipe-repair", name: "Pipe Repair", category: "Services", tier: 2, coverage: "medium", importance: "medium", type: "service", description: "Pipe repair and replacement services for residential and commercial properties.", relatedTo: ["pipe-wrench", "corrosion"] },
-    { id: "leak-detection", name: "Leak Detection", category: "Services", tier: 2, coverage: "low", importance: "medium", type: "service", description: "Advanced leak detection using thermal imaging and acoustic equipment.", relatedTo: ["camera-inspection"] },
-
-    // Systems
-    { id: "tankless-water-heater", name: "Tankless Water Heater", category: "Systems", tier: 1, coverage: "high", importance: "high", type: "system", description: "Energy-efficient tankless water heating systems that provide endless hot water.", relatedTo: ["water-heater-repair"] },
-    { id: "sewer-system", name: "Sewer System", category: "Systems", tier: 1, coverage: "medium", importance: "critical", type: "system", description: "Complete sewer line inspection, repair, and replacement services.", relatedTo: ["emergency-plumbing", "drain-cleaning"] },
-    { id: "water-filtration", name: "Water Filtration", category: "Systems", tier: 2, coverage: "low", importance: "medium", type: "system", description: "Whole-house water filtration systems for clean, safe drinking water.", relatedTo: ["water-discoloration"] },
-
-    // Tools
-    { id: "pipe-wrench", name: "Pipe Wrench", category: "Tools", tier: 2, coverage: "medium", importance: "low", type: "tool", description: "Essential tool for gripping and turning pipes during installation and repair.", relatedTo: ["pipe-repair"] },
-    { id: "snake-auger", name: "Snake Auger", category: "Tools", tier: 2, coverage: "high", importance: "medium", type: "tool", description: "Professional drain snake for clearing tough clogs in pipes and drains.", relatedTo: ["drain-cleaning"] },
-    { id: "camera-inspection", name: "Camera Inspection", category: "Tools", tier: 3, coverage: "low", importance: "medium", type: "tool", description: "Video camera inspection to identify issues inside pipes and drains.", relatedTo: ["leak-detection", "emergency-plumbing"] },
-
-    // Symptoms
-    { id: "slow-drain", name: "Slow Drain", category: "Symptoms", tier: 1, coverage: "high", importance: "medium", type: "symptom", description: "Water draining slowly indicates a partial clog or buildup in pipes.", relatedTo: ["drain-cleaning", "clogged-pipe"] },
-    { id: "no-hot-water", name: "No Hot Water", category: "Symptoms", tier: 1, coverage: "medium", importance: "high", type: "symptom", description: "Lack of hot water can indicate water heater failure or mineral buildup.", relatedTo: ["water-heater-repair", "mineral-buildup"] },
-    { id: "low-water-pressure", name: "Low Water Pressure", category: "Symptoms", tier: 2, coverage: "low", importance: "medium", type: "symptom", description: "Reduced water pressure may be caused by leaks, corrosion, or clogs.", relatedTo: ["pipe-repair", "corrosion"] },
-    { id: "water-discoloration", name: "Water Discoloration", category: "Symptoms", tier: 3, coverage: "low", importance: "low", type: "symptom", description: "Brown or yellow water indicates rust, sediment, or pipe corrosion.", relatedTo: ["water-filtration", "mineral-buildup"] },
-
-    // Causes
-    { id: "clogged-pipe", name: "Clogged Pipe", category: "Causes", tier: 2, coverage: "medium", importance: "medium", type: "cause", description: "Buildup of debris, grease, or foreign objects causing blockage.", relatedTo: ["slow-drain"] },
-    { id: "corrosion", name: "Corrosion", category: "Causes", tier: 2, coverage: "low", importance: "high", type: "cause", description: "Pipe corrosion from age, water chemistry, or galvanic reaction.", relatedTo: ["low-water-pressure"] },
-    { id: "mineral-buildup", name: "Mineral Buildup", category: "Causes", tier: 3, coverage: "low", importance: "medium", type: "cause", description: "Hard water minerals accumulating in pipes and water heaters.", relatedTo: ["no-hot-water", "water-discoloration"] },
-  ],
-  edges: [
-    { source: "emergency-plumbing", target: "sewer-system" },
-    { source: "water-heater-repair", target: "tankless-water-heater" },
-    { source: "drain-cleaning", target: "sewer-system" },
-    { source: "drain-cleaning", target: "snake-auger" },
-    { source: "leak-detection", target: "camera-inspection" },
-    { source: "pipe-repair", target: "pipe-wrench" },
-    { source: "slow-drain", target: "drain-cleaning" },
-    { source: "no-hot-water", target: "water-heater-repair" },
-    { source: "low-water-pressure", target: "pipe-repair" },
-    { source: "water-discoloration", target: "water-filtration" },
-    { source: "clogged-pipe", target: "slow-drain" },
-    { source: "mineral-buildup", target: "no-hot-water" },
-    { source: "corrosion", target: "low-water-pressure" },
-    { source: "mineral-buildup", target: "water-discoloration" },
-    { source: "snake-auger", target: "drain-cleaning" },
-    { source: "camera-inspection", target: "emergency-plumbing" },
-  ]
-};
+import { X, Search, Loader2 } from "lucide-react";
 
 const categoryColors: Record<string, string> = {
-  Services: "var(--primary)",
-  Systems: "var(--accent)",
-  Tools: "var(--high)",
-  Symptoms: "var(--medium)",
-  Causes: "var(--low)",
-};
-
-const coverageColors: Record<string, string> = {
-  high: "var(--high)",
-  medium: "var(--medium)",
-  low: "var(--low)",
+  services: "var(--primary)",
+  materials: "var(--accent)",
+  tools: "var(--high)",
+  symptoms: "var(--medium)",
+  causes: "var(--low)",
+  systems: "var(--imp-high)",
+  other: "var(--text-tertiary)",
 };
 
 export default function EICSGraphFull() {
@@ -74,14 +19,54 @@ export default function EICSGraphFull() {
   const containerRef = useRef<HTMLDivElement>(null);
   const simulationRef = useRef<d3.Simulation<any, any> | null>(null);
 
+  const [graphData, setGraphData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [selectedNode, setSelectedNode] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategories, setActiveCategories] = useState<Set<string>>(new Set());
 
-  const categories = ["Services", "Systems", "Tools", "Symptoms", "Causes"];
+  // Load GeneSight data
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const response = await fetch("/genesight-data.json");
+        const data = await response.json();
+
+        // Build edges from relationships
+        const edges: any[] = [];
+        data.nodes.forEach((node: any) => {
+          const relationships = node.yaml_content?.relationships || {};
+
+          // Process different relationship types
+          ['solves', 'prevents', 'requires', 'relatedTo'].forEach(relType => {
+            if (relationships[relType]) {
+              relationships[relType].forEach((related: any) => {
+                if (related.entity_id) {
+                  edges.push({
+                    source: node.id,
+                    target: related.entity_id
+                  });
+                }
+              });
+            }
+          });
+        });
+
+        setGraphData({ nodes: data.nodes, edges });
+        setLoading(false);
+      } catch (error) {
+        console.error("Error loading graph data:", error);
+        setLoading(false);
+      }
+    }
+
+    loadData();
+  }, []);
+
+  const categories = graphData ? [...new Set(graphData.nodes.map((n: any) => n.category))] : [];
 
   useEffect(() => {
-    if (!svgRef.current || !containerRef.current) return;
+    if (!graphData || !svgRef.current || !containerRef.current) return;
 
     const container = containerRef.current;
     const width = container.clientWidth;
@@ -105,8 +90,8 @@ export default function EICSGraphFull() {
 
     svg.call(zoom);
 
-    // Filter data based on search and categories
-    let filteredNodes = demoData.nodes.filter(node => {
+    // Filter data
+    let filteredNodes = graphData.nodes.filter((node: any) => {
       if (searchTerm && !node.name.toLowerCase().includes(searchTerm.toLowerCase())) {
         return false;
       }
@@ -116,15 +101,15 @@ export default function EICSGraphFull() {
       return true;
     });
 
-    const filteredNodeIds = new Set(filteredNodes.map(n => n.id));
-    const filteredEdges = demoData.edges.filter(edge =>
-      filteredNodeIds.has(edge.source as string) && filteredNodeIds.has(edge.target as string)
+    const filteredNodeIds = new Set(filteredNodes.map((n: any) => n.id));
+    const filteredEdges = graphData.edges.filter((edge: any) =>
+      filteredNodeIds.has(edge.source) && filteredNodeIds.has(edge.target)
     );
 
     // Create force simulation
     const simulation = d3.forceSimulation(filteredNodes as any)
       .force("link", d3.forceLink(filteredEdges).id((d: any) => d.id).distance(100))
-      .force("charge", d3.forceManyBody().strength(-400))
+      .force("charge", d3.forceManyBody().strength(-300))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force("collision", d3.forceCollide().radius(30));
 
@@ -136,8 +121,8 @@ export default function EICSGraphFull() {
       .data(filteredEdges)
       .join("line")
       .attr("stroke", "var(--accent)")
-      .attr("stroke-opacity", 0.3)
-      .attr("stroke-width", 2);
+      .attr("stroke-opacity", 0.25)
+      .attr("stroke-width", 1.5);
 
     // Draw nodes
     const node = g.append("g")
@@ -156,44 +141,43 @@ export default function EICSGraphFull() {
 
     // Add circles
     node.append("circle")
-      .attr("r", (d: any) => d.tier === 1 ? 14 : d.tier === 2 ? 10 : 8)
-      .attr("fill", (d: any) => coverageColors[d.coverage] || "var(--text-tertiary)")
-      .attr("stroke", (d: any) => categoryColors[d.category] || "var(--border)")
-      .attr("stroke-width", 3);
+      .attr("r", (d: any) => {
+        const connections = filteredEdges.filter((e: any) =>
+          e.source === d.id || e.target === d.id
+        ).length;
+        return Math.max(6, Math.min(16, 6 + connections * 0.4));
+      })
+      .attr("fill", (d: any) => categoryColors[d.category] || categoryColors.other)
+      .attr("stroke", "white")
+      .attr("stroke-width", 2)
+      .attr("opacity", 0.9);
 
-    // Add labels
-    node.append("text")
-      .text((d: any) => d.name)
-      .attr("x", 18)
+    // Add labels (only for tier 1 nodes)
+    node.filter((d: any) => d.tier === 1)
+      .append("text")
+      .text((d: any) => d.name.substring(0, 20))
+      .attr("x", 12)
       .attr("y", 4)
-      .attr("font-size", "12px")
+      .attr("font-size", "11px")
       .attr("fill", "var(--text-secondary)")
-      .attr("font-weight", "400")
+      .attr("font-weight", "500")
       .style("pointer-events", "none");
 
     // Hover effects
     node.on("mouseenter", function() {
       d3.select(this).select("circle")
         .transition()
-        .duration(200)
-        .attr("r", (d: any) => (d.tier === 1 ? 14 : d.tier === 2 ? 10 : 8) * 1.4)
-        .attr("stroke-width", 4);
-
-      d3.select(this).select("text")
-        .attr("fill", "var(--text-primary)")
-        .attr("font-weight", "600");
+        .duration(150)
+        .attr("stroke-width", 3)
+        .attr("opacity", 1);
     });
 
     node.on("mouseleave", function() {
       d3.select(this).select("circle")
         .transition()
-        .duration(200)
-        .attr("r", (d: any) => d.tier === 1 ? 14 : d.tier === 2 ? 10 : 8)
-        .attr("stroke-width", 3);
-
-      d3.select(this).select("text")
-        .attr("fill", "var(--text-secondary)")
-        .attr("font-weight", "400");
+        .duration(150)
+        .attr("stroke-width", 2)
+        .attr("opacity", 0.9);
     });
 
     // Update positions on simulation tick
@@ -236,7 +220,7 @@ export default function EICSGraphFull() {
     return () => {
       simulation.stop();
     };
-  }, [searchTerm, activeCategories]);
+  }, [graphData, searchTerm, activeCategories]);
 
   const toggleCategory = (category: string) => {
     setActiveCategories(prev => {
@@ -251,10 +235,31 @@ export default function EICSGraphFull() {
   };
 
   const getConnections = (nodeId: string) => {
-    return demoData.edges.filter(e =>
-      (e.source as any) === nodeId || (e.target as any) === nodeId
+    if (!graphData) return 0;
+    return graphData.edges.filter((e: any) =>
+      e.source === nodeId || e.target === nodeId ||
+      e.source.id === nodeId || e.target.id === nodeId
     ).length;
   };
+
+  if (loading) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-bg-secondary rounded-2xl">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 text-primary animate-spin mx-auto mb-3" />
+          <p className="text-text-secondary">Loading GeneSight graph...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!graphData) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-bg-secondary rounded-2xl">
+        <p className="text-text-secondary">Failed to load graph data</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-full w-full bg-bg-primary rounded-2xl border border-border overflow-hidden">
@@ -262,8 +267,8 @@ export default function EICSGraphFull() {
       <div className="w-80 flex flex-col bg-white border-r border-border-light">
         {/* Header */}
         <div className="p-5 border-b border-border-light">
-          <h3 className="text-lg font-black text-text-primary">EICS Graph Demo</h3>
-          <p className="text-sm text-text-secondary font-light mt-1">{demoData.nodes.length} entities</p>
+          <h3 className="text-lg font-black text-text-primary">GeneSight EICS</h3>
+          <p className="text-sm text-text-secondary font-light mt-1">{graphData.nodes.length} entities</p>
         </div>
 
         {/* Search */}
@@ -284,17 +289,17 @@ export default function EICSGraphFull() {
         <div className="p-5 border-b border-border-light">
           <h4 className="text-xs font-semibold text-text-tertiary uppercase mb-3">Categories</h4>
           <div className="flex flex-wrap gap-2">
-            {categories.map(cat => (
+            {categories.map((cat: string) => (
               <button
                 key={cat}
                 onClick={() => toggleCategory(cat)}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all capitalize ${
                   activeCategories.has(cat)
                     ? 'text-white'
                     : 'bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
                 }`}
                 style={activeCategories.has(cat) ? {
-                  backgroundColor: categoryColors[cat],
+                  backgroundColor: categoryColors[cat] || categoryColors.other,
                 } : {}}
               >
                 {cat}
@@ -320,10 +325,10 @@ export default function EICSGraphFull() {
               <div className="space-y-4 text-sm">
                 <div>
                   <p className="text-text-tertiary mb-1">
-                    <span className="font-medium">Category:</span> {selectedNode.category}
+                    <span className="font-medium">Category:</span> <span className="capitalize">{selectedNode.category}</span>
                   </p>
                   <p className="text-text-tertiary mb-1">
-                    <span className="font-medium">Type:</span> {selectedNode.type}
+                    <span className="font-medium">Type:</span> {selectedNode.yaml_content?.type || 'N/A'}
                   </p>
                   <p className="text-text-tertiary mb-1">
                     <span className="font-medium">Tier:</span> {selectedNode.tier}
@@ -331,39 +336,50 @@ export default function EICSGraphFull() {
                   <p className="text-text-tertiary mb-1">
                     <span className="font-medium">Importance:</span> {selectedNode.importance}
                   </p>
-                  <p className="text-text-tertiary mb-1">
-                    <span className="font-medium">Coverage:</span> {selectedNode.coverage}
-                  </p>
                   <p className="text-text-tertiary">
                     <span className="font-medium">Connections:</span> {getConnections(selectedNode.id)}
                   </p>
                 </div>
 
-                <div>
-                  <h4 className="font-semibold text-text-primary mb-2">Description</h4>
-                  <p className="text-text-secondary font-light leading-relaxed">
-                    {selectedNode.description}
-                  </p>
-                </div>
-
-                {selectedNode.relatedTo && selectedNode.relatedTo.length > 0 && (
+                {selectedNode.yaml_content?.initial_description && (
                   <div>
-                    <h4 className="font-semibold text-text-primary mb-2">Related Entities</h4>
-                    <ul className="space-y-1">
-                      {selectedNode.relatedTo.map((id: string) => {
-                        const related = demoData.nodes.find(n => n.id === id);
-                        return related ? (
-                          <li key={id}>
-                            <button
-                              onClick={() => setSelectedNode(related)}
-                              className="text-primary hover:underline text-sm"
-                            >
-                              {related.name}
-                            </button>
-                          </li>
-                        ) : null;
-                      })}
-                    </ul>
+                    <h4 className="font-semibold text-text-primary mb-2">Description</h4>
+                    <p className="text-text-secondary font-light leading-relaxed">
+                      {selectedNode.yaml_content.initial_description}
+                    </p>
+                  </div>
+                )}
+
+                {selectedNode.yaml_content?.keywords && selectedNode.yaml_content.keywords.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold text-text-primary mb-2">Keywords</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {selectedNode.yaml_content.keywords.slice(0, 5).map((kw: string, i: number) => (
+                        <span key={i} className="px-2 py-1 bg-bg-secondary rounded text-xs text-text-secondary">
+                          {kw}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {selectedNode.yaml_content?.relationships && (
+                  <div>
+                    <h4 className="font-semibold text-text-primary mb-2">Relationships</h4>
+                    {Object.entries(selectedNode.yaml_content.relationships).map(([relType, entities]: [string, any]) => (
+                      entities && entities.length > 0 && (
+                        <div key={relType} className="mb-2">
+                          <p className="text-xs font-medium text-text-tertiary capitalize mb-1">{relType}:</p>
+                          <ul className="space-y-1 pl-2">
+                            {entities.slice(0, 3).map((entity: any, i: number) => (
+                              <li key={i} className="text-xs text-text-secondary">
+                                • {entity.name}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )
+                    ))}
                   </div>
                 )}
               </div>
@@ -383,6 +399,17 @@ export default function EICSGraphFull() {
         {/* Controls hint */}
         <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 border border-border-light text-xs text-text-tertiary">
           Scroll to zoom • Drag to pan • Click nodes for details
+        </div>
+
+        {/* Stats */}
+        <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 border border-border-light text-xs">
+          <p className="text-text-primary font-medium">
+            {graphData.nodes.filter((n: any) => {
+              if (searchTerm && !n.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+              if (activeCategories.size > 0 && !activeCategories.has(n.category)) return false;
+              return true;
+            }).length} / {graphData.nodes.length} entities shown
+          </p>
         </div>
       </div>
     </div>
