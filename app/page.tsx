@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 export default function LandingPage() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const categories = [
     { name: "Services", color: "var(--primary)" },
@@ -73,10 +75,12 @@ export default function LandingPage() {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/95 backdrop-blur-sm border-b border-border-light">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <span className="text-2xl font-black text-text-primary tracking-tight">
+          <span className="text-3xl md:text-4xl font-black text-text-primary tracking-tight">
             Thorbit
           </span>
-          <div className="flex items-center gap-6">
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-6">
             <a href="#how-it-works" className="text-text-secondary hover:text-text-primary transition-colors font-light">
               How It Works
             </a>
@@ -90,7 +94,45 @@ export default function LandingPage() {
               Book a Demo
             </a>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-text-primary hover:text-primary transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-border-light bg-bg-primary">
+            <div className="px-6 py-4 flex flex-col gap-4">
+              <a
+                href="#how-it-works"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-text-secondary hover:text-text-primary transition-colors font-light py-2"
+              >
+                How It Works
+              </a>
+              <a
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-text-secondary hover:text-text-primary transition-colors font-light py-2"
+              >
+                Features
+              </a>
+              <a
+                href="#demo"
+                onClick={() => setMobileMenuOpen(false)}
+                className="bg-primary hover:bg-primary-dark text-bg-primary px-5 py-3 rounded-lg font-medium transition-all text-center"
+              >
+                Book a Demo
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -140,7 +182,7 @@ export default function LandingPage() {
       </section>
 
       {/* Problem Section */}
-      <section className="py-24 px-6 bg-bg-secondary">
+      <section className="py-24 px-6 bg-gradient-to-br from-bg-secondary to-bg-tertiary">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-text-primary leading-tight mb-8">
             Why do they rank with fewer backlinks?
@@ -252,7 +294,7 @@ export default function LandingPage() {
       </section>
 
       {/* Comparison Section */}
-      <section className="py-24 px-6 bg-bg-secondary">
+      <section className="py-24 px-6 bg-gradient-to-br from-bg-tertiary to-bg-secondary">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-4">
@@ -394,7 +436,7 @@ export default function LandingPage() {
       </section>
 
       {/* Dual Scoring Section */}
-      <section className="py-24 px-6 bg-bg-secondary">
+      <section className="py-24 px-6 bg-gradient-to-br from-primary/5 to-accent/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-primary font-medium mb-4 tracking-wide">STRATEGIC PRIORITIZATION</p>
@@ -508,7 +550,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-6 bg-bg-secondary">
+      <section id="features" className="py-24 px-6 bg-gradient-to-br from-bg-secondary via-bg-tertiary to-bg-secondary">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-primary font-medium mb-4 tracking-wide">FEATURES</p>
@@ -687,7 +729,7 @@ export default function LandingPage() {
       </section>
 
       {/* Full Workflow Automation */}
-      <section className="py-24 px-6 bg-bg-secondary">
+      <section className="py-24 px-6 bg-gradient-to-br from-high/5 to-primary/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-primary font-medium mb-4 tracking-wide">END-TO-END AUTOMATION</p>
@@ -816,7 +858,7 @@ export default function LandingPage() {
       </section>
 
       {/* Content Quality Flow */}
-      <section className="py-24 px-6 bg-bg-secondary">
+      <section className="py-24 px-6 bg-gradient-to-br from-accent/5 to-high/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-primary font-medium mb-4 tracking-wide">CONTENT THAT CONVERTS</p>
@@ -917,7 +959,7 @@ export default function LandingPage() {
       </section>
 
       {/* Who It's For */}
-      <section className="py-24 px-6 bg-bg-secondary">
+      <section className="py-24 px-6 bg-gradient-to-br from-bg-tertiary to-primary/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-primary font-medium mb-4 tracking-wide">WHO IT'S FOR</p>
@@ -1014,17 +1056,17 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section id="demo" className="py-24 px-6 bg-foreground">
+      <section id="demo" className="py-24 px-6 bg-gradient-to-br from-primary to-accent">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-black text-bg-primary mb-6">
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
             Stop guessing. Start measuring.
           </h2>
-          <p className="text-xl font-light text-bg-secondary mb-10">
+          <p className="text-xl font-light text-white/90 mb-10">
             See your topical landscape. Understand your gaps. Build authority systematically.
           </p>
           <a
             href="mailto:demo@thorbit.com"
-            className="inline-block bg-accent hover:bg-accent-hover text-foreground px-10 py-4 rounded-xl font-medium text-lg transition-all hover:-translate-y-1 hover:shadow-lg"
+            className="inline-block bg-white hover:bg-bg-secondary text-text-primary px-10 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl"
           >
             Book a Demo
           </a>
@@ -1032,10 +1074,10 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 bg-foreground border-t border-text-secondary/20">
+      <footer className="py-8 px-6 bg-gradient-to-r from-primary to-accent border-t border-white/10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="text-xl font-black text-bg-primary">Thorbit</span>
-          <p className="text-sm font-light text-text-tertiary">
+          <span className="text-xl font-black text-white">Thorbit</span>
+          <p className="text-sm font-light text-white/80">
             Topical Authority Measurement Platform
           </p>
         </div>
