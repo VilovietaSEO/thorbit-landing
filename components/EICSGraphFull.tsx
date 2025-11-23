@@ -521,7 +521,8 @@ export default function EICSGraphFull() {
           {/* SVG Canvas */}
           <svg
             ref={svgRef}
-            className="w-full flex-1 bg-bg-secondary rounded-lg border border-border"
+            className="w-full flex-1 bg-bg-secondary rounded-lg border border-border-light"
+            style={{ boxShadow: 'var(--shadow)' }}
           />
         </div>
       </div>
@@ -537,7 +538,7 @@ export default function EICSGraphFull() {
 
           {/* Modal - sized to match container */}
           <div className="absolute inset-0 flex items-center justify-center z-50 p-6">
-            <div className="bg-white w-full max-w-2xl h-full rounded-lg shadow-2xl overflow-y-auto">
+            <div className="bg-bg-primary w-full max-w-2xl h-full rounded-lg overflow-y-auto" style={{ boxShadow: 'var(--shadow-lg)' }}>
               <GraphSidebar
                 node={selectedNode}
                 onClose={() => setSelectedNode(null)}

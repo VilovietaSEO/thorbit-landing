@@ -57,9 +57,9 @@ export default function GraphSidebar({ node, onClose, onNodeClick }: GraphSideba
   };
 
   return (
-    <div className="bg-white p-6 h-full overflow-y-auto">
+    <div className="bg-bg-primary p-6 h-full overflow-y-auto rounded-lg">
       {/* Header */}
-      <div className="flex items-start justify-between mb-6 gap-2 pb-4 border-b border-border">
+      <div className="flex items-start justify-between mb-6 gap-2 pb-4 border-b border-border-light">
         <h3 className="text-xl font-bold text-text-primary flex-1">{node.name}</h3>
         <span className={`px-3 py-1 rounded text-xs font-bold whitespace-nowrap ${tierColors[node.tier as keyof typeof tierColors] || tierColors[3]}`}>
           TIER {node.tier}

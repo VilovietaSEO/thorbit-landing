@@ -40,8 +40,8 @@ export default function GraphControls({ graphData, filters, onFilterChange }: Gr
   }
 
   return (
-    <div className="bg-bg-secondary rounded-lg p-4">
-      <h3 className="text-lg font-semibold text-text-primary mb-4">Filters</h3>
+    <div className="card-v2 p-6">
+      <h3 className="text-lg font-black text-text-primary mb-4">Filters</h3>
 
       {/* Search */}
       <div className="mb-4">
