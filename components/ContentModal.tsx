@@ -345,10 +345,10 @@ export default function ContentModal({ isOpen, onClose }: ContentModalProps) {
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-6 pointer-events-none">
-        <div className="bg-white rounded-2xl w-full max-w-7xl h-[90vh] flex overflow-hidden shadow-2xl border-2 border-accent/30 pointer-events-auto">
-          {/* Table of Contents Sidebar */}
-          <aside className="w-72 flex-shrink-0 border-r border-border-light bg-[var(--bg-secondary)] p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-6 pointer-events-none">
+        <div className="bg-white rounded-2xl w-full max-w-7xl h-[95vh] md:h-[90vh] flex overflow-hidden shadow-2xl border-2 border-accent/30 pointer-events-auto">
+          {/* Table of Contents Sidebar - Hidden on mobile */}
+          <aside className="hidden md:block w-72 flex-shrink-0 border-r border-border-light bg-[var(--bg-secondary)] p-6 overflow-y-auto">
             <div className="sticky top-0">
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-accent/20">
                 <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
@@ -385,7 +385,7 @@ export default function ContentModal({ isOpen, onClose }: ContentModalProps) {
           {/* Content Area */}
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Header */}
-            <div className="border-b border-border-light bg-white px-12 py-6 flex-shrink-0">
+            <div className="border-b border-border-light bg-white px-4 md:px-12 py-4 md:py-6 flex-shrink-0">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
@@ -418,7 +418,7 @@ export default function ContentModal({ isOpen, onClose }: ContentModalProps) {
               ref={contentRef}
               className="flex-1 overflow-y-auto content-modal-content bg-[var(--bg-primary)]"
             >
-              <div className="p-12">
+              <div className="p-4 md:p-12">
                 <MarkdownContentV2 content={EXAMPLE_ARTICLE_MARKDOWN} />
               </div>
             </div>

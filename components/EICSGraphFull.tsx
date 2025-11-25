@@ -575,8 +575,8 @@ export default function EICSGraphFull() {
   return (
     <div className="relative h-full">
       <div className="flex gap-6 h-full">
-        {/* Left Panel: Controls Only */}
-        <div className="w-80 flex flex-col gap-4 overflow-y-auto">
+        {/* Left Panel: Controls Only - Hidden on mobile */}
+        <div className="hidden md:flex w-80 flex-col gap-4 overflow-y-auto">
           <GraphControls
             graphData={graphData}
             filters={filters}
@@ -585,9 +585,9 @@ export default function EICSGraphFull() {
         </div>
 
         {/* Right Panel: Graph Canvas */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           {/* Stats Bar */}
-          <div className="flex gap-6 mb-4 text-sm text-text-secondary">
+          <div className="flex gap-3 md:gap-6 mb-4 text-xs md:text-sm text-text-secondary">
             <div>Nodes: <span className="font-semibold text-text-primary">{graphData.stats.totalNodes}</span></div>
             <div>Edges: <span className="font-semibold text-text-primary">{graphData.stats.totalEdges}</span></div>
             <div>Categories: <span className="font-semibold text-text-primary">{graphData.stats.categories}</span></div>
