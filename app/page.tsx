@@ -473,16 +473,18 @@ export default function LandingPage() {
           </div>
 
           {/* Topic Gap Analysis Introduction */}
-          <div className="max-w-5xl mx-auto mb-12">
-            <p className="text-lg md:text-xl font-light text-text-secondary leading-relaxed">
-              Here's the problem with content strategy: You're flying blind. You have 200 articles published but don't know which critical topics you're missing.
-              Competitors with fewer articles dominate your niche and you can't explain why. Your team debates what to write next based on opinions, not data.
-              We solve this with <span className="font-medium text-text-primary">dual embedding analysis</span>—every page on your website becomes a semantic vector,
-              every entity in your knowledge graph becomes a vector, then we compare them using AI similarity scoring. The result?
-              <span className="font-medium text-text-primary"> HIGH/MEDIUM/LOW/NONE coverage scores</span> for all 490-630 entities mapped across your complete topical landscape.
-              Visual dashboard color-coded by coverage strength, sortable by importance, filterable by category. Load your site and a competitor's site side-by-side
-              to see exactly why they rank—<span className="underline decoration-secondary decoration-2 underline-offset-4">dense coverage vs. sparse coverage</span>.
-              In 3 minutes, not 20 hours of spreadsheet analysis, you get visual proof of semantic coverage gaps—what Google actually measures for topical authority.
+          <div className="max-w-5xl mx-auto mb-12 space-y-6">
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
+              Here's the problem with content strategy: <span className="font-medium text-text-primary">You're flying blind.</span> You have 200 articles published but don't know which critical topics you're missing. Competitors with fewer articles dominate your niche and you can't explain why. Your team debates what to write next based on opinions, not data.
+            </p>
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
+              We solve this with <span className="font-medium text-text-primary">dual embedding analysis</span>—every page on your website becomes a semantic vector, every entity in your knowledge graph becomes a vector, then we compare them using AI similarity scoring.
+            </p>
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
+              The result? <span className="font-medium text-text-primary">HIGH/MEDIUM/LOW/NONE coverage scores</span> for all 490-630 entities mapped across your complete topical landscape. Visual dashboard color-coded by coverage strength, sortable by importance, filterable by category.
+            </p>
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
+              Load your site and a competitor's site side-by-side to see exactly why they rank—<span className="underline decoration-secondary decoration-2 underline-offset-4">dense coverage vs. sparse coverage</span>. In 3 minutes, not 20 hours of spreadsheet analysis, you get visual proof of semantic coverage gaps—what Google actually measures for topical authority.
             </p>
           </div>
 
