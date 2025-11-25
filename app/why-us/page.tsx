@@ -22,7 +22,7 @@ export default function WhyUsPage() {
               Why Us
             </Link>
             <Link
-              href="/#demo"
+              href="/book-demo"
               className="bg-primary hover:bg-primary-dark text-bg-primary px-5 py-2.5 rounded-lg font-medium transition-all hover:-translate-y-0.5"
             >
               Book a Demo
@@ -51,7 +51,7 @@ export default function WhyUsPage() {
                 Why Us
               </Link>
               <Link
-                href="/#demo"
+                href="/book-demo"
                 onClick={() => setMobileMenuOpen(false)}
                 className="bg-primary hover:bg-primary-dark text-bg-primary px-5 py-3 rounded-lg font-medium transition-all text-center"
               >
@@ -478,7 +478,7 @@ export default function WhyUsPage() {
             In 30-60 minutes, you'll have more documented customer insight than most businesses gather in years. The rest builds from there.
           </p>
           <Link
-            href="/#demo"
+            href="/book-demo"
             className="inline-flex items-center gap-2 bg-white hover:bg-bg-secondary text-text-primary px-10 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl"
           >
             Book a Demo

@@ -252,12 +252,12 @@ export default function LandingPage() {
             <Link href="/why-us" className="text-text-secondary hover:text-teal transition-colors font-light">
               Why Us
             </Link>
-            <a
-              href="#demo"
+            <Link
+              href="/book-demo"
               className="bg-primary hover:bg-primary-dark text-bg-primary px-5 py-2.5 rounded-lg font-medium transition-all hover:-translate-y-0.5"
             >
               Book a Demo
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -281,13 +281,13 @@ export default function LandingPage() {
               >
                 Why Us
               </Link>
-              <a
-                href="#demo"
+              <Link
+                href="/book-demo"
                 onClick={() => setMobileMenuOpen(false)}
                 className="bg-primary hover:bg-primary-dark text-bg-primary px-5 py-3 rounded-lg font-medium transition-all text-center"
               >
                 Book a Demo
-              </a>
+              </Link>
             </div>
           </div>
         )}
@@ -304,12 +304,12 @@ export default function LandingPage() {
               Enter a URL, get a $5,000 buyer persona report in 20 minutes. Prove your topic coverage across the buyer journey, close more deals—without hiring anyone. Deep Research, Python Scripts, NLP tools, and hand-crafted marketing experts that think, iterate, and execute.
             </p>
             <div className="flex justify-center">
-              <a
-                href="#demo"
+              <Link
+                href="/book-demo"
                 className="bg-primary hover:bg-primary-dark text-bg-primary px-8 py-4 rounded-xl font-medium text-lg transition-all hover:-translate-y-1 hover:shadow-lg"
               >
                 Book a Demo
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -769,12 +769,12 @@ export default function LandingPage() {
           <p className="text-xl md:text-2xl font-light text-white/90 mb-10">
             See what your customers need. Measure topical authority the way Google does. Build strategic content that ranks and converts.
           </p>
-          <a
-            href="mailto:demo@thorbit.com"
+          <Link
+            href="/book-demo"
             className="inline-block bg-white hover:bg-bg-secondary text-text-primary px-10 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl"
           >
             Book a Demo
-          </a>
+          </Link>
           <p className="text-sm text-white/80 mt-6">3-minute demo. No sales pitch. Just proof.</p>
         </div>
       </section>
