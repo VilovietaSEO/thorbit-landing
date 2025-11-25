@@ -254,6 +254,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/book-demo"
+              target="_blank"
               className="bg-primary hover:bg-primary-dark text-bg-primary px-5 py-2.5 rounded-lg font-medium transition-all hover:-translate-y-0.5"
             >
               Book a Demo
@@ -283,6 +284,7 @@ export default function LandingPage() {
               </Link>
               <Link
                 href="/book-demo"
+                target="_blank"
                 onClick={() => setMobileMenuOpen(false)}
                 className="bg-primary hover:bg-primary-dark text-bg-primary px-5 py-3 rounded-lg font-medium transition-all text-center"
               >
@@ -306,6 +308,7 @@ export default function LandingPage() {
             <div className="flex justify-center">
               <Link
                 href="/book-demo"
+                target="_blank"
                 className="bg-primary hover:bg-primary-dark text-bg-primary px-8 py-4 rounded-xl font-medium text-lg transition-all hover:-translate-y-1 hover:shadow-lg"
               >
                 Book a Demo
@@ -771,6 +774,7 @@ export default function LandingPage() {
           </p>
           <Link
             href="/book-demo"
+            target="_blank"
             className="inline-block bg-white hover:bg-bg-secondary text-text-primary px-10 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl"
           >
             Book a Demo
