@@ -335,12 +335,24 @@ export default function LandingPage() {
                 <EICSGraphFull />
               </Suspense>
             </div>
-            <p className="text-center mt-4 text-sm text-text-tertiary font-light mb-8">
+            <p className="text-center mt-4 text-sm text-text-tertiary font-light">
               ↑ Zoom, pan, search, filter by category, click nodes for full details
             </p>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto text-center">
-              <span className="font-bold text-text-primary">The knowledge graph is the answer.</span> It's a complete map of your domain—every topic, every relationship, every search intent—built in under 2 hours instead of 6 months of manual research. When you can see the entire topical territory at once, you stop guessing what to write and start filling documented gaps systematically.
-            </p>
+          </div>
+
+          {/* Entity Coverage */}
+          <div className="max-w-6xl mx-auto mt-24">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-black text-text-primary leading-tight mb-6">
+                Understand how well your website covers each topic.
+              </h2>
+              <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
+                <span className="font-bold text-text-primary">The knowledge graph is the answer.</span> It's a complete map of your domain—every topic, every relationship, every search intent—built in under 2 hours instead of 6 months of manual research. When you can see the entire topical territory at once, you stop guessing what to write and start filling documented gaps systematically.
+              </p>
+            </div>
+
+            {/* Dashboard Visual */}
+            <InteractiveCardStack />
           </div>
         </div>
       </section>
@@ -531,47 +543,194 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* EICS Structure Section */}
+      {/* Topical Authority Score Section */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">COMPREHENSIVE MAPPING</p>
+          <div className="text-center mb-12">
+            <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">TOPICAL AUTHORITY SCORE</p>
             <h2 className="text-4xl md:text-5xl font-black text-text-primary leading-tight mb-6">
-              7 Entity Categories. 490-630 Entities.
+              One Score. <span className="bg-teal text-white px-2 rounded">Complete Clarity.</span>
             </h2>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
-              We map your complete topical landscape across every dimension Google evaluates.
+              Get a definitive score on your domain. Break it out by category and by importance. Prioritize filling the gaps in the areas that matter most to you.
             </p>
           </div>
 
-          {/* Category Pills */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {["Services", "Systems", "Brands", "Tools", "Symptoms", "Causes", "Governance"].map((category) => (
-              <div key={category} className="px-6 py-3 rounded-full bg-sage/15 border-2 border-sage/30 hover:border-sage hover:bg-sage/25 transition-all">
-                <span className="font-medium text-text-primary">{category}</span>
+          {/* Topical Authority Dashboard */}
+          <div className="max-w-6xl mx-auto space-y-6">
+            {/* Main Score Card */}
+            <div className="bg-bg-primary rounded-2xl border-2 border-border-light p-8">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+                <div>
+                  <h3 className="text-2xl font-black text-text-primary mb-1">Topical Authority Score</h3>
+                  <p className="text-text-tertiary font-light mb-6">genesight.com</p>
+
+                  <div className="grid grid-cols-2 gap-x-12 gap-y-4">
+                    <div>
+                      <p className="text-sm text-text-tertiary">Points Earned</p>
+                      <p className="text-2xl font-black text-text-primary">724.0 / 1071.0</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-text-tertiary">Entities</p>
+                      <p className="text-2xl font-black text-text-primary">586</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-text-tertiary">At 100%</p>
+                      <p className="text-2xl font-black text-high">239</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-text-tertiary">Content Gap</p>
+                      <p className="text-2xl font-black text-low">1027 URLs</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Score Circle */}
+                <div className="flex-shrink-0">
+                  <div className="relative w-40 h-40">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="var(--bg-tertiary)" strokeWidth="10" />
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="var(--accent)" strokeWidth="10" strokeDasharray="314" strokeDashoffset="102" strokeLinecap="round" />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-4xl font-black text-accent">67.6</span>
+                      <span className="text-sm text-text-tertiary">out of 100</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
 
-          {/* Topic Gap Analysis Introduction */}
-          <div className="max-w-5xl mx-auto mb-12 space-y-6">
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
-              Here's the problem with content strategy: <span className="font-medium text-navy">You're flying blind.</span> You have 200 articles published but don't know which critical topics you're missing. Competitors with fewer articles dominate your niche and you can't explain why. Your team debates what to write next based on opinions, not data.
-            </p>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
-              We solve this with <span className="font-medium text-navy">dual embedding analysis</span>—every page on your website becomes a semantic vector, every entity in your knowledge graph becomes a vector, then we compare them using AI similarity scoring.
-            </p>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
-              The result? <span className="font-medium text-navy">HIGH/MEDIUM/LOW/NONE coverage scores</span> for all 490-630 entities mapped across your complete topical landscape. Visual dashboard color-coded by coverage strength, sortable by importance, filterable by category.
-            </p>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
-              Load your site and a competitor's site side-by-side to see exactly why they rank—<span className="underline decoration-teal decoration-2 underline-offset-4">dense coverage vs. sparse coverage</span>. In 3 minutes, not 20 hours of spreadsheet analysis, you get visual proof of semantic coverage gaps—what Google actually measures for topical authority.
-            </p>
-          </div>
+            {/* Two Column Layout */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* By Importance Level */}
+              <div className="bg-bg-primary rounded-2xl border-2 border-border-light p-6">
+                <h4 className="text-lg font-black text-text-primary mb-4 flex items-center gap-2">
+                  <span className="text-primary">◉</span> By Importance Level
+                </h4>
 
-          {/* Dashboard Visual */}
-          <div className="max-w-6xl mx-auto">
-            <InteractiveCardStack />
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-medium text-text-primary">Critical <span className="text-text-tertiary font-light">(50 entities)</span></span>
+                      <span className="font-bold text-low">52.1%</span>
+                    </div>
+                    <div className="h-2 bg-bg-tertiary rounded-full overflow-hidden">
+                      <div className="h-full bg-low rounded-full" style={{ width: '52.1%' }}></div>
+                    </div>
+                    <p className="text-xs text-text-tertiary mt-1">104.2 / 200.0 pts &nbsp;•&nbsp; Target: 10 URLs | Weight: 4x</p>
+                    <p className="text-xs text-low mt-1">Gap: 262 quality URLs needed</p>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-medium text-text-primary">High <span className="text-text-tertiary font-light">(124 entities)</span></span>
+                      <span className="font-bold text-medium">68.4%</span>
+                    </div>
+                    <div className="h-2 bg-bg-tertiary rounded-full overflow-hidden">
+                      <div className="h-full bg-medium rounded-full" style={{ width: '68.4%' }}></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-medium text-text-primary">Medium <span className="text-text-tertiary font-light">(198 entities)</span></span>
+                      <span className="font-bold text-high">74.2%</span>
+                    </div>
+                    <div className="h-2 bg-bg-tertiary rounded-full overflow-hidden">
+                      <div className="h-full bg-high rounded-full" style={{ width: '74.2%' }}></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-medium text-text-primary">Low <span className="text-text-tertiary font-light">(214 entities)</span></span>
+                      <span className="font-bold text-high">89.1%</span>
+                    </div>
+                    <div className="h-2 bg-bg-tertiary rounded-full overflow-hidden">
+                      <div className="h-full bg-high rounded-full" style={{ width: '89.1%' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* By Category */}
+              <div className="bg-bg-primary rounded-2xl border-2 border-border-light p-6">
+                <h4 className="text-lg font-black text-text-primary mb-4 flex items-center gap-2">
+                  <span className="text-accent">▊</span> By Category
+                </h4>
+
+                <div className="space-y-3">
+                  {[
+                    { name: 'symptoms conditions', entities: 101, pct: 47.8, gap: 233, color: 'bg-low' },
+                    { name: 'causes triggers', entities: 74, pct: 63.5, gap: 140, color: 'bg-medium' },
+                    { name: 'services', entities: 89, pct: 78.2, gap: 87, color: 'bg-high' },
+                    { name: 'brands products', entities: 67, pct: 71.4, gap: 112, color: 'bg-medium' },
+                    { name: 'systems processes', entities: 82, pct: 69.8, gap: 156, color: 'bg-medium' },
+                  ].map((cat) => (
+                    <div key={cat.name}>
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="font-medium text-text-primary">{cat.name}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs text-text-tertiary">{cat.entities} entities</span>
+                          <span className={`font-bold ${cat.pct >= 70 ? 'text-high' : cat.pct >= 55 ? 'text-medium' : 'text-low'}`}>{cat.pct}%</span>
+                        </div>
+                      </div>
+                      <div className="h-2 bg-bg-tertiary rounded-full overflow-hidden">
+                        <div className={`h-full ${cat.color} rounded-full`} style={{ width: `${cat.pct}%` }}></div>
+                      </div>
+                      <p className="text-xs text-text-tertiary mt-1">Gap: {cat.gap} URLs</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Category × Importance Matrix */}
+            <div className="bg-bg-primary rounded-2xl border-2 border-border-light p-6 overflow-x-auto">
+              <h4 className="text-lg font-black text-text-primary mb-4 flex items-center gap-2">
+                <span className="text-secondary">↗</span> Category × Importance Matrix
+              </h4>
+
+              <table className="w-full min-w-[500px]">
+                <thead>
+                  <tr className="text-sm text-text-tertiary">
+                    <th className="text-left font-medium pb-3">Category</th>
+                    <th className="text-center font-medium pb-3">Critical</th>
+                    <th className="text-center font-medium pb-3">High</th>
+                    <th className="text-center font-medium pb-3">Medium</th>
+                    <th className="text-center font-medium pb-3">Low</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm">
+                  {[
+                    { cat: 'brands products', critical: 74, high: 61, medium: 73, low: 82 },
+                    { cat: 'causes triggers', critical: 28, high: 58, medium: 80, low: 98 },
+                    { cat: 'governance compliance', critical: 36, high: 71, medium: 74, low: 83 },
+                    { cat: 'services', critical: 70, high: 79, medium: 91, low: 96 },
+                    { cat: 'symptoms conditions', critical: 37, high: 45, medium: 57, low: 38 },
+                    { cat: 'systems processes', critical: 61, high: 75, medium: 75, low: 91 },
+                    { cat: 'tools materials', critical: 63, high: 50, medium: 74, low: 113 },
+                  ].map((row) => (
+                    <tr key={row.cat} className="border-t border-border-light">
+                      <td className="py-3 font-medium text-text-primary">{row.cat}</td>
+                      <td className="py-3 text-center">
+                        <span className={`px-3 py-1 rounded-lg text-xs font-bold ${row.critical >= 70 ? 'bg-high/20 text-high' : row.critical >= 50 ? 'bg-medium/20 text-medium' : 'bg-low/20 text-low'}`}>{row.critical}%</span>
+                      </td>
+                      <td className="py-3 text-center">
+                        <span className={`px-3 py-1 rounded-lg text-xs font-bold ${row.high >= 70 ? 'bg-high/20 text-high' : row.high >= 50 ? 'bg-medium/20 text-medium' : 'bg-low/20 text-low'}`}>{row.high}%</span>
+                      </td>
+                      <td className="py-3 text-center">
+                        <span className={`px-3 py-1 rounded-lg text-xs font-bold ${row.medium >= 70 ? 'bg-high/20 text-high' : row.medium >= 50 ? 'bg-medium/20 text-medium' : 'bg-low/20 text-low'}`}>{row.medium}%</span>
+                      </td>
+                      <td className="py-3 text-center">
+                        <span className={`px-3 py-1 rounded-lg text-xs font-bold ${row.low >= 70 ? 'bg-high/20 text-high' : row.low >= 50 ? 'bg-medium/20 text-medium' : 'bg-low/20 text-low'}`}>{row.low}%</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
