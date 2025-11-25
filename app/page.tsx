@@ -58,31 +58,32 @@ function InteractiveCardStack() {
         <p className="text-sm text-text-tertiary">Real-time entity coverage analysis</p>
       </div>
 
-      {/* Table Container */}
-      <div className="overflow-hidden" style={{ maxHeight: '500px' }}>
-        {/* Table Header */}
-        <div className="grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-3 bg-bg-secondary border-b border-border-light sticky top-0 z-10">
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Entity</div>
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Importance</div>
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Score</div>
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">High</div>
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Medium</div>
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Low</div>
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Links</div>
-        </div>
+      {/* Table Container - scrollable on mobile */}
+      <div className="overflow-x-auto overflow-y-hidden" style={{ maxHeight: '500px' }}>
+        <div className="min-w-[700px]">
+          {/* Table Header */}
+          <div className="grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-3 bg-bg-secondary border-b border-border-light sticky top-0 z-10">
+            <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Entity</div>
+            <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Importance</div>
+            <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Score</div>
+            <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">High</div>
+            <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Medium</div>
+            <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Low</div>
+            <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Links</div>
+          </div>
 
-        {/* Table Rows with Animation */}
-        <div className="relative">
-          {entities.map((entity, index) => {
-            const isVisible = visibleRows.includes(index);
-            const isInSpotlight = index === scrollPosition;
+          {/* Table Rows with Animation */}
+          <div className="relative">
+            {entities.map((entity, index) => {
+              const isVisible = visibleRows.includes(index);
+              const isInSpotlight = index === scrollPosition;
 
-            return (
-              <div
-                key={index}
-                className={`grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-4 border-b border-border-light transition-all duration-700 ${
-                  isInSpotlight ? 'bg-secondary/5 shadow-inner' : 'hover:bg-bg-secondary/50'
-                }`}
+              return (
+                <div
+                  key={index}
+                  className={`grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-4 border-b border-border-light transition-all duration-700 ${
+                    isInSpotlight ? 'bg-secondary/5 shadow-inner' : 'hover:bg-bg-secondary/50'
+                  }`}
                 style={{
                   opacity: isVisible ? 1 : 0,
                   transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
@@ -135,28 +136,31 @@ function InteractiveCardStack() {
               </div>
             );
           })}
+          </div>
         </div>
       </div>
 
       {/* Footer Stats */}
       <div className="bg-bg-secondary px-6 py-4 border-t-2 border-border-light">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <p className="text-sm text-text-tertiary">Showing <span className="font-bold text-text-primary">{entities.length}</span> of <span className="font-bold text-text-primary">604</span> entities</p>
-          <div className="flex gap-6 text-xs">
+          <div className="flex flex-wrap gap-4 sm:gap-6 text-xs">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-high"></div>
-              <span className="text-text-tertiary">High Coverage</span>
+              <span className="text-text-tertiary">High</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-medium"></div>
-              <span className="text-text-tertiary">Medium Coverage</span>
+              <span className="text-text-tertiary">Medium</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-low"></div>
-              <span className="text-text-tertiary">Low Coverage</span>
+              <span className="text-text-tertiary">Low</span>
             </div>
           </div>
         </div>
+        {/* Mobile scroll hint */}
+        <p className="text-xs text-text-quaternary mt-2 sm:hidden">← Swipe to see all columns →</p>
       </div>
     </div>
   );
