@@ -14,12 +14,13 @@ interface FormSubmission {
   utm_source?: string;
   utm_medium?: string;
   utm_campaign?: string;
+  utm_ad_set?: string;
   utm_term?: string;
   utm_content?: string;
 }
 
 interface CustomField {
-  id: string;
+  key: string;
   field_value: string;
 }
 
@@ -53,30 +54,30 @@ export async function POST(request: NextRequest) {
     // Build custom fields array for UTM parameters and business size
     const customFields: CustomField[] = [];
 
-    // Business Size custom field
-    const businessSizeFieldId = process.env.GHL_BUSINESS_SIZE_FIELD_ID;
-    if (businessSizeFieldId && body.businessSize) {
+    // Business Size custom field (using key)
+    if (body.businessSize) {
       customFields.push({
-        id: businessSizeFieldId,
+        key: "business_size",
         field_value: body.businessSize,
       });
     }
 
-    // UTM custom fields
-    const utmFieldMappings = [
-      { param: "utm_source", envKey: "GHL_UTM_SOURCE_FIELD_ID" },
-      { param: "utm_medium", envKey: "GHL_UTM_MEDIUM_FIELD_ID" },
-      { param: "utm_campaign", envKey: "GHL_UTM_CAMPAIGN_FIELD_ID" },
-      { param: "utm_term", envKey: "GHL_UTM_TERM_FIELD_ID" },
-      { param: "utm_content", envKey: "GHL_UTM_CONTENT_FIELD_ID" },
-    ];
+    // Phone Number custom field (using key)
+    if (body.phone) {
+      customFields.push({
+        key: "phone_number",
+        field_value: body.phone,
+      });
+    }
 
-    for (const mapping of utmFieldMappings) {
-      const fieldId = process.env[mapping.envKey];
-      const value = body[mapping.param as keyof FormSubmission];
-      if (fieldId && value) {
+    // UTM custom fields (using keys - no env vars needed)
+    const utmParams = ["utm_source", "utm_medium", "utm_campaign", "utm_ad_set", "utm_term", "utm_content"];
+
+    for (const param of utmParams) {
+      const value = body[param as keyof FormSubmission];
+      if (value) {
         customFields.push({
-          id: fieldId,
+          key: param,
           field_value: value as string,
         });
       }

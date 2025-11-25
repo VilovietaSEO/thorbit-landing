@@ -13,7 +13,7 @@ const BUSINESS_SIZES = [
   { value: "100M+", label: "$100M+" },
 ];
 
-const UTM_PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+const UTM_PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_ad_set", "utm_term", "utm_content"];
 
 interface FormData {
   firstName: string;
@@ -25,6 +25,7 @@ interface FormData {
   utm_source: string;
   utm_medium: string;
   utm_campaign: string;
+  utm_ad_set: string;
   utm_term: string;
   utm_content: string;
 }
@@ -45,6 +46,7 @@ export default function BookDemoPage() {
     utm_source: "",
     utm_medium: "",
     utm_campaign: "",
+    utm_ad_set: "",
     utm_term: "",
     utm_content: "",
   });
@@ -86,6 +88,7 @@ export default function BookDemoPage() {
       utm_source: mergedUtm.utm_source || "",
       utm_medium: mergedUtm.utm_medium || "",
       utm_campaign: mergedUtm.utm_campaign || "",
+      utm_ad_set: mergedUtm.utm_ad_set || "",
       utm_term: mergedUtm.utm_term || "",
       utm_content: mergedUtm.utm_content || "",
     }));
@@ -342,6 +345,7 @@ export default function BookDemoPage() {
                 <input type="hidden" name="utm_source" value={formData.utm_source} />
                 <input type="hidden" name="utm_medium" value={formData.utm_medium} />
                 <input type="hidden" name="utm_campaign" value={formData.utm_campaign} />
+                <input type="hidden" name="utm_ad_set" value={formData.utm_ad_set} />
                 <input type="hidden" name="utm_term" value={formData.utm_term} />
                 <input type="hidden" name="utm_content" value={formData.utm_content} />
 
