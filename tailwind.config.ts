@@ -24,6 +24,21 @@ const config: Config = {
           dark: "var(--secondary-dark)",
         },
 
+        // Strategic accent colors
+        teal: {
+          DEFAULT: "var(--teal)",          // #0D7377 high-contrast attention
+          dark: "var(--teal-dark)",
+        },
+        emerald: {
+          DEFAULT: "var(--emerald)",       // #047857 success/positive
+          dark: "var(--emerald-dark)",
+        },
+        navy: "var(--navy)",               // #1A2332 grounding/depth
+        sage: {
+          DEFAULT: "var(--sage)",          // #A4B494 soft accents
+          dark: "var(--sage-dark)",
+        },
+
         // Semantic colors
         high: "var(--high)",
         medium: "var(--medium)",

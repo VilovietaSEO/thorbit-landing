@@ -70,6 +70,15 @@
   --secondary: #7FA9B3;
   --secondary-dark: #6A8F99;
 
+  /* New Strategic Accent Colors */
+  --teal: #0D7377;           /* High-contrast attention grabber */
+  --teal-dark: #0A5C5F;
+  --emerald: #047857;        /* Success/positive signals */
+  --emerald-dark: #065F46;
+  --navy: #1A2332;           /* Grounding & depth */
+  --sage: #A4B494;           /* Soft accents */
+  --sage-dark: #8B9A7E;
+
   /* Coverage level colors - Warm-shifted semantic colors */
   --high: #6B9B5A;      /* Green + warm = olive sage */
   --medium: #D4A55A;    /* Yellow + warm = warm amber */
@@ -312,6 +321,31 @@ em, i {
 
 .animate-pulse-slow {
   animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Pulse ring animation - expanding ring from solid dot */
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(13, 115, 119, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(13, 115, 119, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(13, 115, 119, 0);
+  }
+}
+
+@keyframes pulse-ring-orange {
+  0% {
+    box-shadow: 0 0 0 0 rgba(196, 112, 79, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(196, 112, 79, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(196, 112, 79, 0);
+  }
 }
 
 /* Badge styles with warm tones */

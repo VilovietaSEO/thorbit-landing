@@ -53,25 +53,25 @@ function InteractiveCardStack() {
   return (
     <div className="w-full bg-bg-primary rounded-2xl border-2 border-border-light shadow-2xl overflow-hidden">
       {/* Dashboard Header */}
-      <div className="bg-gradient-to-r from-secondary/10 to-accent/10 px-6 py-4 border-b-2 border-border-light">
-        <h3 className="text-xl font-black text-text-primary">Entity Dashboard</h3>
-        <p className="text-sm text-text-tertiary">Real-time entity coverage analysis</p>
+      <div className="bg-gradient-to-r from-teal/10 to-sage/10 px-4 md:px-6 py-4 border-b-2 border-border-light">
+        <h3 className="text-lg md:text-xl font-black text-text-primary">Entity Dashboard</h3>
+        <p className="text-xs md:text-sm text-text-tertiary">Real-time entity coverage analysis</p>
       </div>
 
-      {/* Table Container */}
-      <div className="overflow-hidden" style={{ maxHeight: '500px' }}>
+      {/* Desktop Table View */}
+      <div className="hidden md:block overflow-hidden" style={{ maxHeight: '500px' }}>
         {/* Table Header */}
         <div className="grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-3 bg-bg-secondary border-b border-border-light sticky top-0 z-10">
           <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Entity</div>
           <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Importance</div>
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Score</div>
+          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Score</div>
           <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">High</div>
-          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Medium</div>
+          <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Med</div>
           <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Low</div>
           <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Links</div>
         </div>
 
-        {/* Table Rows with Animation */}
+        {/* Table Rows */}
         <div className="relative">
           {entities.map((entity, index) => {
             const isVisible = visibleRows.includes(index);
@@ -81,7 +81,7 @@ function InteractiveCardStack() {
               <div
                 key={index}
                 className={`grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-4 border-b border-border-light transition-all duration-700 ${
-                  isInSpotlight ? 'bg-secondary/5 shadow-inner' : 'hover:bg-bg-secondary/50'
+                  isInSpotlight ? 'bg-teal/5 shadow-inner' : 'hover:bg-bg-secondary/50'
                 }`}
                 style={{
                   opacity: isVisible ? 1 : 0,
@@ -89,47 +89,34 @@ function InteractiveCardStack() {
                   transitionDelay: `${index * 100}ms`
                 }}
               >
-                {/* Entity Name */}
                 <div>
                   <div className="font-bold text-text-primary">{entity.name}</div>
                   <div className="text-xs text-text-tertiary">{entity.category}</div>
                 </div>
-
-                {/* Importance Badge */}
-                <div>
+                <div className="flex items-center">
                   <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${getImportanceColor(entity.importance)}`}>
                     {entity.importance}
                   </span>
                 </div>
-
-                {/* Score with count-up animation */}
-                <div className="font-black text-text-primary text-lg">
+                <div className="flex items-center justify-center font-black text-text-primary text-lg">
                   {isVisible ? entity.score.toFixed(2) : '0.00'}
                 </div>
-
-                {/* High Count */}
-                <div className="flex justify-center">
-                  <span className="px-3 py-1 rounded-lg bg-high/20 text-high font-bold text-sm min-w-[3rem] text-center">
+                <div className="flex items-center justify-center">
+                  <span className="px-2 py-1 rounded-lg bg-emerald/20 text-emerald font-bold text-sm min-w-[2.5rem] text-center">
                     {isVisible ? entity.high : 0}
                   </span>
                 </div>
-
-                {/* Medium Count */}
-                <div className="flex justify-center">
-                  <span className="px-3 py-1 rounded-lg bg-medium/20 text-medium font-bold text-sm min-w-[3rem] text-center">
+                <div className="flex items-center justify-center">
+                  <span className="px-2 py-1 rounded-lg bg-medium/20 text-medium font-bold text-sm min-w-[2.5rem] text-center">
                     {isVisible ? entity.medium : 0}
                   </span>
                 </div>
-
-                {/* Low Count */}
-                <div className="flex justify-center">
-                  <span className="px-3 py-1 rounded-lg bg-low/20 text-low font-bold text-sm min-w-[3rem] text-center">
+                <div className="flex items-center justify-center">
+                  <span className="px-2 py-1 rounded-lg bg-low/20 text-low font-bold text-sm min-w-[2.5rem] text-center">
                     {isVisible ? entity.low : 0}
                   </span>
                 </div>
-
-                {/* Relationships */}
-                <div className="text-center font-bold text-text-primary">
+                <div className="flex items-center justify-center font-bold text-text-primary">
                   {isVisible ? entity.relationships : 0}
                 </div>
               </div>
@@ -138,22 +125,93 @@ function InteractiveCardStack() {
         </div>
       </div>
 
+      {/* Mobile Card View */}
+      <div className="md:hidden overflow-hidden" style={{ maxHeight: '500px' }}>
+        <div className="p-4 space-y-3">
+          {entities.map((entity, index) => {
+            const isVisible = visibleRows.includes(index);
+            const isInSpotlight = index === scrollPosition;
+
+            return (
+              <div
+                key={index}
+                className={`p-4 rounded-xl border border-border-light transition-all duration-700 ${
+                  isInSpotlight ? 'bg-teal/5 border-teal/30' : 'bg-bg-secondary/30'
+                }`}
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                  transitionDelay: `${index * 100}ms`
+                }}
+              >
+                {/* Entity Header */}
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="font-bold text-text-primary text-sm">{entity.name}</div>
+                    <div className="text-xs text-text-tertiary">{entity.category}</div>
+                  </div>
+                  <span className={`px-2 py-1 rounded-full text-xs font-bold ${getImportanceColor(entity.importance)}`}>
+                    {entity.importance}
+                  </span>
+                </div>
+
+                {/* Score */}
+                <div className="flex items-center justify-center mb-3">
+                  <div className="text-center">
+                    <div className="text-3xl font-black text-text-primary">{isVisible ? entity.score.toFixed(2) : '0.00'}</div>
+                    <div className="text-xs text-text-tertiary uppercase">Score</div>
+                  </div>
+                </div>
+
+                {/* Coverage Stats */}
+                <div className="grid grid-cols-4 gap-2 text-center">
+                  <div>
+                    <span className="block px-2 py-1 rounded-lg bg-emerald/20 text-emerald font-bold text-sm">
+                      {isVisible ? entity.high : 0}
+                    </span>
+                    <span className="text-xs text-text-tertiary mt-1 block">High</span>
+                  </div>
+                  <div>
+                    <span className="block px-2 py-1 rounded-lg bg-medium/20 text-medium font-bold text-sm">
+                      {isVisible ? entity.medium : 0}
+                    </span>
+                    <span className="text-xs text-text-tertiary mt-1 block">Med</span>
+                  </div>
+                  <div>
+                    <span className="block px-2 py-1 rounded-lg bg-low/20 text-low font-bold text-sm">
+                      {isVisible ? entity.low : 0}
+                    </span>
+                    <span className="text-xs text-text-tertiary mt-1 block">Low</span>
+                  </div>
+                  <div>
+                    <span className="block px-2 py-1 rounded-lg bg-bg-secondary text-text-primary font-bold text-sm">
+                      {isVisible ? entity.relationships : 0}
+                    </span>
+                    <span className="text-xs text-text-tertiary mt-1 block">Links</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Footer Stats */}
-      <div className="bg-bg-secondary px-6 py-4 border-t-2 border-border-light">
-        <div className="flex items-center justify-between">
+      <div className="bg-bg-secondary px-4 md:px-6 py-4 border-t-2 border-border-light">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-sm text-text-tertiary">Showing <span className="font-bold text-text-primary">{entities.length}</span> of <span className="font-bold text-text-primary">604</span> entities</p>
-          <div className="flex gap-6 text-xs">
+          <div className="flex gap-4 md:gap-6 text-xs">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-high"></div>
-              <span className="text-text-tertiary">High Coverage</span>
+              <div className="w-3 h-3 rounded-full bg-emerald"></div>
+              <span className="text-text-tertiary">High</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-medium"></div>
-              <span className="text-text-tertiary">Medium Coverage</span>
+              <span className="text-text-tertiary">Medium</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-low"></div>
-              <span className="text-text-tertiary">Low Coverage</span>
+              <span className="text-text-tertiary">Low</span>
             </div>
           </div>
         </div>
@@ -189,10 +247,10 @@ export default function LandingPage() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            <a href="#how-it-works" className="text-text-secondary hover:text-secondary transition-colors font-light">
+            <a href="#how-it-works" className="text-text-secondary hover:text-teal transition-colors font-light">
               How It Works
             </a>
-            <a href="#features" className="text-text-secondary hover:text-secondary transition-colors font-light">
+            <a href="#features" className="text-text-secondary hover:text-teal transition-colors font-light">
               Features
             </a>
             <a
@@ -220,14 +278,14 @@ export default function LandingPage() {
               <a
                 href="#how-it-works"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-text-secondary hover:text-secondary transition-colors font-light py-2"
+                className="text-text-secondary hover:text-teal transition-colors font-light py-2"
               >
                 How It Works
               </a>
               <a
                 href="#features"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-text-secondary hover:text-secondary transition-colors font-light py-2"
+                className="text-text-secondary hover:text-teal transition-colors font-light py-2"
               >
                 Features
               </a>
@@ -253,28 +311,22 @@ export default function LandingPage() {
               <span className="block">Build Authority That Converts.</span>
             </h1>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed mb-10">
-              The only platform starting with <span className="underline decoration-secondary decoration-2 underline-offset-4">real consumer psychology</span>—not keyword approximations.
+              The only platform starting with <span className="underline decoration-teal decoration-2 underline-offset-4">real consumer psychology</span>—not keyword approximations.
               Showing topical authority the way Google's algorithm measures it.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex justify-center">
               <a
                 href="#demo"
                 className="bg-primary hover:bg-primary-dark text-bg-primary px-8 py-4 rounded-xl font-medium text-lg transition-all hover:-translate-y-1 hover:shadow-lg"
               >
                 Book a Demo
               </a>
-              <a
-                href="#how-it-works"
-                className="px-8 py-4 rounded-xl bg-gradient-to-br from-secondary/10 to-secondary/5 hover:from-secondary/20 hover:to-secondary/10 text-text-primary font-medium text-lg transition-all border border-secondary/30 hover:border-secondary"
-              >
-                See How It Works
-              </a>
             </div>
           </div>
 
           {/* Interactive Graph */}
           <div className="max-w-6xl mx-auto">
-            <div className="h-[600px] shadow-xl rounded-2xl overflow-hidden border-2 border-secondary/20">
+            <div className="h-[600px] shadow-xl rounded-2xl overflow-hidden border-2 border-teal/20">
               <Suspense fallback={
                 <div className="w-full h-full bg-bg-secondary border-2 border-dashed border-border rounded-2xl flex items-center justify-center">
                   <div className="text-center p-8">
@@ -300,28 +352,34 @@ export default function LandingPage() {
           <div className="text-center mb-12">
             <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">FOUNDATION FIRST</p>
             <h2 className="text-3xl md:text-4xl font-black text-text-primary leading-tight mb-6">
-              Start With <span className="bg-secondary text-white px-1 rounded">People</span>, Not Keywords
+              Start With <span className="bg-teal text-white px-1 rounded">People</span>, Not Keywords
             </h2>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-3xl mx-auto">
-              Branding agencies charge $10k for real consumer intelligence. We automate it.
-              Before mapping a single topic, we analyze 50+ actual customer conversations from Reddit, reviews, and forums.
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-3xl mx-auto mb-6">
+              Enter your URL. In under 20 minutes, get deeper brand positioning and market understanding than a $5,000 agency engagement.
+            </p>
+            <p className="text-lg md:text-xl font-light text-text-tertiary leading-relaxed max-w-3xl mx-auto">
+              We automatically analyze 50+ real customer conversations from Reddit, reviews, and forums—extracting the exact language, pain points, objections, and desires your audience uses. No surveys. No guesswork. Real consumer intelligence, instantly.
             </p>
           </div>
 
           {/* ICP Framework Grid - 6 columns x 4 rows */}
-          <div className="card-v2 bg-bg-primary rounded-2xl p-8 border-2 border-secondary/20 mb-8 transition-all duration-300 hover:border-secondary/40 hover:shadow-xl hover:-translate-y-1">
+          <div className="card-v2 bg-bg-primary rounded-2xl p-8 border-2 border-teal/20 mb-8 transition-all duration-300 hover:border-teal/40 hover:shadow-xl hover:-translate-y-1">
             <p className="text-sm text-primary mb-6 font-medium uppercase tracking-wide text-center">24-SECTION ICP FRAMEWORK</p>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 text-sm mb-8">
               {icpSections.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-2 py-3 px-4 rounded-lg bg-white/70 border border-high/20 hover:border-high hover:bg-high/5 transition-all hover:scale-105 animate-pulse-slow"
-                  style={{
-                    animationDelay: `${i * 0.05}s`,
-                    animationDuration: '3s'
-                  }}
+                  className="flex items-center gap-2 py-3 px-4 rounded-lg bg-white/70 border border-sage/30 hover:border-teal hover:bg-teal/5 transition-all hover:scale-105"
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-high flex-shrink-0 animate-pulse"></div>
+                  <div
+                    className="w-2 h-2 rounded-full flex-shrink-0"
+                    style={{
+                      backgroundColor: '#C4704F',
+                      boxShadow: '0 0 0 0 rgba(196, 112, 79, 0.7)',
+                      animation: `pulse-ring-orange 2s ease-out infinite`,
+                      animationDelay: `${i * 0.08}s`
+                    }}
+                  ></div>
                   <span className="text-text-secondary font-light text-xs leading-tight">{item}</span>
                 </div>
               ))}
@@ -345,12 +403,13 @@ export default function LandingPage() {
             <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">CONTENT THAT CONVERTS</p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-text-primary leading-tight mb-6">
               Stop Writing for Keywords.<br />
-              Start Writing for <span className="bg-secondary text-white px-1 rounded">Humans</span>.
+              Start Writing for Humans.
             </h2>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-3xl mx-auto mb-12">
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-3xl mx-auto mb-6">
               Instead of "how do we rank for this keyword?" ask "who is this person and what do they need right now?"
-              We generate 2,000-2,500 word strategic briefs that tell writers exactly how to serve real human needs—psychological state, exact opening lines, section-by-section instructions.
-              Content that converts because it was architected for humans, not algorithms.
+            </p>
+            <p className="text-lg md:text-xl font-light text-text-tertiary leading-relaxed max-w-3xl mx-auto mb-12">
+              We generate 2,000-2,500 word strategic briefs that tell writers exactly how to serve real human needs—psychological state, exact opening lines, section-by-section instructions. Content that converts because it was architected for humans, not algorithms.
             </p>
           </div>
 
@@ -358,7 +417,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             <button
               onClick={() => setBriefModalOpen(true)}
-              className="bg-secondary hover:bg-secondary/90 text-white rounded-xl px-8 py-6 font-bold text-lg transition-all hover:scale-105 hover:shadow-lg"
+              className="bg-primary hover:bg-primary-dark text-white rounded-xl px-8 py-6 font-bold text-lg transition-all hover:scale-105 hover:shadow-lg"
             >
               <div className="flex items-center justify-center gap-3">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -370,7 +429,7 @@ export default function LandingPage() {
 
             <button
               onClick={() => setContentModalOpen(true)}
-              className="bg-accent hover:bg-accent/90 text-white rounded-xl px-8 py-6 font-bold text-lg transition-all hover:scale-105 hover:shadow-lg"
+              className="bg-accent hover:bg-accent-hover text-white rounded-xl px-8 py-6 font-bold text-lg transition-all hover:scale-105 hover:shadow-lg"
             >
               <div className="flex items-center justify-center gap-3">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -388,10 +447,10 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-text-primary leading-tight mb-8">
             It's not about more keywords or more backlinks.<br />
-            It's about <span className="bg-secondary text-white px-1 rounded">topical density</span>.
+            It's about <span className="bg-teal text-white px-1 rounded">topical density</span>.
           </h2>
           <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed mb-12">
-            Competitors with 50 articles outrank you with 100 because they systematically covered 200 entities with <span className="underline decoration-secondary decoration-2 underline-offset-4">dense interconnection</span>.
+            Competitors with 50 articles outrank you with 100 because they systematically covered 200 entities with <span className="underline decoration-teal decoration-2 underline-offset-4">dense interconnection</span>.
             You covered 80 entities randomly based on keyword volume.
           </p>
 
@@ -466,7 +525,7 @@ export default function LandingPage() {
           {/* Category Pills */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {["Services", "Systems", "Brands", "Tools", "Symptoms", "Causes", "Governance"].map((category) => (
-              <div key={category} className="px-6 py-3 rounded-full bg-bg-secondary border-2 border-border-light hover:border-secondary/40 transition-all">
+              <div key={category} className="px-6 py-3 rounded-full bg-sage/15 border-2 border-sage/30 hover:border-sage hover:bg-sage/25 transition-all">
                 <span className="font-medium text-text-primary">{category}</span>
               </div>
             ))}
@@ -475,16 +534,16 @@ export default function LandingPage() {
           {/* Topic Gap Analysis Introduction */}
           <div className="max-w-5xl mx-auto mb-12 space-y-6">
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
-              Here's the problem with content strategy: <span className="font-medium text-text-primary">You're flying blind.</span> You have 200 articles published but don't know which critical topics you're missing. Competitors with fewer articles dominate your niche and you can't explain why. Your team debates what to write next based on opinions, not data.
+              Here's the problem with content strategy: <span className="font-medium text-navy">You're flying blind.</span> You have 200 articles published but don't know which critical topics you're missing. Competitors with fewer articles dominate your niche and you can't explain why. Your team debates what to write next based on opinions, not data.
             </p>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
-              We solve this with <span className="font-medium text-text-primary">dual embedding analysis</span>—every page on your website becomes a semantic vector, every entity in your knowledge graph becomes a vector, then we compare them using AI similarity scoring.
+              We solve this with <span className="font-medium text-navy">dual embedding analysis</span>—every page on your website becomes a semantic vector, every entity in your knowledge graph becomes a vector, then we compare them using AI similarity scoring.
             </p>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
-              The result? <span className="font-medium text-text-primary">HIGH/MEDIUM/LOW/NONE coverage scores</span> for all 490-630 entities mapped across your complete topical landscape. Visual dashboard color-coded by coverage strength, sortable by importance, filterable by category.
+              The result? <span className="font-medium text-navy">HIGH/MEDIUM/LOW/NONE coverage scores</span> for all 490-630 entities mapped across your complete topical landscape. Visual dashboard color-coded by coverage strength, sortable by importance, filterable by category.
             </p>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed">
-              Load your site and a competitor's site side-by-side to see exactly why they rank—<span className="underline decoration-secondary decoration-2 underline-offset-4">dense coverage vs. sparse coverage</span>. In 3 minutes, not 20 hours of spreadsheet analysis, you get visual proof of semantic coverage gaps—what Google actually measures for topical authority.
+              Load your site and a competitor's site side-by-side to see exactly why they rank—<span className="underline decoration-teal decoration-2 underline-offset-4">dense coverage vs. sparse coverage</span>. In 3 minutes, not 20 hours of spreadsheet analysis, you get visual proof of semantic coverage gaps—what Google actually measures for topical authority.
             </p>
           </div>
 
@@ -502,7 +561,7 @@ export default function LandingPage() {
           <div className="text-center mb-12">
             <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">CAMPAIGN PLANNING</p>
             <h2 className="text-4xl md:text-5xl font-black text-text-primary leading-tight mb-6">
-              From Guessing to <span className="bg-secondary text-white px-2 rounded">Calculating</span>
+              From Guessing to <span className="bg-teal text-white px-2 rounded">Calculating</span>
             </h2>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
               Turn "Maybe 50 articles?" into "Exactly 156 articles—here's the math, phases, and ROI."

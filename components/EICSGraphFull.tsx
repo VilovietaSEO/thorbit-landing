@@ -252,6 +252,15 @@ export default function EICSGraphFull() {
     // Create container group for zoom
     const g = svg.append("g");
 
+    // Start zoomed out to show entire graph - center and scale down
+    const initialScale = 0.55;
+    const initialX = width * (1 - initialScale) / 2;
+    const initialY = height * (1 - initialScale) / 2;
+    svg.call(
+      zoom.transform as any,
+      d3.zoomIdentity.translate(initialX, initialY).scale(initialScale)
+    );
+
     // Calculate category foci - GRID LAYOUT with proportional spacing for distinct clusters
     const categories = Array.from(new Set(filteredNodes.map((n: any) => n.category))) as string[];
     const categoryFociMap: { [key: string]: { x: number; y: number } } = {};
@@ -332,14 +341,14 @@ export default function EICSGraphFull() {
       .alphaTarget(0)
       .stop();
 
-    // Pre-compute MANY positions for cluster separation
-    for (let i = 0; i < 800; ++i) simulation.tick();
+    // Pre-compute positions so graph appears stable on load
+    for (let i = 0; i < 1000; ++i) simulation.tick();
 
-    // Now restart with visible animation - set alpha to give initial bounce
+    // Start with very low alpha - graph appears settled, only reacts to interaction
     simulation
-      .alpha(0.3)           // Restart with enough energy for visible settling
-      .alphaTarget(0)       // Decay toward 0
-      .alphaDecay(0.02)     // Faster decay for initial animation (then settles)
+      .alpha(0.01)          // Nearly settled - minimal movement on load
+      .alphaTarget(0)
+      .alphaDecay(0.02)
       .restart();
 
     simulationRef.current = simulation;
