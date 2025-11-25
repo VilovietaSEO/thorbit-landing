@@ -584,8 +584,8 @@ export default function EICSGraphFull() {
   return (
     <div className="relative h-full">
       <div className="flex gap-6 h-full">
-        {/* Left Panel: Controls Only */}
-        <div className="w-80 flex flex-col gap-4 overflow-y-auto">
+        {/* Left Panel: Controls Only - Hidden on mobile */}
+        <div className="hidden md:flex w-80 flex-col gap-4 overflow-y-auto">
           <GraphControls
             graphData={graphData}
             filters={filters}

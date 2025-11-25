@@ -346,9 +346,9 @@ export default function ContentModal({ isOpen, onClose }: ContentModalProps) {
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-6 pointer-events-none">
-        <div className="bg-white rounded-2xl w-full max-w-7xl h-[90vh] flex overflow-hidden shadow-2xl border-2 border-accent/30 pointer-events-auto">
-          {/* Table of Contents Sidebar */}
-          <aside className="w-72 flex-shrink-0 border-r border-border-light bg-[var(--bg-secondary)] p-6 overflow-y-auto">
+        <div className="relative bg-white rounded-2xl w-full max-w-7xl h-[90vh] flex overflow-hidden shadow-2xl border-2 border-accent/30 pointer-events-auto">
+          {/* Table of Contents Sidebar - Hidden on mobile */}
+          <aside className="hidden md:block w-72 flex-shrink-0 border-r border-border-light bg-[var(--bg-secondary)] p-6 overflow-y-auto">
             <div className="sticky top-0">
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-accent/20">
                 <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
@@ -381,6 +381,17 @@ export default function ContentModal({ isOpen, onClose }: ContentModalProps) {
               </nav>
             </div>
           </aside>
+
+          {/* Mobile close button - only visible on mobile */}
+          <button
+            onClick={onClose}
+            className="md:hidden absolute top-4 right-4 p-2 rounded-full bg-accent/10 hover:bg-accent/20 transition-all z-10"
+            style={{ color: 'var(--accent)' }}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
 
           {/* Content Area */}
           <div className="flex-1 flex flex-col overflow-hidden">

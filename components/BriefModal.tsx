@@ -84,12 +84,12 @@ export default function BriefModal({ isOpen, onClose }: BriefModalProps) {
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
         <div
-          className="bg-white rounded-2xl w-full max-w-7xl h-[90vh] flex overflow-hidden border-2 border-secondary/30"
+          className="relative bg-white rounded-2xl w-full max-w-7xl h-[90vh] flex overflow-hidden border-2 border-secondary/30"
           style={{ boxShadow: 'var(--shadow-lg)' }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* TOC Sidebar */}
-          <aside className="w-72 flex-shrink-0 border-r border-border-light bg-[var(--bg-secondary)] p-6 overflow-y-auto">
+          {/* TOC Sidebar - Hidden on mobile */}
+          <aside className="hidden md:block w-72 flex-shrink-0 border-r border-border-light bg-[var(--bg-secondary)] p-6 overflow-y-auto">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-border-light">
               <div className="flex items-center gap-3">
                 <div className="p-1.5 rounded-lg bg-secondary/10">
@@ -122,6 +122,15 @@ export default function BriefModal({ isOpen, onClose }: BriefModalProps) {
               ))}
             </ul>
           </aside>
+
+          {/* Mobile close button - only visible on mobile */}
+          <button
+            onClick={onClose}
+            className="md:hidden absolute top-4 right-4 p-2 rounded-full bg-secondary/10 hover:bg-secondary/20 transition-all z-10"
+            style={{ color: 'var(--secondary)' }}
+          >
+            <X className="h-5 w-5" />
+          </button>
 
           {/* Main Content */}
           <div className="flex-1 overflow-y-auto brief-modal-content bg-[var(--bg-primary)]" ref={contentRef}>
