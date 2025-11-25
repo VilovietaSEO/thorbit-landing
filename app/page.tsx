@@ -527,7 +527,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section id="demo" className="py-24 px-6 bg-gradient-to-br from-primary to-accent">
+      <section id="demo" className="py-24 px-6 bg-primary">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
             Start With People. Build What Google Rewards.
@@ -545,15 +545,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 bg-gradient-to-r from-primary to-accent border-t border-white/10">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="text-xl font-black text-white">Thorbit</span>
-          <p className="text-sm font-light text-white/80">
-            Topical Authority Measurement Platform
-          </p>
-        </div>
-      </footer>
 
       {/* Modals */}
       <ICPModal isOpen={icpModalOpen} onClose={() => setIcpModalOpen(false)} />
