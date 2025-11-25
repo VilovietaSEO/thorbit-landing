@@ -306,13 +306,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="max-w-6xl mx-auto text-center mb-16">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-text-primary leading-[1.15] tracking-tight mb-8 text-center">
-              <span className="block">See What People Need.</span>
-              <span className="block">Measure What Google Values.</span>
-              <span className="block">Build Authority That Converts.</span>
+              Specialized AI Agent Swarms That Automate Research, Analysis, and SEO Execution
             </h1>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed mb-10">
-              The only platform starting with <span className="underline decoration-teal decoration-2 underline-offset-4">real consumer psychology</span>—not keyword approximations.
-              Showing topical authority the way Google's algorithm measures it.
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto mb-10">
+              Enter a URL, get a $5,000 buyer persona report in 20 minutes. Prove your topic coverage across the buyer journey, close more deals—without hiring anyone. Deep Research, Python Scripts, NLP tools, and hand-crafted marketing experts that think, iterate, and execute.
             </p>
             <div className="flex justify-center">
               <a
@@ -338,8 +335,11 @@ export default function LandingPage() {
                 <EICSGraphFull />
               </Suspense>
             </div>
-            <p className="text-center mt-4 text-sm text-text-tertiary font-light">
+            <p className="text-center mt-4 text-sm text-text-tertiary font-light mb-8">
               ↑ Zoom, pan, search, filter by category, click nodes for full details
+            </p>
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto text-center">
+              <span className="font-bold text-text-primary">The knowledge graph is the answer.</span> It's a complete map of your domain—every topic, every relationship, every search intent—built in under 2 hours instead of 6 months of manual research. When you can see the entire topical territory at once, you stop guessing what to write and start filling documented gaps systematically.
             </p>
           </div>
         </div>
@@ -354,11 +354,8 @@ export default function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-black text-text-primary leading-tight mb-6">
               Start With <span className="bg-teal text-white px-1 rounded">People</span>, Not Keywords
             </h2>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-3xl mx-auto mb-6">
-              Enter your URL. In under 20 minutes, get deeper brand positioning and market understanding than a $5,000 agency engagement.
-            </p>
-            <p className="text-lg md:text-xl font-light text-text-tertiary leading-relaxed max-w-3xl mx-auto">
-              We automatically analyze 50+ real customer conversations from Reddit, reviews, and forums—extracting the exact language, pain points, objections, and desires your audience uses. No surveys. No guesswork. Real consumer intelligence, instantly.
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
+              Most tools give you keywords. We give you the exact words your customers use—extracted from thousands of real conversations. Pain points, objections, desires, and statistics that transform how you write everything. All it takes is a single click and 50 AI agents read thousands of comments, comb the internet for stats, and synthesize 70+ customer conversations.
             </p>
           </div>
 
@@ -405,11 +402,8 @@ export default function LandingPage() {
               Stop Writing for Keywords.<br />
               Start Writing for Humans.
             </h2>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-3xl mx-auto mb-6">
-              Instead of "how do we rank for this keyword?" ask "who is this person and what do they need right now?"
-            </p>
-            <p className="text-lg md:text-xl font-light text-text-tertiary leading-relaxed max-w-3xl mx-auto mb-12">
-              We generate 2,000-2,500 word strategic briefs that tell writers exactly how to serve real human needs—psychological state, exact opening lines, section-by-section instructions. Content that converts because it was architected for humans, not algorithms.
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto mb-12">
+              Most AI tools use 1-3 agents. Thorbit orchestrates 50+ specialized agents—research, strategy, writing, quality loops—built on a decade of marketing expertise and 3,000 hours of AI engineering. Click below and see what that actually produces. You might find that the brief is more detailed than anything a human has ever been able to produce for you, and the content is perfectly adjusted and optimized for your audience.
             </p>
           </div>
 
@@ -442,16 +436,44 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Campaign Architect Flow */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">CAMPAIGN PLANNING</p>
+            <h2 className="text-4xl md:text-5xl font-black text-text-primary leading-tight mb-6">
+              From Gaps to <span className="bg-teal text-white px-2 rounded">Roadmap</span>. We Automatically Convert Data into Strategy Based on Your Priorities.
+            </h2>
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
+              Custom campaigns automatically built out so you can prioritize the strategy based on a few simple choices. Customize how many articles you want to create per entity of every importance level. Choose a pricing model based on topic gap percentage or brief and article à la carte cost. Or maybe you just want to flat rate. Or you're a business owner and you'll just skip that part and go straight into the Campaign Duration.
+            </p>
+          </div>
+
+          <Suspense fallback={
+            <div className="h-[500px] bg-bg-secondary rounded-2xl flex items-center justify-center border-2 border-border-light">
+              <div className="text-center p-8">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-text-secondary font-light">Loading interactive flow...</p>
+              </div>
+            </div>
+          }>
+            <CampaignArchitectFlow />
+          </Suspense>
+
+          <p className="text-center mt-6 text-sm text-text-tertiary font-light">
+            Click steps or press play to see the transformation
+          </p>
+        </div>
+      </section>
+
       {/* Problem Section */}
       <section className="py-24 px-6 bg-gradient-to-br from-bg-secondary to-bg-tertiary">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-text-primary leading-tight mb-8">
-            It's not about more keywords or more backlinks.<br />
-            It's about <span className="bg-teal text-white px-1 rounded">topical density</span>.
+            Stop Guessing. Start <span className="bg-teal text-white px-1 rounded">Proving</span>.
           </h2>
-          <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed mb-12">
-            Competitors with 50 articles outrank you with 100 because they systematically covered 200 entities with <span className="underline decoration-teal decoration-2 underline-offset-4">dense interconnection</span>.
-            You covered 80 entities randomly based on keyword volume.
+          <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto mb-12">
+            See how Google sees your site—content clusters, topical density, coverage gaps. Prove to prospects why they need you. Defend your budget with data. Predict exactly how many articles it takes to compete. What once took 40 hours of manual analysis is now automatic.
           </p>
 
           {/* Coverage Comparison Visualization */}
@@ -551,37 +573,6 @@ export default function LandingPage() {
           <div className="max-w-6xl mx-auto">
             <InteractiveCardStack />
           </div>
-        </div>
-      </section>
-
-
-      {/* Campaign Architect Flow */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">CAMPAIGN PLANNING</p>
-            <h2 className="text-4xl md:text-5xl font-black text-text-primary leading-tight mb-6">
-              From Guessing to <span className="bg-teal text-white px-2 rounded">Calculating</span>
-            </h2>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
-              Turn "Maybe 50 articles?" into "Exactly 156 articles—here's the math, phases, and ROI."
-            </p>
-          </div>
-
-          <Suspense fallback={
-            <div className="h-[500px] bg-bg-secondary rounded-2xl flex items-center justify-center border-2 border-border-light">
-              <div className="text-center p-8">
-                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-text-secondary font-light">Loading interactive flow...</p>
-              </div>
-            </div>
-          }>
-            <CampaignArchitectFlow />
-          </Suspense>
-
-          <p className="text-center mt-6 text-sm text-text-tertiary font-light">
-            Click steps or press play to see the transformation
-          </p>
         </div>
       </section>
 
