@@ -82,14 +82,14 @@ export default function BriefModal({ isOpen, onClose }: BriefModalProps) {
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-6">
         <div
-          className="bg-white rounded-2xl w-full max-w-7xl h-[90vh] flex overflow-hidden border-2 border-secondary/30"
+          className="bg-white rounded-2xl w-full max-w-7xl h-[95vh] md:h-[90vh] flex overflow-hidden border-2 border-secondary/30"
           style={{ boxShadow: 'var(--shadow-lg)' }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* TOC Sidebar */}
-          <aside className="w-72 flex-shrink-0 border-r border-border-light bg-[var(--bg-secondary)] p-6 overflow-y-auto">
+          {/* TOC Sidebar - Hidden on mobile */}
+          <aside className="hidden md:block w-72 flex-shrink-0 border-r border-border-light bg-[var(--bg-secondary)] p-6 overflow-y-auto">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-border-light">
               <div className="flex items-center gap-3">
                 <div className="p-1.5 rounded-lg bg-secondary/10">
@@ -125,7 +125,17 @@ export default function BriefModal({ isOpen, onClose }: BriefModalProps) {
 
           {/* Main Content */}
           <div className="flex-1 overflow-y-auto brief-modal-content bg-[var(--bg-primary)]" ref={contentRef}>
-            <div className="p-12">
+            {/* Mobile close button */}
+            <div className="md:hidden sticky top-0 z-10 bg-white border-b border-border-light p-4 flex justify-between items-center">
+              <h3 className="font-medium text-text-primary">Strategic Brief</h3>
+              <button
+                onClick={onClose}
+                className="p-2 rounded-full hover:bg-bg-hover transition-all text-secondary"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-6 md:p-12">
               <MarkdownContentV2 content={EXAMPLE_BRIEF_MARKDOWN} />
             </div>
           </div>
