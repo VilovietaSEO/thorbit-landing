@@ -12,16 +12,37 @@ interface Filters {
   searchTerm: string;
 }
 
-// Category colors matching production
+// Category colors - using globals.css design system (Mocha Mousse + warm palette)
 const categoryColors: Record<string, string> = {
-  services: "#C4704F",
-  materials: "#D9A854",
-  tools: "#6B9B5A",
-  symptoms: "#D4A55A",
-  causes: "#C4695A",
-  systems: "#C97A52",
-  other: "#9B8F83"
+  // Primary categories from GeneSight EICS data (mapped to design system)
+  services: "#C4704F",              // --primary: Mocha Mousse/burnt orange
+  systems_processes: "#C97A52",     // --imp-high: Warm orange
+  tools_materials: "#6B9B5A",       // --high: Olive sage green
+  symptoms_conditions: "#C4695A",   // --low: Warm brick red
+  causes_triggers: "#B85A4A",       // --critical: Deep warm red
+  brands_products: "#D9A854",       // --accent: Golden honey/amber
+  governance_compliance: "#7FA9B3", // --secondary: Serene blue
+
+  // Legacy/fallback category names (for compatibility)
+  systems: "#C97A52",               // --imp-high
+  tools: "#6B9B5A",                 // --high
+  materials: "#D9A854",             // --accent
+  symptoms: "#C4695A",              // --low
+  causes: "#B85A4A",                // --critical
+  processes: "#C97A52",             // --imp-high
+  locations: "#7FA9B3",             // --secondary
+  other: "#9B8F83"                  // --text-tertiary: Warm taupe
 };
+
+// Calculate node size based on entity tier (matches production)
+function calculateNodeSize(tier: number): number {
+  const sizeMap: Record<number, number> = {
+    1: 24,  // Tier 1: core entities - largest
+    2: 16,  // Tier 2: supporting entities
+    3: 8    // Tier 3: peripheral entities - smallest
+  };
+  return sizeMap[tier] || 12;
+}
 
 export default function EICSGraphFull() {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -72,7 +93,7 @@ export default function EICSGraphFull() {
         // Transform nodes to match production structure
         const transformedNodes = rawData.nodes.map((node: any) => {
           const connections = connectionCounts.get(node.id) || 0;
-          const size = Math.max(8, Math.min(20, 8 + connections * 0.5));
+          const size = calculateNodeSize(node.tier || 3);  // Tier-based sizing like production
           const color = categoryColors[node.category] || categoryColors.other;
 
           // Extract metadata from yaml_content
@@ -231,40 +252,95 @@ export default function EICSGraphFull() {
     // Create container group for zoom
     const g = svg.append("g");
 
-    // Initialize nodes near center
-    filteredNodes.forEach((node: any) => {
-      node.x = width / 2 + (Math.random() - 0.5) * 200;
-      node.y = height / 2 + (Math.random() - 0.5) * 200;
+    // Calculate category foci - GRID LAYOUT with proportional spacing for distinct clusters
+    const categories = Array.from(new Set(filteredNodes.map((n: any) => n.category))) as string[];
+    const categoryFociMap: { [key: string]: { x: number; y: number } } = {};
+    const cols = Math.ceil(Math.sqrt(categories.length));
+    const rows = Math.ceil(categories.length / cols);
+
+    // Proportional spacing based on container size (fills ~90% of available space)
+    const spacingX = (width * 0.9) / cols;
+    const spacingY = (height * 0.9) / rows;
+    const minSpacing = Math.min(spacingX, spacingY);
+    const gridWidth = cols * minSpacing;
+    const gridHeight = rows * minSpacing;
+    const offsetX = (width - gridWidth) / 2;
+    const offsetY = (height - gridHeight) / 2;
+
+    categories.forEach((cat: string, i: number) => {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      categoryFociMap[cat] = {
+        x: offsetX + (col + 0.5) * minSpacing,
+        y: offsetY + (row + 0.5) * minSpacing
+      };
     });
 
-    // Calculate radius for radial containment
-    const radius = Math.min(width, height) * 0.48;
+    // Initialize nodes near their category centers
+    filteredNodes.forEach((node: any) => {
+      const focus = categoryFociMap[node.category];
+      if (focus) {
+        node.x = focus.x + (Math.random() - 0.5) * 60;
+        node.y = focus.y + (Math.random() - 0.5) * 60;
+      } else {
+        node.x = width / 2 + (Math.random() - 0.5) * 100;
+        node.y = height / 2 + (Math.random() - 0.5) * 100;
+      }
+    });
 
-    // Create force simulation
+    // Custom cluster force - pulls nodes toward their category centers
+    function forceCluster() {
+      let nodes: any[];
+      let strength = 0.9; // VERY STRONG pull to category center
+
+      function force(alpha: number) {
+        nodes.forEach((d: any) => {
+          const focus = categoryFociMap[d.category];
+          if (focus) {
+            d.vx += (focus.x - d.x) * strength * alpha;
+            d.vy += (focus.y - d.y) * strength * alpha;
+          }
+        });
+      }
+
+      force.initialize = (_: any) => nodes = _;
+      force.strength = (_?: number) => _ == null ? strength : (strength = _, force);
+
+      return force;
+    }
+
+    // Create force simulation - DISTINCT CLUSTERS, NO OVERLAP (matches production)
     const simulation = d3.forceSimulation(filteredNodes)
       .force("link", d3.forceLink(filteredEdges)
         .id((d: any) => d.id)
-        .distance(120)
-        .strength(0.3)
+        .distance(100)       // Shorter links
+        .strength(0.02)      // VERY WEAK: almost ignore cross-category links
       )
       .force("charge", d3.forceManyBody()
-        .strength(-400)
-        .distanceMax(300)
+        .strength(-150)      // WEAKER: don't push nodes away from their cluster
+        .distanceMax(400)    // SHORTER: only affect nearby nodes
       )
-      .force("center", d3.forceCenter(width / 2, height / 2).strength(0.03))
-      .force("collision", d3.forceCollide().radius((d: any) => d.size + 40))
-      .force("radial", d3.forceRadial(radius, width / 2, height / 2).strength(0.005))
-      .alphaDecay(0.03)
-      .velocityDecay(0.6)
+      .force("collision", d3.forceCollide()
+        .radius((d: any) => d.size + 30)  // More padding to prevent overlap
+        .strength(1.0)       // MAX STRENGTH: hard collision detection
+        .iterations(3)       // Multiple iterations for better collision
+      )
+      .force("cluster", forceCluster().strength(0.9) as any)  // EXTREME: very strong pull to category center
+      .alphaDecay(0.01)        // VERY SLOW: lots of time to settle into clusters
+      .velocityDecay(0.3)      // MORE FREEDOM: let nodes move to clusters
       .alpha(1)
       .alphaTarget(0)
       .stop();
 
-    // Pre-compute positions
-    for (let i = 0; i < 150; ++i) simulation.tick();
+    // Pre-compute MANY positions for cluster separation
+    for (let i = 0; i < 800; ++i) simulation.tick();
 
-    // Restart with smooth animation
-    simulation.restart().alphaTarget(0);
+    // Now restart with visible animation - set alpha to give initial bounce
+    simulation
+      .alpha(0.3)           // Restart with enough energy for visible settling
+      .alphaTarget(0)       // Decay toward 0
+      .alphaDecay(0.02)     // Faster decay for initial animation (then settles)
+      .restart();
 
     simulationRef.current = simulation;
 
@@ -427,15 +503,23 @@ export default function EICSGraphFull() {
         .attr("y", (d: any) => d.y);
     });
 
-    // Drag functions
+    // Drag functions - SMOOTH with simulation restart for bouncy effect (matches production)
     function dragstarted(event: any, d: any) {
       dragStartPos = { x: event.x, y: event.y };
       hasDragged = false;
+      if (!event.active) {
+        // Heat up simulation for bouncy drag - slower decay for sustained interaction
+        simulation
+          .alphaDecay(0.01)      // Slow decay during drag for sustained bounciness
+          .alphaTarget(0.15)
+          .restart();
+      }
       d.fx = d.x;
       d.fy = d.y;
     }
 
     function dragged(event: any, d: any) {
+      // Check if we've moved more than 5 pixels (threshold for "dragging")
       const dx = event.x - dragStartPos.x;
       const dy = event.y - dragStartPos.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
@@ -446,25 +530,16 @@ export default function EICSGraphFull() {
 
       d.fx = event.x;
       d.fy = event.y;
-      d.x = event.x;
-      d.y = event.y;
-
-      d3.select(event.sourceEvent.target)
-        .attr("cx", d.x)
-        .attr("cy", d.y);
-
-      link
-        .attr("x1", (l: any) => l.source.x)
-        .attr("y1", (l: any) => l.source.y)
-        .attr("x2", (l: any) => l.target.x)
-        .attr("y2", (l: any) => l.target.y);
-
-      label.filter((n: any) => n.id === d.id)
-        .attr("x", d.x)
-        .attr("y", d.y);
     }
 
     function dragended(event: any, d: any) {
+      if (!event.active) {
+        // Cool down simulation - faster decay to settle quickly
+        simulation
+          .alphaDecay(0.02)
+          .alphaTarget(0);
+      }
+      // Keep node pinned where user dragged it
       d.fx = event.x;
       d.fy = event.y;
     }

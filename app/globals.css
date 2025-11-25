@@ -86,6 +86,7 @@
   --text-primary: #2C2419;
   --text-secondary: #6B5F53;
   --text-tertiary: #9B8F83;
+  --text-quaternary: #B8AFA3;
 
   /* Background colors - Layered warm neutrals */
   --bg-primary: #FDFBF7;
@@ -109,40 +110,6 @@
   --duration-slow: 350ms;
   --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@theme inline {
-  /* Colors */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-dark: var(--primary-dark);
-  --color-primary-light: var(--primary-light);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-secondary: var(--secondary);
-  --color-secondary-dark: var(--secondary-dark);
-  --color-high: var(--high);
-  --color-medium: var(--medium);
-  --color-low: var(--low);
-  --color-none: var(--none);
-  --color-critical: var(--critical);
-  --color-imp-high: var(--imp-high);
-  --color-imp-medium: var(--imp-medium);
-  --color-imp-low: var(--imp-low);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary: var(--text-tertiary);
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-bg-tertiary: var(--bg-tertiary);
-  --color-bg-hover: var(--bg-hover);
-  --color-border: var(--border);
-  --color-border-light: var(--border-light);
-
-  /* Typography - GT Flexa */
-  --font-sans: 'GT Flexa', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'GT Flexa', sans-serif;
 }
 
 /* Base styles with improved typography - Light weight for elegance */
@@ -283,6 +250,32 @@ em, i {
   z-index: 1;
 }
 
+/* Secondary button with blue color - no text disappearing issue */
+.btn-secondary-v2 {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  transition: all var(--duration-normal) var(--ease-out);
+  box-shadow: var(--shadow-sm);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary-v2:hover {
+  background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary-v2:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
 /* Smooth loading states */
 @keyframes shimmer {
   0% {
@@ -303,6 +296,22 @@ em, i {
   background-size: 1000px 100%;
   animation: shimmer 2s infinite linear;
   border-radius: 8px;
+}
+
+/* Slow pulse animation for ICP framework */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(0.98);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
 }
 
 /* Badge styles with warm tones */
@@ -428,4 +437,43 @@ em, i {
   background: rgba(168, 155, 143, 0.15);
   color: var(--none);
   border: 1px solid rgba(168, 155, 143, 0.3);
+}
+
+/* ICP Modal - H2 with sage blue-green vertical bar */
+.icp-h2 {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.icp-h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 9999px;
+  background: var(--secondary);
+}
+
+/* ICP Modal - List items with golden bullet points */
+.icp-list {
+  list-style: none;
+  margin-left: 1.5rem;
+}
+
+.icp-list li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.icp-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--accent);
 }
