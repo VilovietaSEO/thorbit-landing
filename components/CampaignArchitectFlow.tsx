@@ -95,8 +95,8 @@ export default function CampaignArchitectFlow() {
   const articlePriceRef = useRef<HTMLInputElement>(null);
   const timeline6Ref = useRef<HTMLButtonElement>(null);
   const campaignNameRef = useRef<HTMLInputElement>(null);
-  const nextBtnRef = useRef<HTMLButtonElement>(null);
-  const createBtnRef = useRef<HTMLButtonElement>(null);
+  const nextBtnRef = useRef<HTMLDivElement>(null);
+  const createBtnRef = useRef<HTMLDivElement>(null);
   const criticalSliderRef = useRef<HTMLInputElement>(null);
 
   // Get element center position relative to container
