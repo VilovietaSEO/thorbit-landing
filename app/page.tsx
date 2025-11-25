@@ -8,6 +8,7 @@ import ContentModal from "@/components/ContentModal";
 
 const EICSGraphFull = lazy(() => import("@/components/EICSGraphFull"));
 const CampaignArchitectFlow = lazy(() => import("@/components/CampaignArchitectFlow"));
+const InternalLinkingFlow = lazy(() => import("@/components/InternalLinkingFlow"));
 
 // Animated Dashboard Component
 function InteractiveCardStack() {
@@ -732,6 +733,39 @@ export default function LandingPage() {
               </table>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Internal Linking Section */}
+      <section className="py-24 px-6 bg-gradient-to-br from-bg-secondary to-bg-tertiary">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">INTERNAL LINKING</p>
+            <h2 className="text-4xl md:text-5xl font-black text-text-primary leading-tight mb-6">
+              AI-Powered Link <span className="bg-teal text-white px-2 rounded">Suggestions</span>
+            </h2>
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto mb-6">
+              Your knowledge graph already maps how entities relate to each other. We use those relationships to discover linking opportunities: if Entity A relates to Entity B, and both have page coverage, we find the exact paragraph where that connection makes semantic sense. Then AI generates anchor text that fits naturally into the surrounding content.
+            </p>
+            <p className="text-lg md:text-xl font-light text-text-tertiary leading-relaxed max-w-3xl mx-auto">
+              Not "these pages share keywords." Not even "these pages are relevant." But "this specific paragraph is the right place to connect these two concepts, and here's copy that reads like it belongs there."
+            </p>
+          </div>
+
+          <Suspense fallback={
+            <div className="h-[500px] bg-bg-primary rounded-2xl flex items-center justify-center border-2 border-border-light">
+              <div className="text-center p-8">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-text-secondary font-light">Loading interactive demo...</p>
+              </div>
+            </div>
+          }>
+            <InternalLinkingFlow />
+          </Suspense>
+
+          <p className="text-center mt-6 text-sm text-text-tertiary font-light">
+            Click Play to see the internal linking workflow in action
+          </p>
         </div>
       </section>
 
