@@ -21,6 +21,15 @@ export default async function Image() {
     'Campaign Architect',
   ];
 
+  // Fetch Inter font (similar geometric sans-serif to GT Flexa)
+  const interBold = await fetch(
+    'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYAZ9hjp18.ttf'
+  ).then((res) => res.arrayBuffer());
+
+  const interBlack = await fetch(
+    'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hjp18.ttf'
+  ).then((res) => res.arrayBuffer());
+
   return new ImageResponse(
     (
       <div
@@ -33,6 +42,7 @@ export default async function Image() {
           padding: '60px',
           position: 'relative',
           overflow: 'hidden',
+          fontFamily: 'Inter',
         }}
       >
         {/* Background decorative elements */}
@@ -79,32 +89,15 @@ export default async function Image() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
             marginBottom: '40px',
           }}
         >
-          <div
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #C4704F 0%, #A25A3F 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontSize: '24px',
-              fontWeight: 'bold',
-            }}
-          >
-            T
-          </div>
           <span
             style={{
-              fontSize: '32px',
-              fontWeight: 'bold',
+              fontSize: '48px',
+              fontWeight: 900,
               color: '#2C2419',
-              letterSpacing: '-0.5px',
+              letterSpacing: '-1px',
             }}
           >
             Thorbit
@@ -124,7 +117,7 @@ export default async function Image() {
           <h1
             style={{
               fontSize: '52px',
-              fontWeight: 'bold',
+              fontWeight: 900,
               color: '#2C2419',
               lineHeight: 1.15,
               margin: 0,
@@ -139,10 +132,11 @@ export default async function Image() {
 
           <p
             style={{
-              fontSize: '22px',
+              fontSize: '24px',
               color: '#5C5347',
               marginTop: '24px',
               maxWidth: '700px',
+              fontWeight: 700,
             }}
           >
             See what Google sees. Visualize your topical authority.
@@ -183,7 +177,7 @@ export default async function Image() {
               <span
                 style={{
                   fontSize: '16px',
-                  fontWeight: '600',
+                  fontWeight: 700,
                   color: '#2C2419',
                 }}
               >
@@ -208,7 +202,7 @@ export default async function Image() {
             style={{
               fontSize: '18px',
               color: '#7FA9B3',
-              fontWeight: '600',
+              fontWeight: 700,
             }}
           >
             thorbit.com
@@ -218,6 +212,20 @@ export default async function Image() {
     ),
     {
       ...size,
+      fonts: [
+        {
+          name: 'Inter',
+          data: interBlack,
+          style: 'normal',
+          weight: 900,
+        },
+        {
+          name: 'Inter',
+          data: interBold,
+          style: 'normal',
+          weight: 700,
+        },
+      ],
     }
   );
 }
