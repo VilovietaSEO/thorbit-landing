@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, lazy, Suspense } from "react";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import ICPModal from "@/components/ICPModal";
 import BriefModal from "@/components/BriefModal";
@@ -248,12 +249,9 @@ export default function LandingPage() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            <a href="#how-it-works" className="text-text-secondary hover:text-teal transition-colors font-light">
-              How It Works
-            </a>
-            <a href="#features" className="text-text-secondary hover:text-teal transition-colors font-light">
-              Features
-            </a>
+            <Link href="/why-us" className="text-text-secondary hover:text-teal transition-colors font-light">
+              Why Us
+            </Link>
             <a
               href="#demo"
               className="bg-primary hover:bg-primary-dark text-bg-primary px-5 py-2.5 rounded-lg font-medium transition-all hover:-translate-y-0.5"
@@ -276,20 +274,13 @@ export default function LandingPage() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-border-light bg-bg-primary">
             <div className="px-6 py-4 flex flex-col gap-4">
-              <a
-                href="#how-it-works"
+              <Link
+                href="/why-us"
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-text-secondary hover:text-teal transition-colors font-light py-2"
               >
-                How It Works
-              </a>
-              <a
-                href="#features"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-text-secondary hover:text-teal transition-colors font-light py-2"
-              >
-                Features
-              </a>
+                Why Us
+              </Link>
               <a
                 href="#demo"
                 onClick={() => setMobileMenuOpen(false)}
@@ -742,12 +733,12 @@ export default function LandingPage() {
           <div className="text-center mb-12">
             <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">INTERNAL LINKING</p>
             <h2 className="text-4xl md:text-5xl font-black text-text-primary leading-tight mb-6">
-              AI-Powered Link <span className="bg-teal text-white px-2 rounded">Suggestions</span>
+              AI-Powered Link Suggestions
             </h2>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto mb-6">
               Your knowledge graph already maps how entities relate to each other. We use those relationships to discover linking opportunities: if Entity A relates to Entity B, and both have page coverage, we find the exact paragraph where that connection makes semantic sense. Then AI generates anchor text that fits naturally into the surrounding content.
             </p>
-            <p className="text-lg md:text-xl font-light text-text-tertiary leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
               Not "these pages share keywords." Not even "these pages are relevant." But "this specific paragraph is the right place to connect these two concepts, and here's copy that reads like it belongs there."
             </p>
           </div>
