@@ -300,7 +300,7 @@ export default function LandingPage() {
           <div className="text-center mb-12">
             <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">FOUNDATION FIRST</p>
             <h2 className="text-3xl md:text-4xl font-black text-text-primary leading-tight mb-6">
-              Start With <span className="bg-[#D9A854] text-white px-1 rounded">People</span>, Not Keywords
+              Start With <span className="bg-secondary text-white px-1 rounded">People</span>, Not Keywords
             </h2>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-3xl mx-auto">
               Branding agencies charge $10k for real consumer intelligence. We automate it.
@@ -345,7 +345,7 @@ export default function LandingPage() {
             <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">CONTENT THAT CONVERTS</p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-text-primary leading-tight mb-6">
               Stop Writing for Keywords.<br />
-              Start Writing for <span className="bg-[#D9A854] text-white px-1 rounded">Humans</span>.
+              Start Writing for <span className="bg-secondary text-white px-1 rounded">Humans</span>.
             </h2>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-3xl mx-auto mb-12">
               Instead of "how do we rank for this keyword?" ask "who is this person and what do they need right now?"
@@ -388,7 +388,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-text-primary leading-tight mb-8">
             It's not about more keywords or more backlinks.<br />
-            It's about <span className="bg-[#D9A854] text-white px-1 rounded">topical density</span>.
+            It's about <span className="bg-secondary text-white px-1 rounded">topical density</span>.
           </h2>
           <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed mb-12">
             Competitors with 50 articles outrank you with 100 because they systematically covered 200 entities with <span className="underline decoration-secondary decoration-2 underline-offset-4">dense interconnection</span>.
@@ -502,7 +502,7 @@ export default function LandingPage() {
           <div className="text-center mb-12">
             <p className="text-primary font-medium mb-4 tracking-wide uppercase text-sm">CAMPAIGN PLANNING</p>
             <h2 className="text-4xl md:text-5xl font-black text-text-primary leading-tight mb-6">
-              From Guessing to <span className="bg-[#D9A854] text-white px-2 rounded">Calculating</span>
+              From Guessing to <span className="bg-secondary text-white px-2 rounded">Calculating</span>
             </h2>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
               Turn "Maybe 50 articles?" into "Exactly 156 articles—here's the math, phases, and ROI."
