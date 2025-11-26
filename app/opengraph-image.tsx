@@ -7,7 +7,7 @@ export const contentType = 'image/png'
 
 export default async function Image() {
   const fontData = await fetch(
-    new URL('../public/fonts/gt-flexa/GT-Flexa-Black-Trial.woff2', import.meta.url)
+    'https://thorbit.ai/fonts/gt-flexa/GT-Flexa-Black-Trial.woff2'
   ).then((res) => res.arrayBuffer())
 
   return new ImageResponse(
