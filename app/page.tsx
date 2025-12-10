@@ -61,9 +61,9 @@ function InteractiveCardStack() {
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden md:block overflow-hidden" style={{ maxHeight: '500px' }}>
+      <div className="hidden md:block overflow-x-auto overflow-y-auto" style={{ maxHeight: '500px' }}>
         {/* Table Header */}
-        <div className="grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-3 bg-bg-secondary border-b border-border-light sticky top-0 z-10">
+        <div className="grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-3 bg-bg-secondary border-b border-border-light sticky top-0 z-10 min-w-[800px]">
           <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Entity</div>
           <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Importance</div>
           <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider text-center">Score</div>
@@ -82,7 +82,7 @@ function InteractiveCardStack() {
             return (
               <div
                 key={index}
-                className={`grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-4 border-b border-border-light transition-all duration-700 ${
+                className={`grid grid-cols-[2fr,1fr,0.8fr,0.6fr,0.6fr,0.6fr,0.8fr] gap-4 px-6 py-4 border-b border-border-light transition-all duration-700 min-w-[800px] ${
                   isInSpotlight ? 'bg-teal/5 shadow-inner' : 'hover:bg-bg-secondary/50'
                 }`}
                 style={{
@@ -128,7 +128,7 @@ function InteractiveCardStack() {
       </div>
 
       {/* Mobile Card View */}
-      <div className="md:hidden overflow-hidden" style={{ maxHeight: '500px' }}>
+      <div className="md:hidden overflow-y-auto" style={{ maxHeight: '500px' }}>
         <div className="p-4 space-y-3">
           {entities.map((entity, index) => {
             const isVisible = visibleRows.includes(index);
