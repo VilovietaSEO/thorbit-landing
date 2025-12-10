@@ -511,3 +511,105 @@ em, i {
   border-radius: 9999px;
   background: var(--accent);
 }
+
+/* Border Beam Animation - Thorbit Column Only */
+@keyframes border-beam-spin {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.border-beam-thorbit {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.border-beam-thorbit::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    var(--primary),
+    var(--primary) 20deg,
+    rgba(196, 112, 79, 0.8) 60deg,
+    rgba(196, 112, 79, 0.4) 120deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.border-beam-thorbit::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 2px;
+  top: 2px;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  background: white;
+  border-radius: 0.625rem;
+}
+
+.border-beam-thorbit:hover::before {
+  opacity: 1;
+  animation: border-beam-spin 6s linear infinite;
+}
+
+/* Decorative Background Blobs */
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bg-blob-sage {
+  background: radial-gradient(circle, #8BA888, transparent 70%);
+  width: 500px;
+  height: 500px;
+}
+
+.bg-blob-yellow {
+  background: radial-gradient(circle, #F4D03F, transparent 70%);
+  width: 450px;
+  height: 450px;
+}
+
+.bg-blob-orange {
+  background: radial-gradient(circle, #C4704F, transparent 70%);
+  width: 400px;
+  height: 400px;
+}
+
+/* Positioning variants */
+.bg-blob-left {
+  left: 0;
+}
+
+.bg-blob-right {
+  right: 0;
+}
+
+.bg-blob-top {
+  top: 100px;
+}
+
+.bg-blob-middle {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.bg-blob-bottom {
+  bottom: 100px;
+}

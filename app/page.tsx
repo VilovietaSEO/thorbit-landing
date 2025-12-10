@@ -2,7 +2,7 @@
 
 import { useState, useEffect, lazy, Suspense } from "react";
 import Link from "next/link";
-import { Menu, X, Calendar, AlertTriangle, FileText, Sparkles, DollarSign, Edit, BarChart, TrendingUp, Zap, CheckCircle, Check } from "lucide-react";
+import { Menu, X, Calendar, AlertTriangle, FileText, Sparkles, DollarSign, Edit, BarChart, TrendingUp, Zap, CheckCircle, Check, ChevronDown } from "lucide-react";
 import ICPModal from "@/components/ICPModal";
 import BriefModal from "@/components/BriefModal";
 import ContentModal from "@/components/ContentModal";
@@ -265,6 +265,7 @@ function FeatureModal({ isOpen, onClose, title, children }: {
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [featuresDropdownOpen, setFeaturesDropdownOpen] = useState(false);
   const [icpModalOpen, setIcpModalOpen] = useState(false);
   const [briefModalOpen, setBriefModalOpen] = useState(false);
   const [contentModalOpen, setContentModalOpen] = useState(false);
@@ -295,6 +296,54 @@ export default function LandingPage() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
+            {/* Features Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setFeaturesDropdownOpen(!featuresDropdownOpen)}
+                onBlur={() => setTimeout(() => setFeaturesDropdownOpen(false), 200)}
+                className="flex items-center gap-2 text-text-primary hover:text-primary transition-colors font-medium"
+              >
+                Features
+                <ChevronDown size={16} className={`transition-transform ${featuresDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {featuresDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-2xl border border-border-light py-2 z-50">
+                  <a href="#icp" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    ICP Research Documents
+                  </a>
+                  <a href="#knowledge-graph" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    Knowledge Graph
+                  </a>
+                  <a href="#entity-coverage" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    Entity Coverage Dashboard
+                  </a>
+                  <a href="#strategic-content" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    Strategic Content and Briefs
+                  </a>
+                  <a href="#strategic-content" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    Content Creator
+                  </a>
+                  <a href="#campaign-builder" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    Campaign Builder
+                  </a>
+                  <a href="#topical-authority" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    Topical Authority Score
+                  </a>
+                  <a href="#internal-linking" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    AI Powered Internal Linking
+                  </a>
+                  <a href="#search-console" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    Search Console Integration
+                  </a>
+                  <a href="#platform" className="block px-4 py-3 text-text-primary hover:bg-bg-secondary transition-colors">
+                    Additional Platform Features
+                  </a>
+                </div>
+              )}
+            </div>
+
             <Link
               href="/book-demo"
               target="_blank"
@@ -317,7 +366,84 @@ export default function LandingPage() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-border-light bg-bg-primary">
-            <div className="px-6 py-4 flex flex-col gap-4">
+            <div className="px-6 py-4 flex flex-col gap-3">
+              {/* Features Section */}
+              <div className="border-b border-border-light pb-3 mb-2">
+                <p className="text-xs font-bold text-text-tertiary uppercase tracking-wider mb-3">Features</p>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href="#icp"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    ICP Research Documents
+                  </a>
+                  <a
+                    href="#knowledge-graph"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    Knowledge Graph
+                  </a>
+                  <a
+                    href="#entity-coverage"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    Entity Coverage Dashboard
+                  </a>
+                  <a
+                    href="#strategic-content"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    Strategic Content and Briefs
+                  </a>
+                  <a
+                    href="#strategic-content"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    Content Creator
+                  </a>
+                  <a
+                    href="#campaign-builder"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    Campaign Builder
+                  </a>
+                  <a
+                    href="#topical-authority"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    Topical Authority Score
+                  </a>
+                  <a
+                    href="#internal-linking"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    AI Powered Internal Linking
+                  </a>
+                  <a
+                    href="#search-console"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    Search Console Integration
+                  </a>
+                  <a
+                    href="#platform"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-text-primary hover:text-primary transition-colors py-2"
+                  >
+                    Additional Platform Features
+                  </a>
+                </div>
+              </div>
+
               <Link
                 href="/book-demo"
                 target="_blank"
@@ -338,11 +464,8 @@ export default function LandingPage() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-text-primary leading-[1.15] tracking-tight mb-8 text-center">
               The First Platform Where 100+ AI Agents Research, Strategize, AND Execute
             </h1>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto mb-6">
-              Not just keyword rankings. Not just content generation. Complete marketing intelligence—competitor research, customer psychology, strategic planning, and execution deliverables—in 3 hours instead of months.
-            </p>
-            <p className="text-lg md:text-xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto mb-10">
-              <strong className="font-bold text-text-primary">For agencies serving $1M+ clients.</strong> Win and retain premium accounts with intelligence that justifies your value. <strong className="font-bold text-text-primary">For $1M+ businesses.</strong> Build marketing capability in-house with intelligence infrastructure you couldn't access before.
+            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto mb-10">
+              Not just keyword rankings. Not just content generation. Complete marketing intelligence—competitor research, customer psychology, strategic planning, and execution deliverables—in 3 hours instead of months. Build marketing capability with intelligent infrastructure you couldn't access before, and scale without hiring.
             </p>
             <div className="flex justify-center gap-4">
               <Link
@@ -364,7 +487,7 @@ export default function LandingPage() {
       </section>
 
       {/* NEW SECTION: The Intelligence Gap in Current Tools */}
-      <section className="py-24 px-6" style={{ backgroundColor: '#B87A63' }}>
+      <section className="py-24 px-6 bg-primary">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
@@ -377,7 +500,7 @@ export default function LandingPage() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             {/* What's Missing */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light">
+            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] cursor-pointer">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-6">What's Missing:</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -412,7 +535,7 @@ export default function LandingPage() {
             </div>
 
             {/* What Thorbit Does */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-primary/30">
+            <div className="bg-white rounded-2xl p-8 border-2 border-primary/30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] cursor-pointer">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-6">What Thorbit Does:</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -448,7 +571,7 @@ export default function LandingPage() {
           </div>
 
           {/* The Impact */}
-          <div className="bg-white rounded-2xl p-10 border-l-4 border-white">
+          <div className="bg-white rounded-2xl p-10 border-l-4 border-primary transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] cursor-pointer">
             <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-6 text-center">
               Why This Changes Everything
             </h3>
@@ -457,7 +580,7 @@ export default function LandingPage() {
                 <span className="font-bold text-text-primary">When you're trying to sell somebody,</span> trust is everything. And if they don't know you, you don't have it.
               </p>
               <p className="text-lg md:text-xl text-text-secondary leading-relaxed">
-                That's where intelligence changes the game. <span className="font-bold text-white">Show them their categorical coverage gaps—data they can't get anywhere else.</span> Show them competitor publishing patterns. Show them validated customer language from real conversations.
+                That's where intelligence changes the game. <span className="inline-block bg-accent/20 px-3 py-1 rounded-lg font-bold text-text-primary">Show them their categorical coverage gaps—data they can't get anywhere else.</span> Show them competitor publishing patterns. Show them validated customer language from real conversations.
               </p>
               <p className="text-lg md:text-xl text-text-secondary leading-relaxed">
                 You're not asking them to trust your opinion. You're showing them data.
@@ -473,13 +596,13 @@ export default function LandingPage() {
 
           {/* Does vs. Helps */}
           <div className="mt-12 max-w-4xl mx-auto text-center">
-            <p className="text-xl md:text-2xl text-text-secondary leading-relaxed">
-              And this doesn't just <span className="font-bold text-text-primary">help you</span> do research. It <span className="font-bold text-white">does the research.</span>
+            <p className="text-xl md:text-2xl text-white leading-relaxed">
+              And this doesn't just help you do research. <span className="inline-block bg-white/20 px-3 py-1 rounded-lg font-bold text-white border border-white/30">It does the research.</span>
             </p>
-            <p className="text-xl md:text-2xl text-text-secondary leading-relaxed mt-4">
-              It doesn't just <span className="font-bold text-text-primary">help you</span> create briefs and content. It <span className="font-bold text-white">does the briefs and content.</span>
+            <p className="text-xl md:text-2xl text-white leading-relaxed mt-4">
+              It doesn't just help you create briefs and content. <span className="inline-block bg-white/20 px-3 py-1 rounded-lg font-bold text-white border border-white/30">It does the briefs and content.</span>
             </p>
-            <p className="text-lg md:text-xl text-text-secondary leading-relaxed mt-6">
+            <p className="text-lg md:text-xl text-white/90 leading-relaxed mt-6">
               You get tools that differentiate you in the marketplace. You prove with data what needs to be done, rather than rely on your word.
             </p>
           </div>
@@ -487,7 +610,7 @@ export default function LandingPage() {
       </section>
 
       {/* Section 2: Research → Strategize → Execute */}
-      <section className="py-24 px-6 bg-gradient-to-br from-bg-secondary to-bg-tertiary">
+      <section className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-text-primary leading-tight mb-6">
@@ -514,30 +637,30 @@ export default function LandingPage() {
                 <p className="font-medium text-base" style={{ color: 'var(--high)' }}>Deep Intelligence Across 4 Domains</p>
               </div>
 
-              <div className="flex-1 bg-white rounded-xl p-6 flex flex-col">
+              <div className="flex-1 bg-primary rounded-xl p-6 flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] cursor-pointer">
                 <div>
-                  <p className="text-lg text-text-secondary mb-4">100+ AI agents execute research that would take teams weeks:</p>
-                  <ul className="space-y-3 text-base text-text-secondary">
+                  <p className="text-lg text-white mb-4">100+ AI agents execute research that would take teams weeks:</p>
+                  <ul className="space-y-3 text-base text-white">
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Competitor Analysis</span> – Strategic gap identification at entity level.</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Competitor Analysis</span> – Strategic gap identification at entity level.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Customer Psychology</span> – Real conversation analysis from 50-75 sources. Validated patterns, exact language.</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Customer Psychology</span> – Real conversation analysis from 50-75 sources. Validated patterns, exact language.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Market Understanding</span> – Complete entity mapping with relationship intelligence across 500-600 topics.</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Market Understanding</span> – Complete entity mapping with relationship intelligence across 500-600 topics.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Business Context</span> – Your positioning, voice, and constraints extracted automatically from your site.</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Business Context</span> – Your positioning, voice, and constraints extracted automatically from your site.</span>
                     </li>
                   </ul>
                 </div>
-                <div className="mt-auto pt-6 border-t border-border-light">
-                  <p className="text-base"><span className="font-medium" style={{ color: 'var(--high)' }}>Result:</span> <span className="text-text-secondary">Proprietary intelligence that doesn't exist in any other tool.</span></p>
+                <div className="mt-auto pt-6 border-t border-white/20">
+                  <p className="text-base"><span className="font-medium text-white">Result:</span> <span className="text-white">Proprietary intelligence that doesn't exist in any other tool.</span></p>
                 </div>
               </div>
             </div>
@@ -554,30 +677,30 @@ export default function LandingPage() {
                 <p className="font-medium text-base" style={{ color: 'var(--primary)' }}>Multi-Agent Synthesis</p>
               </div>
 
-              <div className="flex-1 bg-white rounded-xl p-6 flex flex-col">
+              <div className="flex-1 bg-primary rounded-xl p-6 flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] cursor-pointer">
                 <div>
-                  <p className="text-lg text-text-secondary mb-4">Agents synthesize across intelligence sources to generate:</p>
-                  <ul className="space-y-3 text-base text-text-secondary">
+                  <p className="text-lg text-white mb-4">Agents synthesize across intelligence sources to generate:</p>
+                  <ul className="space-y-3 text-base text-white">
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Mathematical opportunity scoring</span> (not gut feeling prioritization)</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Mathematical opportunity scoring</span> (not gut feeling prioritization)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Strategic roadmaps with phased execution</span> (what to do first and why)</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Strategic roadmaps with phased execution</span> (what to do first and why)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Multi-channel recommendations</span> (search, LLM citations, conversion optimization)</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Multi-channel recommendations</span> (search, LLM citations, conversion optimization)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Performance-driven adjustments</span> (signals trigger strategic responses)</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Performance-driven adjustments</span> (signals trigger strategic responses)</span>
                     </li>
                   </ul>
                 </div>
-                <div className="mt-auto pt-6 border-t border-border-light">
-                  <p className="text-base"><span className="font-medium" style={{ color: 'var(--primary)' }}>Result:</span> <span className="text-text-secondary">Strategy backed by intelligence, not assumptions.</span></p>
+                <div className="mt-auto pt-6 border-t border-white/20">
+                  <p className="text-base"><span className="font-medium text-white">Result:</span> <span className="text-white">Strategy backed by intelligence, not assumptions.</span></p>
                 </div>
               </div>
             </div>
@@ -594,36 +717,36 @@ export default function LandingPage() {
                 <p className="font-medium text-base" style={{ color: 'var(--accent)' }}>Complete Deliverables Ready to Use</p>
               </div>
 
-              <div className="flex-1 bg-white rounded-xl p-6 flex flex-col">
+              <div className="flex-1 bg-primary rounded-xl p-6 flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] cursor-pointer">
                 <div>
-                  <p className="text-lg text-text-secondary mb-4">Agents generate execution artifacts:</p>
-                  <ul className="space-y-3 text-base text-text-secondary">
+                  <p className="text-lg text-white mb-4">Agents generate execution artifacts:</p>
+                  <ul className="space-y-3 text-base text-white">
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Strategic briefs</span> (2,500 words synthesizing 5 intelligence layers)</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Strategic briefs</span> (2,500 words synthesizing 5 intelligence layers)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Campaign roadmaps</span> (phased plans with ROI projections)</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Campaign roadmaps</span> (phased plans with ROI projections)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Content assets</span> (articles, landing pages informed by intelligence)</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Content assets</span> (articles, landing pages informed by intelligence)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-text-tertiary mt-0.5">•</span>
-                      <span><span className="font-bold text-text-primary">Optimization recommendations</span> (performance signals → strategic response)</span>
+                      <span className="text-white/70 mt-0.5">•</span>
+                      <span><span className="font-bold text-white">Optimization recommendations</span> (performance signals → strategic response)</span>
                     </li>
                   </ul>
                 </div>
-                <div className="mt-auto pt-6 border-t border-border-light">
-                  <p className="text-base"><span className="font-medium" style={{ color: 'var(--accent)' }}>Result:</span> <span className="text-text-secondary">Outputs no human team can manually create at this speed and quality.</span></p>
+                <div className="mt-auto pt-6 border-t border-white/20">
+                  <p className="text-base"><span className="font-medium text-white">Result:</span> <span className="text-white">Outputs no human team can manually create at this speed and quality.</span></p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-12 max-w-5xl mx-auto bg-white rounded-2xl p-8 border-l-4" style={{ borderColor: 'var(--teal)' }}>
+          <div className="mt-12 max-w-5xl mx-auto bg-white rounded-2xl p-8 border-l-4 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] cursor-pointer" style={{ borderColor: 'var(--teal)' }}>
             <p className="text-xl text-text-secondary text-center leading-relaxed mb-4">
               Every output is informed by research. Every strategy is backed by intelligence. Every execution artifact is powered by 100+ agents working together.
             </p>
@@ -642,7 +765,7 @@ export default function LandingPage() {
               Why 100+ Agents Beat 1-3 Prompts
             </h2>
             <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
-              It's not about quantity. It's about <span className="font-bold text-text-primary">intelligent orchestration.</span>
+              It's not about quantity. It's about <span className="font-bold text-primary">intelligent orchestration.</span>
             </p>
           </div>
 
@@ -651,28 +774,28 @@ export default function LandingPage() {
             <div className="min-w-[640px] md:min-w-0">
               {/* Header Row */}
               <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
-                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center">
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                   <h3 className="text-base md:text-xl font-black text-text-primary">Capability</h3>
                 </div>
-                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center">
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                   <h3 className="text-base md:text-xl font-medium text-text-secondary">Typical AI Tools</h3>
                 </div>
-                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center">
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
                   <h3 className="text-base md:text-xl font-black text-primary">Thorbit</h3>
                 </div>
               </div>
 
               {/* Competitor Website Scraping */}
               <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
-                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                   <p className="text-sm md:text-lg font-bold text-text-primary text-center">Competitor Scraping</p>
                 </div>
-                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
+                  <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center shadow-lg">
                     <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
                   <div className="w-8 h-8 rounded-full bg-high/10 flex items-center justify-center">
                     <span className="text-2xl leading-none font-bold" style={{ color: 'var(--high)' }}>✓</span>
                   </div>
@@ -681,30 +804,30 @@ export default function LandingPage() {
 
             {/* Customer Research */}
             <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-sm md:text-lg font-bold text-text-primary text-center">Customer Research</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
+                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center shadow-lg">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
-                <p className="text-xs md:text-base font-medium text-text-primary text-center">Thousands of comments across dozens of URLs</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
+                <p className="text-xs md:text-base font-medium text-text-primary text-center">Analyze thousands of comments and 50+ sources across the web</p>
               </div>
             </div>
 
             {/* Knowledge Graph */}
             <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-sm md:text-lg font-bold text-text-primary text-center">Knowledge Graph</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
+                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center shadow-lg">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
                 <div className="w-8 h-8 rounded-full bg-high/10 flex items-center justify-center">
                   <span className="text-2xl leading-none font-bold" style={{ color: 'var(--high)' }}>✓</span>
                 </div>
@@ -713,74 +836,74 @@ export default function LandingPage() {
 
             {/* Topical Authority */}
             <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-sm md:text-lg font-bold text-text-primary text-center">Topical Authority</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
+                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center shadow-lg">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
                 <p className="text-xs md:text-sm text-text-tertiary text-center">Only backlink authority</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
-                <p className="text-xs md:text-base font-medium text-text-primary text-center">By category and importance across your site</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
+                <p className="text-xs md:text-base font-medium text-text-primary text-center">By category and importance across your site: measure the exact amount of coverage you have for topics</p>
               </div>
             </div>
 
             {/* Content Strategy */}
             <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-sm md:text-lg font-bold text-text-primary text-center">Content Strategy</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
+                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center shadow-lg">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
                 <p className="text-xs md:text-sm text-text-tertiary text-center">Keywords unrelated to buyer persona</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
                 <p className="text-xs md:text-base font-medium text-text-primary text-center">Full knowledge of niche, competitors, customers, and entities</p>
               </div>
             </div>
 
             {/* Content Briefs */}
             <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-sm md:text-lg font-bold text-text-primary text-center">Content Briefs</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-xs md:text-sm text-text-tertiary text-center">Keyword counting and word count</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
                 <p className="text-xs md:text-base font-medium text-text-primary text-center">Tone, persona, CTAs, and reader psychology</p>
               </div>
             </div>
 
             {/* Content Writing */}
             <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-sm md:text-lg font-bold text-text-primary text-center">Content Writing</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-xs md:text-sm text-text-tertiary text-center">Sequential prompts (outline → write → edit)</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
                 <p className="text-xs md:text-base font-medium text-text-primary text-center">50 agents with refinement loops and deep research</p>
               </div>
             </div>
 
             {/* Internal Linking */}
             <div className="grid grid-cols-3 gap-3 md:gap-6">
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
                 <p className="text-sm md:text-lg font-bold text-text-primary text-center">Internal Linking</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2 transition-all duration-300 hover:shadow-2xl hover:border-primary/30">
+                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center shadow-lg">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
                 <p className="text-xs md:text-sm text-text-tertiary text-center">Keyword-based only</p>
               </div>
-              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center transition-all duration-300 hover:shadow-2xl hover:border-primary/30 border-beam-thorbit">
                 <p className="text-xs md:text-base font-medium text-text-primary text-center">Topical opportunities with 3 integration methods</p>
               </div>
             </div>
@@ -824,11 +947,11 @@ export default function LandingPage() {
             </div>
 
             {/* The Result */}
-            <div className="bg-gradient-to-br from-bg-secondary to-bg-tertiary rounded-2xl p-8 border border-border-light">
-              <p className="text-base md:text-lg text-text-secondary leading-relaxed mb-4">
-                <span className="font-bold text-text-primary">The result:</span> Strategic briefs that read like consultants spent weeks researching—because agents actually did. Content reflecting real customer language—because agents analyzed actual conversations. Campaign roadmaps with mathematical justification—because agents synthesized across intelligence to calculate priorities.
+            <div className="bg-primary rounded-2xl p-8 border border-border-light">
+              <p className="text-base md:text-lg text-white leading-relaxed mb-4">
+                <span className="font-bold text-white">The result:</span> Strategic briefs that read like consultants spent weeks researching—because agents actually did. Content reflecting real customer language—because agents analyzed actual conversations. Campaign roadmaps with mathematical justification—because agents synthesized across intelligence to calculate priorities.
               </p>
-              <p className="text-base md:text-lg text-text-secondary leading-relaxed">
+              <p className="text-base md:text-lg text-white leading-relaxed">
                 This is infrastructure, not a feature. Years of AI engineering, not ChatGPT with better prompts.
               </p>
             </div>
@@ -838,8 +961,69 @@ export default function LandingPage() {
 
 
       {/* Section 4: Complete Platform Capabilities */}
-      <section id="platform" className="py-24 px-6 bg-gradient-to-br from-bg-secondary to-bg-tertiary">
-        <div className="max-w-7xl mx-auto">
+      <section id="platform" className="py-24 px-6 bg-gradient-to-br from-bg-secondary to-bg-tertiary relative">
+        {/* Decorative Background Blobs - varied shapes overlapping cards */}
+        {/* Teal blob #1 - left side, zigzag irregular */}
+        <div style={{
+          position: 'absolute',
+          left: '0',
+          top: '400px',
+          width: '350px',
+          height: '500px',
+          background: 'radial-gradient(ellipse, #6B9B93, transparent 70%)',
+          filter: 'blur(100px)',
+          opacity: 1,
+          zIndex: 0,
+          pointerEvents: 'none',
+          borderRadius: '30% 70% 60% 40% / 50% 30% 70% 50%'
+        }}></div>
+
+        {/* Sage green blob - right side, organic wavy */}
+        <div style={{
+          position: 'absolute',
+          right: '50px',
+          top: '600px',
+          width: '400px',
+          height: '450px',
+          background: 'radial-gradient(circle, #8BA888, transparent 70%)',
+          filter: 'blur(110px)',
+          opacity: 1,
+          zIndex: 0,
+          pointerEvents: 'none',
+          borderRadius: '70% 30% 50% 50% / 40% 60% 40% 60%'
+        }}></div>
+
+        {/* Teal blob #2 - left bottom, stretched zigzag */}
+        <div style={{
+          position: 'absolute',
+          left: '100px',
+          bottom: '300px',
+          width: '380px',
+          height: '520px',
+          background: 'radial-gradient(ellipse, #5A8B82, transparent 70%)',
+          filter: 'blur(120px)',
+          opacity: 1,
+          zIndex: 0,
+          pointerEvents: 'none',
+          borderRadius: '60% 40% 30% 70% / 50% 60% 40% 50%'
+        }}></div>
+
+        {/* Small accent blob - right top, squiggly */}
+        <div style={{
+          position: 'absolute',
+          right: '-50px',
+          top: '250px',
+          width: '300px',
+          height: '400px',
+          background: 'radial-gradient(circle, #7BA89F, transparent 70%)',
+          filter: 'blur(90px)',
+          opacity: 1,
+          zIndex: 0,
+          pointerEvents: 'none',
+          borderRadius: '40% 60% 70% 30% / 60% 30% 70% 40%'
+        }}></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-text-primary leading-tight mb-6">
               Intelligence Outputs + Complete Platform Features
@@ -848,7 +1032,7 @@ export default function LandingPage() {
 
           <div className="max-w-5xl mx-auto space-y-16">
             {/* ICP Research Documents */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
+            <div id="icp" className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-3">ICP Research Documents</h3>
               <p className="text-xl font-bold text-primary mb-6">Customer psychology with statistical validation</p>
 
@@ -899,7 +1083,7 @@ export default function LandingPage() {
             </div>
 
             {/* Knowledge Graph */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
+            <div id="knowledge-graph" className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-3">Knowledge Graph</h3>
               <p className="text-xl font-bold text-primary mb-6">Complete topical territory mapped systematically</p>
 
@@ -924,7 +1108,7 @@ export default function LandingPage() {
             </div>
 
             {/* Entity Coverage Dashboard */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
+            <div id="entity-coverage" className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-3">Entity Coverage Dashboard</h3>
               <p className="text-xl font-bold text-primary mb-6">Real-time competitive tracking</p>
 
@@ -942,7 +1126,7 @@ export default function LandingPage() {
             </div>
 
             {/* Strategic Content Briefs */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
+            <div id="strategic-content" className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-3">Strategic Content Briefs + Published Content</h3>
               <p className="text-xl font-bold text-primary mb-6">5-layer intelligence synthesis → execution-ready articles</p>
 
@@ -977,7 +1161,39 @@ export default function LandingPage() {
             </div>
 
             {/* Campaign Builder */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
+            <div id="campaign-builder" className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30 relative overflow-visible">
+              {/* Diagonal brushstroke - teal */}
+              <div style={{
+                position: 'absolute',
+                left: '-100px',
+                top: '-50px',
+                width: '200px',
+                height: '700px',
+                background: 'linear-gradient(135deg, #6B9B93, transparent 80%)',
+                filter: 'blur(100px)',
+                opacity: 1,
+                zIndex: -1,
+                pointerEvents: 'none',
+                transform: 'rotate(-25deg)',
+                borderRadius: '20% 80% 15% 85% / 70% 10% 90% 30%'
+              }}></div>
+
+              {/* Diagonal brushstroke with zigzag - sage green */}
+              <div style={{
+                position: 'absolute',
+                right: '-120px',
+                bottom: '-80px',
+                width: '180px',
+                height: '650px',
+                background: 'linear-gradient(45deg, #8BA888, transparent 75%)',
+                filter: 'blur(110px)',
+                opacity: 1,
+                zIndex: -1,
+                pointerEvents: 'none',
+                transform: 'rotate(35deg)',
+                borderRadius: '10% 90% 25% 75% / 80% 20% 80% 20%'
+              }}></div>
+
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-3">Campaign Builder</h3>
               <p className="text-xl font-bold text-primary mb-6">Mathematical prioritization and ROI modeling</p>
 
@@ -1002,7 +1218,7 @@ export default function LandingPage() {
             </div>
 
             {/* Topical Authority Score Visualization */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
+            <div id="topical-authority" className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-3">Topical Authority Score</h3>
               <p className="text-xl font-bold text-primary mb-6">Visual competitive intelligence</p>
 
@@ -1131,7 +1347,7 @@ export default function LandingPage() {
             </div>
 
             {/* AI-Powered Internal Linking */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
+            <div id="internal-linking" className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-3">AI-Powered Internal Linking</h3>
               <p className="text-xl font-bold text-primary mb-6">Relationship-based strategic linking</p>
 
@@ -1156,7 +1372,7 @@ export default function LandingPage() {
             </div>
 
             {/* Search Console Integration */}
-            <div className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
+            <div id="search-console" className="bg-white rounded-2xl p-8 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/30">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-3">Search Console Integration</h3>
               <p className="text-xl font-bold text-primary mb-6">Unified performance dashboard across all sites</p>
 
@@ -1656,8 +1872,8 @@ export default function LandingPage() {
       {/* What This Lets You Actually Do */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-gradient-to-br from-bg-secondary to-bg-tertiary rounded-3xl p-12 md:p-16 border-2 border-border-light shadow-lg">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-text-primary leading-tight mb-12 text-center">
+          <div className="bg-primary rounded-3xl p-12 md:p-16 border-2 border-border-light shadow-lg">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-12 text-center">
               What This Lets You Actually Do
             </h2>
 
@@ -1665,63 +1881,71 @@ export default function LandingPage() {
               {/* Left Column */}
               <div className="space-y-6">
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">See exactly how much content you need to publish</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">See exactly how much content you need to publish</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Find close-to-ranking opportunities</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Find close-to-ranking opportunities</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Spot content gaps with ROI potential</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Spot content gaps with ROI potential</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Track aggregate performance across clients</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Track aggregate performance across clients</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Implement strategic internal linking</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Implement strategic internal linking</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Get strategic answers instantly</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Get strategic answers instantly</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Detect topical drift</p>
                 </div>
               </div>
 
               {/* Right Column */}
               <div className="space-y-6">
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Identify keyword cannibalization before it hurts rankings</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Identify keyword cannibalization before it hurts rankings</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Compare coverage at entity level</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Compare coverage at entity level</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Prioritize with mathematical certainty</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Prioritize with mathematical certainty</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Detect topical drift</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Edit everything in one place</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Edit everything in one place</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Prove competitive gaps visually</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-high text-2xl flex-shrink-0">✓</span>
-                  <p className="text-lg text-text-primary font-light">Prove competitive gaps visually</p>
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Show up in LLMs with greater frequency</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-white text-2xl flex-shrink-0">✓</span>
+                  <p className="text-lg text-white font-light">Convert more organic traffic from Google and AI Search</p>
                 </div>
               </div>
             </div>
 
             {/* CTA Button */}
             <div className="text-center">
-              <button className="bg-gradient-to-r from-primary to-primary-dark text-white px-10 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl flex items-center justify-center gap-3 mx-auto">
+              <button className="bg-white text-black px-10 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl flex items-center justify-center gap-3 mx-auto">
                 <Calendar className="w-5 h-5" />
                 Want This for Your Business? Book Your Demo
               </button>
