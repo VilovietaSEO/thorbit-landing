@@ -364,13 +364,13 @@ export default function LandingPage() {
       </section>
 
       {/* NEW SECTION: The Intelligence Gap in Current Tools */}
-      <section className="py-24 px-6 bg-gradient-to-br from-bg-tertiary to-bg-secondary">
+      <section className="py-24 px-6" style={{ backgroundColor: '#B87A63' }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-text-primary leading-tight mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
               The Intelligence Gap in Current Tools
             </h2>
-            <p className="text-xl md:text-2xl font-light text-text-secondary leading-relaxed max-w-4xl mx-auto">
+            <p className="text-xl md:text-2xl font-light text-white leading-relaxed max-w-4xl mx-auto">
               Every tool shows you keyword lists. None show you what actually matters.
             </p>
           </div>
@@ -448,7 +448,7 @@ export default function LandingPage() {
           </div>
 
           {/* The Impact */}
-          <div className="bg-white rounded-2xl p-10 border-l-4 border-primary">
+          <div className="bg-white rounded-2xl p-10 border-l-4 border-white">
             <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-6 text-center">
               Why This Changes Everything
             </h3>
@@ -457,7 +457,7 @@ export default function LandingPage() {
                 <span className="font-bold text-text-primary">When you're trying to sell somebody,</span> trust is everything. And if they don't know you, you don't have it.
               </p>
               <p className="text-lg md:text-xl text-text-secondary leading-relaxed">
-                That's where intelligence changes the game. <span className="font-bold text-primary">Show them their categorical coverage gaps—data they can't get anywhere else.</span> Show them competitor publishing patterns. Show them validated customer language from real conversations.
+                That's where intelligence changes the game. <span className="font-bold text-white">Show them their categorical coverage gaps—data they can't get anywhere else.</span> Show them competitor publishing patterns. Show them validated customer language from real conversations.
               </p>
               <p className="text-lg md:text-xl text-text-secondary leading-relaxed">
                 You're not asking them to trust your opinion. You're showing them data.
@@ -474,10 +474,10 @@ export default function LandingPage() {
           {/* Does vs. Helps */}
           <div className="mt-12 max-w-4xl mx-auto text-center">
             <p className="text-xl md:text-2xl text-text-secondary leading-relaxed">
-              And this doesn't just <span className="font-bold text-text-primary">help you</span> do research. It <span className="font-bold text-primary">does the research.</span>
+              And this doesn't just <span className="font-bold text-text-primary">help you</span> do research. It <span className="font-bold text-white">does the research.</span>
             </p>
             <p className="text-xl md:text-2xl text-text-secondary leading-relaxed mt-4">
-              It doesn't just <span className="font-bold text-text-primary">help you</span> create briefs and content. It <span className="font-bold text-primary">does the briefs and content.</span>
+              It doesn't just <span className="font-bold text-text-primary">help you</span> create briefs and content. It <span className="font-bold text-white">does the briefs and content.</span>
             </p>
             <p className="text-lg md:text-xl text-text-secondary leading-relaxed mt-6">
               You get tools that differentiate you in the marketplace. You prove with data what needs to be done, rather than rely on your word.
