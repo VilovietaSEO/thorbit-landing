@@ -1568,9 +1568,9 @@ export default function LandingPage() {
                   </p>
                 </div>
 
-                {/* Cannibalization Audit */}
+                {/* Duplicate Content Audit */}
                 <div className="bg-white rounded-xl p-6 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:border-primary/30 flex flex-col">
-                  <h4 className="text-2xl font-black text-text-primary mb-3 text-center">Cannibalization Audit</h4>
+                  <h4 className="text-2xl font-black text-text-primary mb-3 text-center">Duplicate Content Audit</h4>
                   <p className="text-sm text-text-secondary leading-relaxed mb-6 flex-1 text-center">
                     Identify pages competing against each other for the same rankings. Visual detection with specific recommendations on which pages to consolidate, redirect, or differentiate.
                   </p>
@@ -1907,7 +1907,7 @@ export default function LandingPage() {
       <ContentModal isOpen={contentModalOpen} onClose={() => setContentModalOpen(false)} />
 
       {/* Feature Modals */}
-      <FeatureModal isOpen={cannibalizationModalOpen} onClose={() => setCannibalizationModalOpen(false)} title="Cannibalization Audit">
+      <FeatureModal isOpen={cannibalizationModalOpen} onClose={() => setCannibalizationModalOpen(false)} title="Duplicate Content Audit">
         <div className="space-y-6">
           <p className="text-base text-text-secondary leading-relaxed">
             Identify pages competing against each other for the same rankings with <span className="font-bold text-primary">visual detection</span> and specific recommendations on which pages to consolidate, redirect, or differentiate.
