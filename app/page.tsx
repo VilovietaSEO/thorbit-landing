@@ -2119,7 +2119,7 @@ export default function LandingPage() {
           >
             Book a Demo
           </Link>
-          <p className="text-base text-white/80">3-minute walkthrough. No sales pitch. Just proof.</p>
+          <p className="text-base text-white/80">45-minute walkthrough. No sales pitch. Just proof.</p>
         </div>
       </section>
 
