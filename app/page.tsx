@@ -585,10 +585,10 @@ export default function LandingPage() {
               <p className="text-lg md:text-xl text-text-secondary leading-relaxed">
                 You're not asking them to trust your opinion. You're showing them data.
               </p>
-              <p className="text-lg md:text-xl font-bold text-text-primary leading-relaxed text-center mt-8">
+              <p className="text-lg md:text-xl font-bold text-text-primary leading-relaxed text-left md:text-center mt-8">
                 This is how you differentiate yourself. This is how you win premium accounts.
               </p>
-              <p className="text-base md:text-lg text-text-secondary leading-relaxed text-center">
+              <p className="text-base md:text-lg text-text-secondary leading-relaxed text-left md:text-center">
                 Enter a URL. Get the intelligence. Prove you understand their business before they sign.
               </p>
             </div>
@@ -1071,14 +1071,14 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-4">
                 <button
                   onClick={() => setIcpModalOpen(true)}
-                  className="bg-primary hover:bg-primary-dark text-bg-primary px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-1 hover:shadow-lg flex items-center gap-2"
+                  className="bg-primary hover:bg-primary-dark text-bg-primary px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-1 hover:shadow-lg flex items-center gap-2 w-fit"
                 >
                   View Full ICP Example →
                 </button>
-                <p className="text-sm font-medium text-text-tertiary">1 hour vs. 2-4 weeks of customer interviews</p>
+                <p className="text-sm font-medium text-text-tertiary text-center">1 hour vs. 2-4 weeks of customer interviews</p>
               </div>
             </div>
 
