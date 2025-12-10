@@ -1,0 +1,15 @@
+I'll manually update the buttons and move content to modal.
+
+Features to update:
+1. cannibalization - line ~1044
+2. opportunity - line ~1298
+3. onpage - line ~1554
+4. searchconsole - line ~1609
+5. linking - line ~2009
+6. wordpress - line ~2057
+7. assistant - line ~2160
+
+Each needs:
+- Button updated to openModal
+- Remove inline expanded content
+- Content moved to modal section

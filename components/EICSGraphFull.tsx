@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
-import GraphControls from "./GraphControls";
 import GraphSidebar from "./GraphSidebar";
 import { Loader2, AlertCircle } from "lucide-react";
 
@@ -583,32 +582,20 @@ export default function EICSGraphFull() {
 
   return (
     <div className="relative h-full">
-      <div className="flex gap-6 h-full">
-        {/* Left Panel: Controls Only - Hidden on mobile */}
-        <div className="hidden md:flex w-80 flex-col gap-4 overflow-y-auto">
-          <GraphControls
-            graphData={graphData}
-            filters={filters}
-            onFilterChange={setFilters}
-          />
+      <div className="flex flex-col h-full">
+        {/* Stats Bar */}
+        <div className="flex gap-6 mb-4 text-sm text-text-secondary">
+          <div>Nodes: <span className="font-semibold text-text-primary">{graphData.stats.totalNodes}</span></div>
+          <div>Edges: <span className="font-semibold text-text-primary">{graphData.stats.totalEdges}</span></div>
+          <div>Categories: <span className="font-semibold text-text-primary">{graphData.stats.categories}</span></div>
         </div>
 
-        {/* Right Panel: Graph Canvas */}
-        <div className="flex-1 flex flex-col">
-          {/* Stats Bar */}
-          <div className="flex gap-6 mb-4 text-sm text-text-secondary">
-            <div>Nodes: <span className="font-semibold text-text-primary">{graphData.stats.totalNodes}</span></div>
-            <div>Edges: <span className="font-semibold text-text-primary">{graphData.stats.totalEdges}</span></div>
-            <div>Categories: <span className="font-semibold text-text-primary">{graphData.stats.categories}</span></div>
-          </div>
-
-          {/* SVG Canvas */}
-          <svg
-            ref={svgRef}
-            className="w-full flex-1 bg-bg-secondary rounded-lg border border-border-light"
-            style={{ boxShadow: 'var(--shadow)' }}
-          />
-        </div>
+        {/* SVG Canvas */}
+        <svg
+          ref={svgRef}
+          className="w-full flex-1 bg-bg-secondary rounded-lg border border-border-light"
+          style={{ boxShadow: 'var(--shadow)' }}
+        />
       </div>
 
       {/* Modal Overlay for Entity Details */}
