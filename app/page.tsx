@@ -237,24 +237,24 @@ function FeatureModal({ isOpen, onClose, title, children }: {
         <div className="fixed inset-0 transition-opacity bg-black/70" aria-hidden="true"></div>
 
         <div
-          className="relative inline-block w-full max-w-6xl p-8 my-8 overflow-hidden text-left align-middle transition-all transform bg-bg-primary shadow-2xl rounded-2xl border-2 border-border-light"
+          className="relative inline-block w-full max-w-6xl p-6 md:p-8 my-8 overflow-hidden text-left align-middle transition-all transform bg-bg-primary shadow-2xl rounded-2xl border-2 border-border-light max-h-[90vh] flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 transition-colors text-gray-700 hover:text-gray-900"
+            className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 transition-colors text-gray-700 hover:text-gray-900 z-10"
           >
             <X className="w-5 h-5" />
           </button>
 
           {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-black text-text-primary mb-8 pr-12">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-text-primary mb-6 md:mb-8 pr-12 flex-shrink-0">
             {title}
           </h2>
 
           {/* Content */}
-          <div className="overflow-y-auto max-h-[70vh]">
+          <div className="overflow-y-auto flex-1 -webkit-overflow-scrolling-touch" style={{ WebkitOverflowScrolling: 'touch' }}>
             {children}
           </div>
         </div>
