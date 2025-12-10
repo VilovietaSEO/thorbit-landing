@@ -3,13 +3,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thorbit.ai"),
-  title: "Thorbit - 100+ AI Agents Research, Strategize, AND Execute",
-  description: "The first platform where 100+ AI agents research, strategize, and execute. Complete marketing intelligence—competitor research, customer psychology, strategic planning, and execution deliverables—in 3 hours instead of months.",
+  title: "100 AI Agents Automating Your Organic Content",
+  description: "Not just keyword rankings, not just content generation, complete marketing intelligence.",
   keywords: ["AI agents", "marketing intelligence", "competitor analysis", "customer research", "content strategy", "SEO", "topical authority", "categorical coverage"],
   authors: [{ name: "Thorbit" }],
   openGraph: {
-    title: "Thorbit - 100+ AI Agents Research, Strategize, AND Execute",
-    description: "Complete marketing intelligence in 3 hours instead of months. 100+ AI agents do the research, strategy, and execution.",
+    title: "100 AI Agents Automating Your Organic Content",
+    description: "Not just keyword rankings, not just content generation, complete marketing intelligence.",
     type: "website",
     images: [
       {
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thorbit - 100+ AI Agents Research, Strategize, AND Execute",
-    description: "Complete marketing intelligence in 3 hours instead of months.",
+    title: "100 AI Agents Automating Your Organic Content",
+    description: "Not just keyword rankings, not just content generation, complete marketing intelligence.",
     images: ["/og-image.png"],
   },
 };
