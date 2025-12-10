@@ -647,63 +647,64 @@ export default function LandingPage() {
           </div>
 
           {/* Comparison Table */}
-          <div className="max-w-6xl mx-auto mb-12">
-            {/* Header Row */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light text-center">
-                <h3 className="text-xl font-black text-text-primary">Capability</h3>
+          <div className="max-w-6xl mx-auto mb-12 overflow-x-auto md:overflow-visible">
+            <div className="min-w-[640px] md:min-w-0">
+              {/* Header Row */}
+              <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center">
+                  <h3 className="text-base md:text-xl font-black text-text-primary">Capability</h3>
+                </div>
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center">
+                  <h3 className="text-base md:text-xl font-medium text-text-secondary">Typical AI Tools</h3>
+                </div>
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light text-center">
+                  <h3 className="text-base md:text-xl font-black text-primary">Thorbit</h3>
+                </div>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light text-center">
-                <h3 className="text-xl font-medium text-text-secondary">Typical AI Tools</h3>
-              </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light text-center">
-                <h3 className="text-xl font-black text-primary">Thorbit</h3>
-              </div>
-            </div>
 
-            {/* Competitor Website Scraping */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-lg font-bold text-text-primary text-center">Competitor Scraping</p>
-              </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
-                  <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
+              {/* Competitor Website Scraping */}
+              <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                  <p className="text-sm md:text-lg font-bold text-text-primary text-center">Competitor Scraping</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
+                    <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-high/10 flex items-center justify-center">
+                    <span className="text-2xl leading-none font-bold" style={{ color: 'var(--high)' }}>✓</span>
+                  </div>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-high/10 flex items-center justify-center">
-                  <span className="text-2xl leading-none font-bold" style={{ color: 'var(--high)' }}>✓</span>
-                </div>
-              </div>
-            </div>
 
             {/* Customer Research */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-lg font-bold text-text-primary text-center">Customer Research</p>
+            <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-sm md:text-lg font-bold text-text-primary text-center">Customer Research</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
                 <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-base font-medium text-text-primary text-center">Thousands of comments across dozens of URLs</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-xs md:text-base font-medium text-text-primary text-center">Thousands of comments across dozens of URLs</p>
               </div>
             </div>
 
             {/* Knowledge Graph */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-lg font-bold text-text-primary text-center">Knowledge Graph</p>
+            <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-sm md:text-lg font-bold text-text-primary text-center">Knowledge Graph</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
                 <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
                 <div className="w-8 h-8 rounded-full bg-high/10 flex items-center justify-center">
                   <span className="text-2xl leading-none font-bold" style={{ color: 'var(--high)' }}>✓</span>
                 </div>
@@ -711,78 +712,79 @@ export default function LandingPage() {
             </div>
 
             {/* Topical Authority */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-lg font-bold text-text-primary text-center">Topical Authority</p>
+            <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-sm md:text-lg font-bold text-text-primary text-center">Topical Authority</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex flex-col items-center justify-center gap-2">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
-                <p className="text-sm text-text-tertiary text-center">Only backlink authority</p>
+                <p className="text-xs md:text-sm text-text-tertiary text-center">Only backlink authority</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-base font-medium text-text-primary text-center">By category and importance across your site</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-xs md:text-base font-medium text-text-primary text-center">By category and importance across your site</p>
               </div>
             </div>
 
             {/* Content Strategy */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-lg font-bold text-text-primary text-center">Content Strategy</p>
+            <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-sm md:text-lg font-bold text-text-primary text-center">Content Strategy</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex flex-col items-center justify-center gap-2">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
-                <p className="text-sm text-text-tertiary text-center">Keywords unrelated to buyer persona</p>
+                <p className="text-xs md:text-sm text-text-tertiary text-center">Keywords unrelated to buyer persona</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-base font-medium text-text-primary text-center">Full knowledge of niche, competitors, customers, and entities</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-xs md:text-base font-medium text-text-primary text-center">Full knowledge of niche, competitors, customers, and entities</p>
               </div>
             </div>
 
             {/* Content Briefs */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-lg font-bold text-text-primary text-center">Content Briefs</p>
+            <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-sm md:text-lg font-bold text-text-primary text-center">Content Briefs</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-sm text-text-tertiary text-center">Keyword counting and word count</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-xs md:text-sm text-text-tertiary text-center">Keyword counting and word count</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-base font-medium text-text-primary text-center">Tone, persona, CTAs, and reader psychology</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-xs md:text-base font-medium text-text-primary text-center">Tone, persona, CTAs, and reader psychology</p>
               </div>
             </div>
 
             {/* Content Writing */}
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-lg font-bold text-text-primary text-center">Content Writing</p>
+            <div className="grid grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-6">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-sm md:text-lg font-bold text-text-primary text-center">Content Writing</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-sm text-text-tertiary text-center">Sequential prompts (outline → write → edit)</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-xs md:text-sm text-text-tertiary text-center">Sequential prompts (outline → write → edit)</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-base font-medium text-text-primary text-center">50 agents with refinement loops and deep research</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-xs md:text-base font-medium text-text-primary text-center">50 agents with refinement loops and deep research</p>
               </div>
             </div>
 
             {/* Internal Linking */}
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-lg font-bold text-text-primary text-center">Internal Linking</p>
+            <div className="grid grid-cols-3 gap-3 md:gap-6">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-sm md:text-lg font-bold text-text-primary text-center">Internal Linking</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex flex-col items-center justify-center gap-2">
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex flex-col items-center justify-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-low/10 flex items-center justify-center">
                   <span className="text-2xl leading-none" style={{ color: 'var(--low)' }}>✕</span>
                 </div>
-                <p className="text-sm text-text-tertiary text-center">Keyword-based only</p>
+                <p className="text-xs md:text-sm text-text-tertiary text-center">Keyword-based only</p>
               </div>
-              <div className="bg-white rounded-xl p-6 border border-border-light flex items-center justify-center">
-                <p className="text-base font-medium text-text-primary text-center">Topical opportunities with 3 integration methods</p>
+              <div className="bg-white rounded-xl p-4 md:p-6 border border-border-light flex items-center justify-center">
+                <p className="text-xs md:text-base font-medium text-text-primary text-center">Topical opportunities with 3 integration methods</p>
               </div>
             </div>
+          </div>
           </div>
 
           {/* Intelligent Orchestration Section */}
@@ -1557,7 +1559,7 @@ export default function LandingPage() {
             <div className="mt-16">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-8 text-center">Additional Platform Features</h3>
 
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-3 md:gap-6">
                 {/* Website & Competitor Scraping */}
                 <div className="bg-white rounded-xl p-6 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:border-primary/30">
                   <h4 className="text-2xl font-black text-text-primary mb-3 text-center">Website & Competitor Scraping</h4>
