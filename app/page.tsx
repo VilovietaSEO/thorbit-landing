@@ -1802,7 +1802,7 @@ export default function LandingPage() {
 
                 {/* Content Opportunity Analysis */}
                 <div className="bg-white rounded-xl p-6 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:border-primary/30 flex flex-col">
-                  <h4 className="text-2xl font-black text-text-primary mb-3 text-center">Content Opportunity Analysis</h4>
+                  <h4 className="text-lg md:text-2xl font-black text-text-primary mb-3 text-center break-words">Content Opportunity Analysis</h4>
                   <p className="text-sm text-text-secondary leading-relaxed mb-6 flex-1 text-center">
                     Automated identification of gaps where you have no content addressing valuable topics. <span className="font-bold text-primary">Close-to-ranking opportunities</span> for existing pages.
                   </p>
