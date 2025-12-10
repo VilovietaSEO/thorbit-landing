@@ -1775,7 +1775,7 @@ export default function LandingPage() {
             <div className="mt-16">
               <h3 className="text-3xl md:text-4xl font-black text-text-primary mb-8 text-center">Additional Platform Features</h3>
 
-              <div className="grid grid-cols-3 gap-3 md:gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
                 {/* Website & Competitor Scraping */}
                 <div className="bg-white rounded-xl p-6 border-2 border-border-light transition-all duration-300 hover:shadow-lg hover:border-primary/30">
                   <h4 className="text-2xl font-black text-text-primary mb-3 text-center">Website & Competitor Scraping</h4>
@@ -1945,9 +1945,8 @@ export default function LandingPage() {
 
             {/* CTA Button */}
             <div className="text-center">
-              <button className="bg-white text-black px-10 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl flex items-center justify-center gap-3 mx-auto">
-                <Calendar className="w-5 h-5" />
-                Want This for Your Business? Book Your Demo
+              <button className="bg-white text-black px-10 py-4 rounded-xl font-bold text-lg transition-all hover:-translate-y-1 hover:shadow-xl mx-auto">
+                Want This for Your Business?
               </button>
             </div>
           </div>
