@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { GTMHead, GTMBody} from "../components/GTM";
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -42,7 +43,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <GTMHead />
+      <body>
+        <GTMBody />
+        {children}
+      </body>
     </html>
   );
 }
