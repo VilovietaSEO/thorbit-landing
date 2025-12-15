@@ -6,11 +6,11 @@ import { useState, useEffect } from "react";
 
 const BUSINESS_SIZES = [
   { value: "", label: "Select business size" },
-  { value: "<1M", label: "Less than $1M" },
-  { value: "1-5M", label: "$1M - $5M" },
-  { value: "5-10M", label: "$5M - $10M" },
-  { value: "10-100M", label: "$10M - $100M" },
-  { value: "100M+", label: "$100M+" },
+  { value: "<$1M", label: "Less than $1M" },
+  { value: "$1M - $5M", label: "$1M - $5M" },
+  { value: "$5M - $10M", label: "$5M - $10M" },
+  { value: "$10M - $100M", label: "$10M - $100M" },
+  { value: "Over $100M", label: "Over $100M" },
 ];
 
 const UTM_PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_ad_set", "utm_term", "utm_content"];
