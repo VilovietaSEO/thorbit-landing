@@ -6,6 +6,7 @@ import { Menu, X, Calendar, AlertTriangle, FileText, Sparkles, DollarSign, Edit,
 import ICPModal from "@/components/ICPModal";
 import BriefModal from "@/components/BriefModal";
 import ContentModal from "@/components/ContentModal";
+import Footer from "@/components/Footer";
 
 const EICSGraphFull = lazy(() => import("@/components/EICSGraphFull"));
 const CampaignArchitectFlow = lazy(() => import("@/components/CampaignArchitectFlow"));
@@ -2542,6 +2543,8 @@ export default function LandingPage() {
           </div>
         </div>
       </FeatureModal>
+
+      <Footer />
     </div>
   );
 }
